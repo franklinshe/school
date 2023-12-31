@@ -1,0 +1,201 @@
+\documentclass[12pt]{article}
+
+% Packages for mathematical notation and symbols
+\usepackage{amsmath, amssymb, amsthm}
+
+% Page layout and margins
+\usepackage[a4paper, margin=1in]{geometry}
+
+% Font settings
+\usepackage{newpxtext,newpxmath}
+\usepackage[T1]{fontenc}
+
+% Title and author
+\title{Econ 441 Reading Notes}
+\author{Franklin She}
+\date{Spring 2024}
+
+% Theorem-like environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% Document starts here
+\begin{document}
+
+\maketitle
+
+\section{Introduction \& Basic Tools}
+
+\subsection{Choice under uncertainty, expected utility}
+
+\subsubsection{Reading: van Zandt Ch. 1 \& 2}
+
+Overview
+\begin{itemize}
+    \item Weak Axiom of Revealed Preference (WARP)
+    \item Independence Axiom
+    \item First Order Stochastic Dominance
+    \item Continuity Axiom
+    \item Expected Utility Maximization
+    \item von Neumann-Morgenstern Theorem
+\end{itemize}
+
+\subsubsection{Chapter 1: Introduction to decision theory}
+
+Let $X$ be the finite set of all consumption bundles. Let $A$ be a non-empty subset of $X$ of a potential feasible set. Let $C(A)$ be the elements of $A$ that the agent might choose. $C(A)$ may contain more than one item because of indifference.
+
+\begin{definition}(Preference Maximization): Let $\succeq$ be the relation defined for a choice rule $C(\cdot)$.
+
+    \[
+        x \in C(A) \iff x \succeq y \qquad \forall y \in A
+    \]
+
+\end{definition}
+\begin{definition}[Preference Relation is Rational]
+    The preference relation $\succeq$ is rational if it satisfies the following two axioms:
+    \begin{enumerate}
+        \item Completeness: $\forall x, y \in X$, either $x \succeq y$ or $y \succeq x$ or both.
+        \item Transitivity: $\forall x, y, z \in X$, if $x \succeq y$ and $y \succeq z$, then $x \succeq z$.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition} The choice rule satisfies WARP if and only if satisfies preference maximization and the preference relation is rational.
+
+\end{proposition}
+
+\begin{definition}(Weak Axiom of Revealed Preference): Let $x, y \in X$. Let $A$ and $B$ be subsets of $X$ containing both $x$ and $y$. If $x \in C(A)$ and $y \in C(B)$, then $x \in C(B)$. In other words, if $x$ is revealed weakly preferred to $y$, then $y$ is not revealed preferred to $x$.
+
+\end{definition}
+
+\begin{proposition}2. If the preference relation $\succeq$ is rational, then there is a utility function $U \colon X \to \mathbb{R}$ such that $\forall x, y \in X$, 
+
+    \[
+        x \succeq y \iff U(x) \geq U(y)
+    \]
+
+    - Note: the utility representation is not unique. Consider monotonic transformations on $U$.
+    - Utility functions are useful to present an example of preferences when $X$ is large. (e.g. $U(x) = \log(x_1) + \log(x_2)$)
+
+\end{proposition}
+
+\subsubsection{Chapter 2: Lotteries and objected expected utility}
+
+\begin{definition}(Probability measure): $P \colon X \to [0, 1]$ is a probability measure and $P(x)$ is the probability of outcome $x$ if and only if
+
+    1. $P(x) \geq 0$ for all $x \in X$
+    2. $\sum_{x \in X} P(x) = 1$
+
+\end{definition}
+
+Consequentialism: The decision maker is indifferent between a compound lottery and its reduced lottery (the lottery of the outcomes of the compound lottery).
+
+\begin{definition}(Independence Axiom) For all lotteries $P, Q, R \in \mathcal{L}$ and $\alpha \in [0, 1]$
+
+    \[
+        P \succeq Q \iff \alpha P + (1 - \alpha) R \sim \succeq Q + (1 - \alpha) R
+    \]
+
+    - We can rewrite simple lotteries as compound lotteries to invoke the independence axiom to find inconsistencies in choices. (Exercise 2.1)
+
+\end{definition}
+
+\begin{definition}{First Order Stochastic Dominance}
+    Let $P$ and $Q$ be two lotteries with outcomes $x_1, \dots, x_n$ and $y_1, \dots, y_n$, and $P(x_i) = Q(y_i) = \alpha_i$ for all $i$. We allow that $x_i = x_j$ or $y_i = y_j$ for some $i \neq j$. $P$ weakly first order stochastically dominates $Q$ if and only if
+    \[
+        x_i \geq y_i \qquad \forall i \in \{1, \dots, n\}
+    \]
+
+    $P$ (strictly) first order stochastically dominates $Q$ ($P$ f.o.s.d. $Q$) if and only if
+    \[
+        x_i > y_i \qquad \forall i \in \{1, \dots, n\}
+    \]
+\end{definition}
+
+\begin{proposition}1. Suppose that $\succeq$ satisfies the independence axiom. If $P$ weakly (resp. strictly) first order stochastically dominates $Q$, then $P \succeq Q$ (resp. $P \succ Q$).
+    - Proof with the independence axiom and the compound lottery representation of simple lotteries.
+    - We can use this proposition to show conclude that lotteries are preferred to others by rewriting the lotteries into simple lotteries with the same probability distribution. (p. 22)
+
+\end{proposition}
+
+\begin{proposition}2. Let $X = \{x_1, \dots, x_n\}$ and WLOG assume that $x_1 \succeq \dots \succeq x_n$. $P$ weakly f.o.s.d $Q$ if and only if $\forall k \in \{1, \dots, n\}$
+
+    \[
+        \sum_{i = 1}^k P(x_i) \geq \sum_{i = 1}^k Q(x_i)
+    \]
+
+    Because the probabilities sum to 1, this can be rewritten as
+
+    \[
+        \sum_{i = k}^n P(x_i) \leq \sum_{i = k}^n Q(x_i)
+    \]
+
+    In other words, we can either compare the cumulative probabilities of the worst outcomes or the best outcomes to determine first order stochastic dominance.
+
+\end{proposition}
+
+\begin{definition}(Continuity Axiom) If $P, Q \in \mathcal{L}$ and $P \succ Q$, then $\forall R \in \mathcal{L}$, there exists $\alpha \in (0, 1)$ such that
+
+    \[
+        P \succ (1 - \alpha) Q + \alpha R
+    \]
+
+    and there exists $\beta \in (0, 1)$ such that
+
+    \[
+        (1 - \beta) P + \beta R \succ Q.
+    \]
+
+    In words, there is nothing so good (or so bad) that it does not become insignificant if it occurs with small enough probability. This is also called the Archimedean axiom.
+    - Note: this is still unintuitive for me. There is an example on page 25.
+
+\end{definition}
+
+\begin{definition}(Expected utility maximization) Preference $\succeq$ over lotteries $\mathcal{L}$ satisfies expected utility maximization if there is a function $u \colon Z \to \mathbb{R}$ such that $\forall P, Q \in \mathcal{L}$ and $P \succeq Q$ if and only if
+
+    \[
+        \sum_{z \in Z} u(z) P(z) \geq \sum_{z \in Z} u(z) Q(z)
+    \]
+
+    - A decision maker is an expected utility maximizer if for some function $u$, she always prefers the lottery with the highest expected utility.
+
+\end{definition}
+
+\begin{theorem}1 (von Neumann-Morgenstern) If $\succeq$ satisfies the independence axiom and the continuity axiom, then $\succeq$ satisfies expected utility maximization.
+    - Because VNM utility functions measure strength of preferences over outcomes, they are sometimes called cardinal utility functions.
+    - Only positive affine transformations preserve the ranking of lotteries. If $u \colon X \to \mathbb{R}$ is a VNM utility function, then $v \colon X \to \mathbb{R}$ is a positive affine transformation of $u$ if and only if there exists $a > 0$ and $b$ such that $v(x) = a + b u(x)$ for all $x \in X$.
+
+\end{theorem}
+
+\subsection{Bayesian inference}
+
+\subsubsection{Reading: van Zandt Ch. 4}
+
+Chapter 4: Choosing when there is new information
+
+Conditional beliefs:
+- Let $\pi \colon S \to \mathbb{R}$ (a probability measure) be the prior belief.
+- Let $\pi(\cdot \mid E) \colon S \to \mathbb{R}$ be the posterior belief after observing $E$.
+- The general rule is (to rescale the probabilities of possible states after observing $E$, some states may be impossible after observing $E$)
+
+\[
+    \pi(s \mid E) = \begin{cases}
+        \frac{\pi(s)}{\pi(E)} & \text{if } s \in E \\
+        0 & \text{if } s \notin E
+    \end{cases}
+\]
+
+Bayes' Rule
+
+\[
+    \pi(A \mid E) = \frac{\pi(A \cap E)}{\pi(E)}
+\]
+
+\end{document}
+

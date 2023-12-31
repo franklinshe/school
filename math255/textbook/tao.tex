@@ -1,0 +1,258 @@
+\documentclass[12pt]{article}
+
+% Packages for mathematical notation and symbols
+\usepackage{amsmath, amssymb, amsthm}
+
+% Page layout and margins
+\usepackage[a4paper, margin=1in]{geometry}
+
+% Font settings
+\usepackage{newpxtext,newpxmath}
+\usepackage[T1]{fontenc}
+
+% Title and author
+\title{Terence Tao Analysis I: Outline}
+\author{Franklin She}
+\date{January 2024}
+
+% Theorem-like environments
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% Document starts here
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Natural numbers}
+
+\subsection{The Peano axioms}
+
+\begin{remark}
+    Tao wants us to set aside everything we know about the natural numbers (counting, adding, multiplying, algebra) and start from scratch.
+\end{remark}
+
+\begin{axiom}
+    0 is a natural number.
+\end{axiom}
+
+\begin{axiom}
+    If $n$ is a natural number, then $n++$ is a natural number.
+\end{axiom}
+
+\begin{definition}
+    We define $1$ to be the number $0++$, $2$ to be the number $(0++)++$, and so forth.
+\end{definition}
+
+\begin{axiom}
+    $0$ is not the successor of any natural number; i.e., we have $n++ \neq 0$ for every natural number $n$.
+\end{axiom}
+
+\begin{remark}
+    This prevents us from having a cycle of natural numbers. E.g. We can prove that $4 \neq 0$ by noting that $4 = 3++ \neq 0$.
+\end{remark}
+
+\begin{axiom}
+    Different natural numbers must have different successors; i.e., if $n,m$ are natural numbers and $n \neq m$, then $n++ \neq m++$. The contrapositive is also useful.
+\end{axiom}
+
+\begin{axiom}{Principal of mathematical induction.}
+    Let $P(n)$ be any property pertaining to a natural number $n$. Suppose that $P(0)$ is true, and suppose that whenever $P(n)$ is true, $P(n++)$ is also true. Then $P(n)$ is true for every natural number $n$.
+\end{axiom}
+
+\begin{assumption}
+    (Informal) There exists a number system $\mathbb{N}$, the natural numbers, that satisfies the Peano axioms.
+\end{assumption}
+
+\begin{remark}
+    Our definition of the natural numbers is axiomatic rather than constructive. We do not describe what the natural numbers are, but describe the properties they have and what you can do with them. This is how mathematics works, treating objects abstractly, caring only about what properties the objects have, not what the objects are or what they mean. 
+\end{remark}
+
+\begin{proposition}
+    (Recursive definitions). Suppose for each natural number $n$, we have some function $f_n \colon \mathbb{N} \to \mathbb{N}$. Let $c$ be a natural number. Then we can assign a unique natural number $a_n$ to each natural number $n$, such that $a_0 = c$ and $a_{n++} = f_n(a_n)$ for each natural number $n$. For example, \[
+    a_3 = f_2(f_1(f_0(c)))
+    .\]  
+\end{proposition}
+
+\begin{remark}
+    This is proved by induction using Axiom 1.4 for the base case and Axiom 1.5 for the recursive case.
+\end{remark}
+
+\subsection{Addition}
+
+\begin{definition}
+    (Addition of natural numbers). Let $m$ be a natural number. To add $0$ to $m$, we define $0 + m := m$. Now suppose inductively that we have defined how to add $n$ to $m$. Then we can add $n++$ to $m$ by defining $(n++) + m := (n + m)++$. For example, \[
+    2 + 3 = (1 ++) + 3 = (1 + 3) ++ = ((0 ++) + 3) ++ = ((0 + 3) ++) ++ = (3 ++) ++ = 4 ++ = 5
+    .\]  
+\end{definition}
+
+\begin{lemma}
+    (1) For any natural number $n$, we have $n + 0 = n$. (2) For any natural numbers $n,m$, we have $n + (m++) = (n + m)++$. Proven easily by induction. 
+\end{lemma}
+
+\begin{proposition}
+    (Addition is commutative). For any natural numbers $n,m$, we have $n + m = m + n$.
+\end{proposition}
+
+\begin{proof}
+    We prove this by induction on $n$. The base case $n = 0$ is trivial. Now suppose inductively that we have proven the claim for $n$. Then \[
+        (n++) + m = (n + m)++ = (m + n)++
+    .\]
+\end{proof}
+
+\begin{proposition}
+    (Addition is associative). For any natural numbers $n,m,k$, we have $(n + m) + k = n + (m + k)$. Proved similarly by induction.
+\end{proposition}
+
+\begin{proposition}
+    (Cancellation law). Let $a,b,c$ be natural numbers. Then $a + b = a + c$ implies $b = c$. Proved similarly by induction.
+\end{proposition}
+
+\begin{definition}
+    (Positive natural numbers). A natural number $n$ is said to be positive iff $n \neq 0$.
+\end{definition}
+
+\begin{proposition}
+    If $a$ is positive and $b$ is a natural number, then $a + b$ is positive. Proved by induction.
+\end{proposition}
+
+\begin{definition}
+    (Ordering of the natural numbers). Let $n,m$ be natural numbers. We say that $n$ is less than or equal to $m$, and write $n \leq m$, iff we have $n = m + a$ for some natural number $a$. We say that $n$ is strictly less than $m$, and write $n < m$, iff $n \leq m$ and $n \neq m$.
+\end{definition}
+
+\begin{proposition}
+    (Basic properties of order for natural numbers). Let $a, b, c$ be natural numbers. Then
+    \begin{enumerate}
+        \item (Reflexivity). $a \leq a$.
+        \item (Transitivity). If $a \leq b$ and $b \leq c$, then $a \leq c$.
+        \item (Anti-symmetry). If $a \leq b$ and $b \leq a$, then $a = b$.
+        \item (Addition preserves order). If $a \leq b$, then $a + c \leq b + c$.
+        \item $a < b$ iff $a++ \leq b$.
+        \item $a < b$ iff $b = a + c$ for some positive natural number $c$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    (1) through (4) are easy. (5)  and (6) use contradiction for strict inequality.
+\end{proof}
+
+\begin{proposition}
+    (Trichotomy of order for natural numbers). Let $a,b$ be natural numbers. Then exactly one of the following statements is true: $a < b$, $a = b$, or $b < a$.
+\end{proposition}
+
+\begin{proposition}
+    (Strong principle of induction). Let $m_0$ be a natural number, and let $P(m)$ be a property pertaining to an arbitrary natural number $m$. Suppose that for each $m \geq m_0$, we have the following implication: if $P(m')$ is true for all natural numbers $m_0 \leq m' < m$, then $P(m)$ is also true. (In particular, this means that $P(m_0)$ is true, since in this case the hypothesis is vacuous.) Then we can conclude that $P(m)$ is true for all natural numbers $m \geq m_0$.
+\end{proposition}
+
+\begin{proof}
+    Skipped. Hint from Tao: define $Q(n)$ to be the property that $P(m)$ is true for all $m_0 \leq m < n$.
+\end{proof}
+
+\subsection{Multiplication}
+
+\begin{remark}
+    Just as addition is the iterated increment operation, multiplication is iterated addition.
+\end{remark}
+
+\begin{definition}
+    (Multiplication of natural numbers). Let $m$ be a natural number. To multiple zero to $m$, we define $0 \times m := 0$. Now suppose inductively that we have defined how to multiply $n$ to $m$. Then we can multiply $n++$ to $m$ by defining $(n++) \times m := (n \times m) + m$
+\end{definition}
+
+\begin{lemma}
+    (Multiplication is commutative). For any natural numbers $n,m$, we have $n \times m = m \times n$. Proved by induction.
+\end{lemma}
+
+\begin{lemma}
+    (Positive natural numbers have no zero divisors). Let $n, m$ be natural numbers. Then $n \times m = 0$ iff at least one of $n,m$ is equal to zero.
+\end{lemma}
+
+\begin{proof}
+    ($\implies$) Prove the contrapositive. Suppose $n \neq 0$ and $m \neq 0$. Then $n = a++$ and $m = b++$ for some natural numbers $a,b$. Then \[
+        n \times m = (a++) \times (b++) = (a \times b) + a + b + 1
+    .\]
+    So $n \times m$ is positive. ($\impliedby$) Trivial.
+\end{proof}
+
+\begin{proposition}
+    (Distributive law). For any natural numbers $a,b,c$, we have $a(b +c) = ab + ac$ and $(b + c)a = ba + ca$.
+\end{proposition}
+
+\begin{proof}
+    Since multiplication is commutative, it suffices to prove the first identity. We prove this by induction on $c$. The base case $c = 0$ is trivial. Now suppose inductively that we have proven the claim for $c$.
+    \begin{align*}
+        a(b + (c++)) &= a((b +c)++) \\
+        &= a(b+c) + a \\
+        &= ab + ac + a \\
+        &= ab + a(c++) \\
+    .\end{align*}
+\end{proof}
+
+\begin{proposition}
+    (Multiplication is associative). For any natural numbers $a,b,c$, we have $(ab)c = a(bc)$. Proved by induction.
+\end{proposition}
+
+\begin{proposition}
+    (Multiplication preserves order). Let $a,b,c$ be natural numbers. Then $a < b$ implies $ac < bc$.
+\end{proposition}
+
+\begin{proof}
+    Since $a < b$, we have $b = a + d$ for some positive natural number $d$. Then \[
+        bc = (a + d)c = ac + dc
+    .\]
+    Since $dc$ is positive, we have $ac < bc$.
+\end{proof}
+
+\begin{corollary}
+    (Cancellation law). Let $a,b,c$ be natural numbers. Then $ac = bc$ and $c \neq 0$ implies $a = b$.
+\end{corollary}
+
+\begin{proof}
+    By trichotomy of order, we have $a < b$ or $a = b$ or $b < a$. If $a < b$, then $ac < bc$, a contradiction. If $b < a$, then $bc < ac$, a contradiction. So $a = b$.
+\end{proof}
+
+\begin{proposition}
+    (Euclidean algorithm). Let $n$ be a natural number, and let $q$ be a positive natural number. Then there exists natural numbers $m,r$ such that $0 \leq r < q$ and $n = mq + r$.
+\end{proposition}
+
+\begin{remark}
+    In other words, we can divide $n$ by $q$ and get a quotient $m$ and remainder $r$.
+\end{remark}
+
+\begin{proof}
+    Let us fix $q$ and induct on $n$. The base case $n$ is solved when we take $m = 0$ and $r = n$. Now suppose inductively that we have solved the claim for $n$. Then $n = mq + r$ for some natural numbers $m,r$ with $0 \leq r < q$. For the recursive case, we have two cases. TO BE CONTINUED. 
+\end{proof}
+
+\begin{definition}
+    (Exponentiation for natural numbers). Let $m$ be a natural number. To raise $m$ to the power zero, we define $m^0 := 1$. Now suppose inductively that we have defined $m^n$. Then we can define $m^{n++} := m^n \times m$.
+\end{definition}
+
+\begin{remark}
+    Just like one uses the increment operation to recursively define addition, and addition to recursively define multiplication, one can use multiplication to recursively define exponentiation.
+\end{remark}
+
+\section{Set theory}
+
+\subsection{Fundamentals}
+
+\subsection{Russell's paradox}
+
+\subsection{Functions}
+
+\subsection{Images and inverse images}
+
+\subsection{Cartesian products}
+
+\subsection{Cardinality of sets}
+
+
+\end{document}
