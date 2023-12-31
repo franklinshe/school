@@ -11,7 +11,7 @@
 \usepackage[T1]{fontenc}
 
 % Title and author
-\title{Terence Tao Analysis I: Outline}
+\title{Terence Tao Analysis I (Ch. 2 - 5): Outline}
 \author{Franklin She}
 \date{January 2024}
 
@@ -244,15 +244,251 @@
 
 \subsection{Fundamentals}
 
+\begin{definition}
+    (Informal) We define a set $A$ to be any unordered collection of objects. If $x$ is an object, we say $x \in A$, otherwise, $x \not\in A$.
+\end{definition}
+
+\begin{axiom}
+    (Sets are objects). If $A$ is a set, then $A$ is also an object.
+\end{axiom}
+
+\begin{remark}
+    There is a special case of set theory called "pure set theory" in which all objects are sets. The number $0$ is identified with the empty set $\emptyset = \{\}$, the number $1$ as $\{0\} = \{\{\}\}$, the number $2$ as $\{0, 1\} = \{\{\}, \{\{\}\}\}$, and so on.
+\end{remark}
+
+\begin{definition}
+    (Equality of sets). Two sets $A, B$ are equal iff every element of $A$ is an element of $B$, and vice versa.
+\end{definition}
+
+\begin{axiom}
+    (Empty set). There exists a set $\emptyset$, also denoted as $\{\}$ such that for every object $x$, we have $x \not\in \emptyset$.
+\end{axiom}
+
+\begin{lemma}
+    (Single choice). Let $A$ be a non-empty set. Then there exists an object $x$ such that $x \in A$.
+\end{lemma}
+
+\begin{proof}
+    We prove by contradiction. Suppose that for every object $x$, we have $x \not\in A$. Then $A = \emptyset$, a contradiction.
+\end{proof}
+
+\begin{axiom}
+    (Singleton sets and pair sets). If $a$ is an object, then there exists a set $\{a\}$ such that for every object $x$, we have $x \in \{a\}$ iff $x = a$. Furthermore, if $a, b$ are objects, then there exists a set $\{a, b\}$ such that for every object $x$, we have $x \in \{a, b\}$ iff $x = a$ or $x = b$; we refer to this set as the pair set formed by $a$ and $b$.
+\end{axiom}
+
+\begin{axiom}
+    (Pairwise union). Given any two sets $A, B$, there exists a set $A \cup B$, called the union of $A$ and $B$, such that for every object $x$, we have $x \in A \cup B$ iff $x \in A$ or $x \in B$.
+\end{axiom}
+
+\begin{lemma}
+    (Union is commutative and associative). Let $A, B, C$ be sets. Then $A \cup B = B \cup A$ and $(A \cup B) \cup C = A \cup (B \cup C)$.
+\end{lemma}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{definition}
+    (Subsets). Let $A, B$ be sets. We say that $A$ is a subset of $B$, and write $A \subseteq B$, iff every element of $A$ is also an element of $B$. We say that $A$ is a proper subset of $B$, denoted $A \subset B$ if $A \subseteq B$ and $A \neq B$. 
+\end{definition}
+
+\begin{proposition}
+    (Sets are partially ordered by set inclusion). Let $A, B, C$ be sets. If $A \subseteq B$ and $B \subseteq C$ (also hold for $\subset$). If $A \subseteq B$ and $B \subseteq A$, then $A=B$.
+\end{proposition}
+
+\begin{remark}
+    Given two distinct sets, it is not in general true that one of them is a subset of the other. Take the set of even natural numbers and the set of odd natural numbers. Neither set is a subset of the other. This is why we say that sets are only partially ordered.
+\end{remark}
+
+\begin{axiom}
+    (Axiom of specification). Let $A$ be a set, and for each $x \in A$, let $P(x)$ be a property pertaining to $x$ (i.e., $P(x)$ is either a true statement or a false statement). Then there exists a set $\{x \in A \colon P(x) \text{ is true}\}$, such that for every object $y$, \[
+        y \in \{x \in A \colon P(x) \text{ is true}\} \iff (y \in A \text{ and } P(y) \text{ is true})
+    .\]
+\end{axiom}
+
+\begin{definition}
+    (Intersections). The intersection of two sets $A, B$, denoted $A \cap B$, is defined to be the set \[
+        A \cap B := \{x \in A \colon x \in B\}
+    .\]
+    Also, for all objects $x$, \[
+        x \in A \cap B \iff x \in A \text{ and } x \in B 
+    .\]
+\end{definition}
+
+\begin{definition}
+    (Empty intersection). We say that two sets $A, B$ are disjoint iff $A \cap B = \emptyset$.
+\end{definition}
+    
+\begin{definition}
+    (Difference sets). Given two sets $A, B$, we define the difference set $A \setminus B$ to be the set \[
+        A \setminus B := \{x \in A \colon x \not\in B\} 
+    .\]
+\end{definition}
+
+\begin{proposition}
+    (Sets form a boolean algebra). Let $A, B, C$ be sets, and let $X$ be a set containing $A, B, C$ as subsets.
+    \begin{enumerate}
+        \item (Minimal element). $A \cup \emptyset = A$ and $A \cap \emptyset = \emptyset$.
+        \item (Maximal element). $A \cup X = X$ and $A \cap X = A$.
+        \item (Identity). $A \cup A = A$ and $A \cap A = A$.
+        \item (Commutativity). $A \cup B = B \cup A$ and $A \cap B = B \cap A$.
+        \item (Associativity). $(A \cup B) \cup C = A \cup (B \cup C)$ and $(A \cap B) \cap C = A \cap (B \cap C)$.
+        \item (Distributivity). $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$ and $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$.
+        \item (Partition). $A \cup (X \setminus A) = X$ and $A \cap (X \setminus A) = \emptyset$.
+        \item (De Morgan laws). $X \setminus (A \cup B) = (X \setminus A) \cap (X \setminus B)$ and $X \setminus (A \cap B) = (X \setminus A) \cup (X \setminus B)$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{axiom}
+    (Replacement). Let $A$ be a set. For any object $x \in A$, and any object $y$, suppose we have a statement $P(x, y)$ pertaining to $x$ and $y$, such that for each $x \in A$ there is at most one $y$ for which $P(x, y)$ is true. Then there exists a set $\{y \colon P(x, y) \text{ is true for some } x \in A\}$, such that for any object $z$, \[
+        z \in \{y \colon P(x, y) \text{ is true for some } x \in A\} \iff P(x, z) \text{ is true for some } x \in A
+    .\]
+\end{axiom}
+
+\begin{definition}
+    (Infinity). There exists a set $\mathbb{N}$, whose elements are called natural numbers, as well as an object $0 \in \mathbb{N}$, and an object $n++ \in \mathbb{N}$ assigned to every natural number $n \in \mathbb{N}$, such that the Peano axioms are satisfied.
+\end{definition}
+
+\begin{remark}
+    Tao remarks that this is a more formal version of the definition of the natural numbers in the previous chapter. I am not sure exactly why.
+\end{remark}
+
 \subsection{Russell's paradox}
+
+\begin{axiom}
+    (Universal specification). (Dangerous!) Suppose for every object $x$, we have a statement $P(x)$ pertaining to $x$ (i.e., $P(x)$ is either a true statement or a false statement). Then there exists a set $\{x \colon P(x) \text{ is true}\}$, such that for every object $y$, \[
+        y \in \{x \colon P(x) \text{ is true}\} \iff P(y) \text{ is true}
+    .\]
+\end{axiom}
+
+\begin{remark}
+    This axiom asserts that every property corresponds to a set. It also implies most of the axioms in the previous section. This axiom cannot be included into set theory because of the following logical contradiction.
+\end{remark}
+
+\begin{remark}
+    Discovered by Betrand Russell (1872 - 1970) in 1901. The paradox runs as follows. Let $P(x)$ be the statement \[
+    P(x) \iff x \text{ is a set and } x \not\in x
+    .\] 
+    Using the axiom of universal specification, we can form the set \[
+        R := \{x \colon P(x) \text{ is true}\} = \{x \colon x \text{ is a set and } x \not\in x\}
+    .\] Now we ask the question: is $R \in R$? If $R \in R$, then by the definition of $P$, we have $R \not\in R$. If $R \not\in R$, then by the definition of $P$, we have $R \in R$. This is a contradiction.
+\end{remark}
+
+\begin{axiom}
+    (Regularity). If $A$ is a non-empty set, then there exists at least one element $x$ of $A$ which is either not a set, or is disjoint from $A$.
+\end{axiom}
+
+\begin{remark}
+    This axiom is also known as the axiom of foundation and ensures absurdities such as Russell's paradox do not occur. However, it is pretty unintuitive, and never needed for analysis. It is necessary for more advanced set theory.
+\end{remark}
 
 \subsection{Functions}
 
+\begin{definition}
+    (Functions). Let $X, Y$ be sets. A function $f$ from $X$ to $Y$, denoted $f \colon X \to Y$, is defined to be a set of ordered pairs $(x, y)$ with $x \in X$ and $y \in Y$, such that every element of $X$ appears in exactly one ordered pair. We write $f(x)$ for the unique $y$ such that $(x, y) \in f$. We call $X$ the domain of $f$ and $Y$ the range of $f$. We write $f \colon X \to Y$ to indicate that $f$ is a function from $X$ to $Y$.
+\end{definition}
+
+\begin{definition}
+    (Equality of functions). Two functions $f \colon X \to Y$ and $g \colon X \to Y$ are equal iff $f(x) = g(x)$ for all $x \in X$.
+\end{definition}
+
+\begin{definition}
+    (Composition). Let $f \colon X \to Y$ and $g \colon Y \to Z$ be functions. Then we can define the composition $g \circ f \colon X \to Z$ of $f$ and $g$ to be the function from $X$ to $Z$ defined by the formula \[
+    (g \circ f)(x) := g(f(x))
+    .\]
+\end{definition}
+
+\begin{lemma}
+    (Composition is associative). Let $f \colon X \to Y$, $g \colon Y \to Z$, and $h \colon Z \to W$ be functions. Then $h \circ (g \circ f) = (h \circ g) \circ f$.
+\end{lemma}
+
+\begin{proof}
+    Proved by the definition of composition and equality of functions.
+\end{proof}
+
+\begin{definition}
+    (One-to-one functions). Let $f \colon X \to Y$ be a function. We say that $f$ is one-to-one, or injective, iff $f(x) = f(y)$ implies $x = y$ for all $x, y \in X$.
+\end{definition}
+
+\begin{definition}
+    (Onto functions). Let $f \colon X \to Y$ be a function. We say that $f$ is onto, or surjective, iff $f(X) = Y$. That is, for every $y \in Y$, there exists $x \in X$ such that $f(x) = y$.
+\end{definition}
+
+\begin{definition}
+    (Bijections). Let $f \colon X \to Y$ be a function. We say that $f$ is a bijection iff $f$ is both one-to-one and onto.
+\end{definition}
+
+\begin{definition}
+    (Identity functions). Let $X$ be a set. We define the identity function $\text{id}_X \colon X \to X$ to be the function $\text{id}_X(x) := x$.
+\end{definition}
+
+\begin{definition}
+    (Inverse functions). Let $f \colon X \to Y$ be a function. We say that $f$ is invertible iff there exists a function $g \colon Y \to X$ such that $g \circ f = \text{id}_X$ and $f \circ g = \text{id}_Y$. We call $g$ the inverse of $f$, and denote it by $f^{-1}$.
+\end{definition}
+
+\begin{remark}
+    If $f$ is invertible, then $f$ is a bijection. The converse is also true. 
+\end{remark}
+
 \subsection{Images and inverse images}
 
+\begin{definition}
+    (Images of sets). If $f \colon X \to Y$ is a function, and $E$ is a set in $X$, we define the image $f(E)$ of $E$ under $f$ to be the set \[
+        f(E) := \{f(x) \colon x \in E\}
+    .\]
+    This set is a subset of $Y$. $f(E)$ is also called the forward image of $E$ under $f$.
+\end{definition}
+
+\begin{definition}
+    (Inverse images). If $U$ is a subset of $Y$, we define the inverse image $f^{-1}(U)$ of $U$ under $f$ to be the set \[
+        f^{-1}(U) := \{x \in X \colon f(x) \in U\}
+    .\]
+    $f^{-1}(U)$ is also called the backwards images of $U$ under $f$.
+\end{definition}
+
+\begin{definition}
+    (Power set axiom). Let $X$ and $Y$ be sets. Then there exists a set $Y^X$, called the power set of $X$ into $Y$, which consists of all the functions from $X$ to $Y$, thus \[
+    f \in Y^X \iff f \colon X \to Y
+    .\]  
+\end{definition}
+
+\begin{lemma}
+    Let $X$ be a set. Then the set \[
+    \{Y \colon Y \text{ is a subset of } X\}
+    .\] is a set.
+\end{lemma}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{axiom}
+    (Union). Let $A$ be a set, all of whose elements are themselves sets. Then there exists a set $\bigcup A$, called the union of $A$, which consists of all the elements which belong to at least one element of $A$, thus \[
+    x \in \bigcup A \iff x \in Y \text{ for some } Y \in A
+    .\]
+\end{axiom}
+
+\begin{remark}
+    We can similarly form intersections of families of sets.
+\end{remark}
+
 \subsection{Cartesian products}
-
 \subsection{Cardinality of sets}
-
+\section{Integers and rationals}
+\subsection{Integers}
+\subsection{Rationals}
+\subsection{Absolute value and exponentiation}
+\subsection{Gaps in the rational numbers}
+\section{Real numbers}
+\subsection{Cauchy sequences}
+\subsection{Equivalent Cauchy sequences}
+\subsection{The construction of the real numbers}
+\subsection{Ordering the reals}
+\subsection{The least upper bound property}
+\subsection{Real exponentiation, part 1}
 
 \end{document}
