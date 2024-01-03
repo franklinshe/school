@@ -281,12 +281,8 @@
 \end{axiom}
 
 \begin{lemma}
-    (Union is commutative and associative). Let $A, B, C$ be sets. Then $A \cup B = B \cup A$ and $(A \cup B) \cup C = A \cup (B \cup C)$.
+    (Union is commutative and associative). Let $A, B, C$ be sets. Then $A \cup B = B \cup A$ and $(A \cup B) \cup C = A \cup (B \cup C)$. Simple proof.
 \end{lemma}
-
-\begin{proof}
-    TODO.
-\end{proof}
 
 \begin{definition}
     (Subsets). Let $A, B$ be sets. We say that $A$ is a subset of $B$, and write $A \subseteq B$, iff every element of $A$ is also an element of $B$. We say that $A$ is a proper subset of $B$, denoted $A \subset B$ if $A \subseteq B$ and $A \neq B$. 
@@ -463,7 +459,7 @@
 \end{lemma}
 
 \begin{proof}
-    TODO.
+    TODO. Exercise 3.4.6.
 \end{proof}
 
 \begin{axiom}
@@ -477,18 +473,492 @@
 \end{remark}
 
 \subsection{Cartesian products}
+
+\begin{definition}
+    (Ordered pair). If $x$ and $y$ are any objects (possibly equal), we define the ordered pair $(x, y)$ to be a new object. Two ordered pairs $(x, y)$ and $(x',y')$ are equal if and only if the following holds: \[
+        x = x' \text{ and } y = y'
+    .\]
+\end{definition}
+
+\begin{definition}
+    (Cartesian product). If $X$ and $Y$ are sets, we define the Cartesian product $X \times Y$ to be the set of all ordered pairs $(x, y)$ with $x \in X$ and $y \in Y$, thus \[
+        X \times Y := \{(x, y) \colon x \in X \text{ and } y \in Y\}
+    .\]
+    or equivalently, \[
+        (x, y) \in X \times Y \iff x \in X \text{ and } y \in Y
+    .\]
+\end{definition}
+
+
+\begin{definition}
+    (Ordered $n$-tuple and $n$-fold Cartesian product). If $n$ is a natural number, we define an ordered $n$-tuple to be a function from the set $\{1, \dots, n\}$ of natural numbers from $1$ to $n$ to some set $X$. We denote this ordered $n$-tuple by $(x_1, \dots, x_n)$ or $(x_i)_{1 \leq i \leq n}$. Two ordered $n$-tuples are equal if and only if they agree at every index. We define the $n$-fold Cartesian product $X_1 \times \dots \times X_n$ to be the set of all ordered $n$-tuples $(x_1, \dots, x_n)$ with $x_i \in X_i$ for each $i = 1, \dots, n$, thus \[
+        X_1 \times \dots \times X_n := \{(x_1, \dots, x_n) \colon x_i \in X_i \text{ for each } i = 1, \dots, n\}
+    .\]
+\end{definition}
+
+\begin{remark}
+    Any ordered $n$-tuple $(x_1, \dots, x_n)$ is also called an ordered sequence of $n$ elements or a finite sequence. 
+\end{remark}
+
+\begin{lemma}
+    (Finite choice). Let $n \geq 1$ be a natural number, and for each natural number $1 \leq i \leq n$, let $X_i$ be a non-empty set. Then the Cartesian product $X_1 \times \dots \times X_n$ is non-empty.
+\end{lemma}
+
+\begin{proof}
+    We can prove this via induction on $n$. The claim is vacuously true with $n = 0$, and when $n = 1$ the claim follows from the single choice lemma.
+\end{proof}
+
+\begin{remark}
+    The infinite choice lemma requires an additional axiom, the axiom of choice.
+\end{remark}
+
 \subsection{Cardinality of sets}
+
+\begin{remark}
+    Tao remarks how defining the natural numbers axiomatically via the Peano axioms treats natural numbers like ordinals (First, Second, Third) rather than cardinals (One, Two Three). Cardinality of sets notes that the natural numbers can be used to count the cardinality of sets, as long as the set is finite.
+\end{remark}
+
+\begin{definition}
+    (Equal cardinality). Two sets $X$ and $Y$ have equal cardinality iff there exists a bijection $f \colon X \to Y$.
+\end{definition}
+
+\begin{proposition}
+    (Equal cardinality is commutative and transitive). Let $X, Y, Z$ be sets. If $X$ and $Y$ have equal cardinality, then $Y$ and $X$ have equal cardinality. If $X$ and $Y$ have equal cardinality, and $Y$ and $Z$ have equal cardinality, then $X$ and $Z$ have equal cardinality.
+\end{proposition}
+
+\begin{proof}
+    Proved by the definition of equal cardinality.
+\end{proof}
+
+\begin{definition}
+    (Cardinality $n$). Let $n$ be a natural number. A set $X$ is said to have cardinality $n$ iff it has equal cardinality to $\{1, \dots, n\}$. We write $|X| = n$ to denote the fact that $X$ has cardinality $n$ and we also say that $X$ has $n$ elements.
+\end{definition}
+
+\begin{proposition}
+    (Uniqueness of cardinality). Let $X$ be a set with cardinality $n$. Then $n$ is unique. That is, if $m$ is a natural number such that $X$ has cardinality $m$, then $n = m$.
+\end{proposition}
+
+This proposition needs to following lemma to be proved.
+
+\begin{lemma}
+    Suppose that $n \geq 1$ and that $X$ is a set with cardinality $n$. Then there exists an element $x \in X$ such that $X \setminus \{x\}$ has cardinality $n-1$.
+\end{lemma}
+
+\begin{proof}
+    Proof idea. We find the bijection from $X \setminus \{x\}$ to $\{1, \dots, n-1\}$ by taking the bijection from $X$ to $\{1, \dots, n\}$, call it $f(y)$ and defining a $g(y) = f(y) - 1$ if $f(y) > f(x)$. Intuitively these are the elements "after" the $x$ that was removed, and we shift them down by 1.
+\end{proof}
+
+\begin{proof}
+    (of uniqueness of cardinality). We induct on $n$. For $n = 0$, the claim is true because $X$ must be empty. Now suppose the proposition is already proven for some $n$. To prove true for $n++$, suppose for contradiction that $X$ has cardinality $n++$ and $m$, where $n++ \neq m$. By the above lemma, we have that set $X \setminus \{x\}$ has cardinality $n$ and $m - 1$. By the inductive hypothesis, $n = m - 1$, which implies that $n ++ = m$, a contradiction.
+\end{proof}
+
+\begin{definition}
+    (Finite sets). A set is finite iff it has cardinality $n$ for some natural number $n$. A set is infinite iff it is not finite. 
+\end{definition}
+
+\begin{theorem}
+    The set of natural numbers $\mathbb{N}$ is infinite.
+\end{theorem}
+
+\begin{proof}
+    Suppose for contradiction that $\mathbb{N}$ is finite. Then $\mathbb{N}$ has some cardinality $n$. By the previous lemma, there exists an element $x \in \mathbb{N}$ such that $\mathbb{N} \setminus \{x\}$ has cardinality $n-1$. But $\mathbb{N} \setminus \{x\}$ is a subset of $\mathbb{N}$, so it has cardinality at most $n$. This is a contradiction.
+\end{proof}
+
+\begin{remark}
+    One can use similar arguments to show that any unbounded set is infinite. However, it is possible for some sets to be "more" infinite than others.
+\end{remark}
+
+\begin{proposition}
+    (Cardinal arithmetic).
+    \begin{enumerate}
+        \item Let $X$ be a finite set, and let $x \not\in X$ be an object. Then $X \cup \{x\}$ is finite and $|X \cup \{x\}| = |X| + 1$.
+        \item Let $X$ and $Y$ be finite sets. Then $X \cup Y$ is finite and $|X \cup Y| \leq |X| + |Y|$. If $X$ and $Y$ are disjoint, then $|X \cup Y| = |X| + |Y|$.
+        \item Let $X$ be a finite set and let $Y$ be a subset of $X$. Then $Y$ is finite and $|Y| \leq |X|$. If $Y$ is also infinite, then $|Y| < |X|$. If $Y \neq X$, then $|Y| < |X|$.
+        \item If $X$ is a finite set and $f \colon X \to Y$ is a function. Then $f(X)$ is finite and $|f(X)| \leq |X|$. If $f$ is one-to-one, then $|f(X)| = |X|$. 
+        \item Let $X$ and $Y$ be finite sets. Then $X \times Y$ is finite and $|X \times Y| = |X| \times |Y|$.
+        \item Let $X$ and $Y$ be finite sets. Then $Y^X$ is finite and $|Y^X| = |Y|^{|X|}$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{remark}
+    This proposition suggests cardinality is a form of arithmetic, distinct from the Peano arithmetic.
+\end{remark}
+
 \section{Integers and rationals}
+
 \subsection{Integers}
+
+\begin{remark}
+    Tao chooses to define integers by subtracting two natural numbers.
+\end{remark}
+
+\begin{definition}
+    (Integers). An integer is an expression of the form $a-b$ where $a, b$ are natural numbers. Two integers are considered to be equal $a-b = c-d$ iff $a+d = c+b$. We let $\mathbb{Z}$ denote the set of all integers.
+\end{definition}
+
+\begin{remark}
+    We have to check if integer equality is a legitimate notion of equality by verifying the reflexive, symmetric, and transitive and substitution axioms.
+\end{remark}
+
+\begin{definition}
+    The sum of two integers $(a-b) + (c-d)$ is defined by the formula \[
+        (a-b) + (c-d) := (a+c) - (b+d)
+    .\]
+    The product of two integers $(a-b)(c-d)$ is defined by the formula \[
+        (a-b)(c-d) := (ac + bd) - (ad + bc)
+    .\]
+\end{definition}
+
+\begin{lemma}
+    (Addition and multiplication are well-defined). The sum and product of two integers are integers and equal inputs give equal outputs.
+\end{lemma}
+
+\begin{definition}
+    (Negation of integers) If $a-b$ is an integer, we define its negation $-(a-b)$ by the formula \[
+        -(a-b) := (b-a)
+    .\]
+    In particular, we define $-a := 0-a$ for any positive natural number $a$.
+\end{definition}
+
+\begin{lemma}
+    (Trichotomy of integers). Let $x$ be an integer. Then exactly one of the following three statements is true: $x$ is positive, $x$ is zero, or $x$ is negative.
+\end{lemma}
+
+\begin{proof}
+    Proof idea. By definition, $x = a-b$ for some natural numbers $a,b$. Then $x$ is positive if $a > b$, zero if $a = b$, and negative if $a < b$. To show that no more than one hold at a time, we assume each pair and reach a contradiction.
+\end{proof}
+
+\begin{remark}
+    Tao comments why we didn't just use this lemma to define the integers. The reason is that if we did so, the rules for adding and multiplying would split into many different cases, e.g., negative times positive equals negative. To verify all the properties would end up being much messier.
+\end{remark}
+
+\begin{proposition}
+    (Laws of algebra for integers). Let $x, y, z$ be integers. Then
+    \begin{enumerate}
+        \item (Additive commutativity). $x + y = y + x$ and $xy = yx$.
+        \item (Additive associativity). $(x + y) + z = x + (y + z)$ and $(xy)z = x(yz)$.
+        \item (Additive identity). $x + 0 = x$.
+        \item (Additive inverse). $x + (-x) = 0$.
+        \item (Multiplicative commutativity). $xy = yx$.
+        \item (Multiplicative associativity). $(xy)z = x(yz)$.
+        \item (Multiplicative identity). $x \times 1 = x$.
+        \item (Distributivity 1). $x(y + z) = xy + xz$.
+        \item (Distributivity 2). $(y + z)x = yx + zx$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+    The above set of nine identities assert that the integers form a commutative ring.
+\end{remark}
+
+\begin{proof}
+    These are proven by the definition of integer and the use of algebra of the natural numbers.
+\end{proof}
+
+\begin{definition}
+    (Subtraction). If $x, y$ are integers, we define $x-y$ to be $x + (-y)$.
+\end{definition}
+
+\begin{proposition}
+    (Integers have no zero divisors). Let $x, y$ be integers. If $xy = 0$, then $x = 0$ or $y = 0$.
+\end{proposition}
+
+\begin{proof}
+    Suppose for contradiction that $x \neq 0$ and $y \neq 0$. Then $x = a-b$ and $y = c-d$ for some positive natural numbers $a,b,c,d$. Then $xy = (a-b)(c-d) = ac + bd - ad - bc$. Since $a,b,c,d$ are positive, we have $ac, bd, ad, bc > 0$. So $ac + bd - ad - bc > 0$, a contradiction.
+\end{proof}
+
+\begin{corollary}
+    (Cancellation law). Let $x, y, z$ be integers. If $x \neq 0$ and $xy = xz$, then $y = z$.
+\end{corollary}
+
+\begin{proof}
+    If $y \neq z$, then $y-z \neq 0$. Then $x(y-z) = xy - xz = 0$, a contradiction.
+\end{proof}
+
+\begin{definition}
+    (Ordering of the integers.) Let $x, y$ be integers. We say that $x$ is greater than or equal to $y$, and write $x \geq y$ or $y \leq x$ iff we have $x = y + a$ for some natural number $a$. We say that $x$ is strictly greater than $y$, and write $x > y$ or $y < x$ iff $x \geq y$ and $x \neq y$.
+\end{definition}
+
+\begin{lemma}
+    (Properties of order). Let $a, b, c$ be integers.
+    \begin{enumerate}
+        \item $a > b$ iff $a - b$ is positive.
+        \item (Addition preserves order). If $a > b$, then $a + c > b + c$.
+        \item (Positive multiplication preserves order). If $a > b$ and $c$ is positive, then $ac > bc$.
+        \item (Negation reverses order). $a > b$ iff $-a < -b$.
+        \item (Order is transitive). If $a > b$ and $b > c$, then $a > c$.
+        \item (Order trichotomy). Exactly one of the following statements is true: $a > b$, $a = b$, or $a < b$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
 \subsection{Rationals}
+
+\begin{definition}
+    (Rationals). A rational number is an expression of the form $a/b$ where $a, b$ are integers and $b$ is positive. Two rational numbers $a/b$ and $c/d$ are considered to be equal iff $ad = bc$. We let $\mathbb{Q}$ denote the set of all rational numbers.
+\end{definition}
+
+\begin{remark}
+    Again, we have to check if rational equality is a legitimate notion of equality by verifying the reflexive, symmetric, and transitive and substitution axioms.
+\end{remark}
+
+\begin{definition}
+    (Sum of rationals). If $a/b$ and $c/d$ are rational numbers, we define their sum $(a/b) + (c/d)$ by the formula \[
+        (a/b) + (c/d) := (ad + bc)/(bd)
+    .\]
+    their product \[
+        (a/b)(c/d) := (ac)/(bd)
+    .\]
+    and their negation \[
+        -(a/b) := (-a)/b
+    .\]
+\end{definition}
+
+\begin{lemma}
+    (Sum, product, and negation are well-defined). The sum, product, and negation of two rational numbers are rational numbers and equal inputs give equal outputs.
+\end{lemma}
+
+\begin{proof}
+    Proof idea. We show that supposing $a/b = a'/b'$ and $c/d = c'/d'$, then $(ad + bc)/(bd) = (a'd' + b'c')/(b'd')$ and $(ac)/(bd) = (a'c')/(b'd')$. We also show that $(-a)/b = (-a')/b'$.
+\end{proof}
+
+\begin{proposition}
+    (Laws of algebra for rationals). Let $x, y, z$ be rational numbers. Then
+    \begin{enumerate}
+        \item (Additive commutativity). $x + y = y + x$ and $xy = yx$.
+        \item (Additive associativity). $(x + y) + z = x + (y + z)$ and $(xy)z = x(yz)$.
+        \item (Additive identity). $x + 0 = x$.
+        \item (Additive inverse). $x + (-x) = 0$.
+        \item (Multiplicative commutativity). $xy = yx$.
+        \item (Multiplicative associativity). $(xy)z = x(yz)$.
+        \item (Multiplicative identity). $x \times 1 = x$.
+        \item (Distributivity 1). $x(y + z) = xy + xz$.
+        \item (Distributivity 2). $(y + z)x = yx + zx$.
+        \item (Multiplicative inverse). If $x \neq 0$, then $1/x$ is also a rational number and $x(1/x) = 1$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{remark}
+    The above set of ten identities assert that the rationals $\mathbb{Q}$ form a field.
+\end{remark}
+
+\begin{proof}
+    Proved by the definition of rational number and the use of algebra of the integers.
+\end{proof}
+
+\begin{definition}
+    (Quotient of rationals). If $x, y$ are rational numbers, we define $x/y$ to be $x \times (1/y)$.
+\end{definition}
+
+\begin{definition}
+    (Positive and negative rationals). A rational number $x$ is positive iff $x = a/b$ for some positive integers $a, b$. It is negative iff $x = -y$ for some positive rational $y$.
+\end{definition}
+
+\begin{lemma}
+    (Trichotomy of rationals). Let $x$ be a rational number. Then exactly one of the following three statements is true: $x$ is positive, $x$ is zero, or $x$ is negative.
+\end{lemma}
+
+\begin{proof}
+    Similar to the proof of the trichotomy of integers. (I think.)
+\end{proof}
+
+\begin{definition}
+    (Ordering of the rationals). Let $x, y$ be rational numbers. We say that $x > y$ iff $x - y$ is positive. We say that $x \geq y$ iff $x > y$ or $x = y$. We say that $x < y$ iff $x - y$ is a negative, and similarly define $x \leq y$.
+\end{definition}
+
+\begin{proposition}
+    (Basic properties of order on the rationals). Let $x, y, z$ be rational numbers. Then
+    \begin{enumerate}
+        \item (Order trichotomy). Exactly one of the following statements is true: $x > y$, $x = y$, or $x < y$.
+        \item (Order antisymmetry). If $x > y$, then $y < x$.
+        \item (Order transitivity). If $x > y$ and $y > z$, then $x > z$.
+        \item (Addition preserves order). If $x > y$, then $x + z > y + z$.
+        \item (Positive multiplication preserves order). If $x > y$ and $z$ is positive, then $xz > yz$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
 \subsection{Absolute value and exponentiation}
+
+\begin{definition}
+    (Absolute value). Let $x$ be a rational number. If $x$ is positive, then the absolute value of $x$ is defined as $|x| := x$. If $x$ is negative, then $|x| := -x$. If $x$ is zero, then $|x| := 0$.
+\end{definition}
+
+\begin{definition}
+    (Distance). Let $x, y$ be rational numbers. We define the distance between $x$ and $y$ to be $|x-y|$. Distance is sometimes denoted as $d(x,y)$.
+\end{definition}
+
+\begin{proposition}
+    (Basic properties of absolute value and distance). Let $x, y, z$ be rational numbers. Then
+    \begin{enumerate}
+        \item (Non-degeneracy of absolute value). $|x| \geq 0$ and $|x| = 0$ iff $x = 0$.
+        \item (Triangle inequality for absolute value). $|x+y| \leq |x| + |y|$.
+        \item $-y \leq x \leq y$ iff $y \geq |x|$. In particular, $-|x| \leq x \leq |x|$.
+        \item (Multiplicative identity for absolute value). $|xy| = |x||y|$. In particular, $|x^n| = |x|^n$ for any natural number $n$.
+        \item (Non-degeneracy of distance). $d(x,y) \geq 0$ and $d(x,y) = 0$ iff $x = y$.
+        \item (Symmetry of distance). $d(x,y) = d(y,x)$.
+        \item (Triangle inequality for distance). $d(x,z) \leq d(x,y) + d(y,z)$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{definition}
+    ($\epsilon$-closeness). Let $x, y$ be rational numbers, and let $\epsilon$ be a positive rational number. We say that $x$ is $\epsilon$-close to $y$ iff $d(x,y) \leq \epsilon$.
+\end{definition}
+
+\begin{remark}
+    Tao remarks that this definition is not standard in mathematics textbooks, but we plan to use it as "scaffolding" to construct more important notions of limit (and of Cauchy sequences) and discard the notion of $\epsilon$-close.
+\end{remark}
+
+\begin{proposition}
+    Let $x, y, z, w$ be rational numbers and let $\epsilon, \gamma$ be  positive rational numbers. Then
+    \begin{enumerate}
+        \item $x = y$ iff $x$ is $\epsilon$-close to $y$.
+        \item If $x$ is $\epsilon$-close to $y$, then $y$ is $\epsilon$-close to $x$.
+        \item If $x$ is $\epsilon$-close to $y$ and $y$ is $\gamma$-close to $z$, then $x$ is $(\epsilon + \gamma)$-close to $z$.
+        \item If $x$ and $y$ are $\epsilon$-close, and $z$ and $w$ are $\gamma$-close, then $x+z$ and $y+w$ are $(\epsilon + \gamma)$-close, and $x-z$ and $y-w$ are $(\epsilon + \gamma)$-close. 
+        \item If $x$ and $y$ are $\epsilon$-close, they are also $\epsilon'$-close for any $\epsilon' > \epsilon$.
+        \item There are a few more, but I'm not going to write them down. See page 88 of Tao.
+    \end{enumerate}
+\end{proposition}
+
+\begin{definition}
+    (Exponentiation to a natural number). Let $x$ be a rational number. To raise $x$ to the power $0$, we define $x^0 := 1$. To raise $x$ to the power $n+1$, we define $x^{n+1} := x^n \times x$.
+\end{definition}
+
+\begin{proposition}
+    (Properties of exponentiation, I). Let $x, y$ be rational numbers and let $m, n$ be natural numbers. Then
+    \begin{enumerate}
+        \item $x^m x^n = x^{m+n}$, $(x^m)^n = x^{mn}$, and $(xy)^n = x^n y^n$.
+        \item Suppose $n > 0$. Then $x^n = 0$ iff $x = 0$.
+        \item If $x \geq y \geq 0$, then $x^n \geq y^n \geq 0$. If $x > y \geq 0$ and $n >0$, then $x^n > y^n \geq 0$
+        \item $|x^n| = |x|^n$.
+    \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{definition}
+    (Exponentiation to a negative number). Let $x$ be a non-zero rational number. Then for any negative integer $-n$, we define $x^{-n} := 1/x^n$.
+\end{definition}
+
 \subsection{Gaps in the rational numbers}
+
+\begin{proposition}
+    (Interspersing of integers by rationals). Let $x$ be a rational number. Then there exists an integer $n$ such that $n \leq x < n+1$. In fact, this integer is unique. In particular, there exists a natural number $N$ such that $N>x$ (i.e., there is no such thing as a rational number which is larger than all the natural numbers).
+\end{proposition}
+
+\begin{remark}
+    The integer $n$ for which $n \leq x < n+1$ is called the integer part of $x$, and is denoted $\lfloor x \rfloor$. The natural number $N$ for which $N > x$ is called the ceiling of $x$, and is denoted $\lceil x \rceil$.
+\end{remark}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{proposition}
+    (Interspersing of rationals by integers). If $x$ and $y$ are rational numbers with $x < y$, then there exists an integer $n$ such that $x < n < y$.
+\end{proposition}
+
+\begin{proof}
+    Proof idea. We set $n := (x+y)/2$.
+\end{proof}
+
+\begin{proposition}
+    There does not exist any rational number $x$ such that $x^2 = 2$.
+\end{proposition}
+
+\begin{proof}
+    TODO. See page 91 of Tao.
+\end{proof}
+
+\begin{proposition}
+    For every rational number $\epsilon > 0$, there exists a non-negative rational number $x$ such that $x^2 < 2 < (x + \epsilon)^2$.
+\end{proposition}
+
+\begin{proof}
+    TODO.
+\end{proof}
+
+\begin{remark}
+    This proposition indicates that while the set of rationals does not actually have $\sqrt{2}$, we can get as close as we wish to $\sqrt{2}$. This is how Tao decides to construct the real numbers in the next chapter. There is another way, via "Dedekind cuts", but it is not pursued here.
+\end{remark}
+
 \section{Real numbers}
+
+\begin{remark}
+    So far, we constructed three number systems, the natural numbers $\mathbb{N}$, the integers $\mathbb{Z}$, and the rationals $\mathbb{Q}$. Natural numbers were defined using the Peano axioms and were used to recursively define addition and multiplication. Integers were constructed by taking formal differences of natural numbers. Rationals were constructed by taking formal quotients of the integers.
+    
+    Real numbers are needed for geometry and by extension, calculus. They are constructed by taking limits of rational numbers. This is a very general and useful procedure, that of completing one metric space to form another.
+\end{remark}
+
 \subsection{Cauchy sequences}
+
+\begin{definition}
+    (Sequences). Let $m$ be an integer. A sequence $(a_n)_{n=m}^\infty$ of rational numbers is a function from the set $\{n \in \mathbb{Z} \colon n \geq m\}$ of integers from $m$ to $\infty$ to the rationals. We denote the value of this function at $n$ by $a_n$. More informally, a sequence $(a_n)_{n=m}^\infty$ of rational numbers is a collection of rationals $a_m, a_{m+1}, a_{m+2}, \ldots$.
+\end{definition}
+
+\begin{definition}
+    ($\epsilon$-steadiness). Let $\epsilon > 0$. A sequence $(a_n)_{n=m}^\infty$ of rational numbers is said to be $\epsilon$-steady iff each pair $a_j, a_k$ of sequence elements is $\epsilon$-close for every natural number $j, k$.
+\end{definition}
+
+\begin{definition}
+    (Eventual $\epsilon$-steadiness). Let $\epsilon > 0$. A sequence $(a_n)_{n=m}^\infty$ of rational numbers is said to be eventually $\epsilon$-steady iff there exists a natural number $N$ such that the sequence $(a_n)_{n=N}^\infty$ is $\epsilon$-steady.
+\end{definition}
+
+\begin{definition}
+    (Cauchy sequences). A sequence $(a_n)_{n=m}^\infty$ of rational numbers is said to be Cauchy iff it is eventually $\epsilon$-steady for every rational number $\epsilon > 0$.
+\end{definition}
+
+\begin{proposition}
+    The sequence defined by $a_n := 1/n$ is a Cauchy sequence.
+\end{proposition}
+
+\begin{proof}
+    We want to find $N \geq 1$ such that the sequence $a_N, a_{N+1}, \ldots$ is $\epsilon$-steady. That is to say, find $N$ where \[
+        |1/j - 1/k| \leq \epsilon \text{ for every } j, k \geq N
+    .\] 
+    Because $j, k \geq N$, we know that $0 < 1/j, 1/k \leq 1/N$. This also means that $|1/j - 1/k| \leq 1/N$. So it is sufficient to show that $1/N < \epsilon$, or in other words $N > 1/\epsilon$. We can construct such a $N$ by Proposition 3.29 (Interspersing of integers by rationals), specifically that there exists a natural number $N$ such that $N > x$, where $x$ is a rational number.
+\end{proof}
+
+\begin{remark}
+    Verifying from first principles that a sequence is a Cauchy sequence requires thinking in reverse, working out what conditions on $N$ would suffice to force the sequence to be $\epsilon$-steady and then finding such an $N$.
+\end{remark}
+
+\begin{definition}
+    (Bounded sequences). Let $M \geq 0$ be rational. A finite sequence is bounded by $M$ iff $|a_i| \leq M$ for every $i$. An infinite sequence is bounded by $M$ iff $|a_i| \leq M$ for all $i \geq 1$. A sequence is said to be bounded iff it is bounded by $M$ for some rational $M \geq 0$.
+\end{definition}
+
+\begin{lemma}
+    (Finite sequences are bounded). Every finite sequence $a_1, a_2, \ldots, a_n$ is bounded.
+\end{lemma}
+
+\begin{proof}
+    Prove by induction on $n$. The base case when $n = 1$ is bounded if we select $M = a_1$. To prove the case when $n + 1$, we know by the induction hypothesis that the finite sequence of length $n$ is bounded by some $M$, so if we construct $M + |n+1|$, the case $n+1$ will be bounded by this rational number.
+\end{proof}
+
+\begin{lemma}
+    (Ca
+\end{lemma}
+
 \subsection{Equivalent Cauchy sequences}
 \subsection{The construction of the real numbers}
 \subsection{Ordering the reals}
 \subsection{The least upper bound property}
 \subsection{Real exponentiation, part 1}
-
 \end{document}
