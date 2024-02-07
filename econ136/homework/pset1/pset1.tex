@@ -1,0 +1,254 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+\usepackage{listings}
+\usepackage{color}
+
+\lstdefinestyle{Rstyle}{
+  language=R,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{black},
+  stringstyle=\color{purple},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  frame=single,
+  rulecolor=\color{black},
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=true,
+  title=\lstname,
+  showstringspaces=false,
+  tabsize=2,
+  belowskip=1em,
+  aboveskip=1em,
+}
+
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\E}{\mathbb{E}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{\vspace{-2cm} Econ 136: Problem Set 1}
+\author{Franklin She}
+
+\maketitle
+ 
+\begin{problem}{1}
+    \hfill
+    \begin{enumerate}
+        \item \hfill
+                \begin{align*}
+                    Cov(X, Y) &= \E[(X - \mu_X)(Y - \mu_Y)] \\
+                    &= \E[XY - X\mu_Y - Y\mu_X + \mu_X\mu_Y] \\
+                    &= \E[XY] - \E[X\mu_Y] - \E[Y\mu_X] + \E[\mu_X\mu_Y] \\
+                    &= \E[XY] - \mu_Y\E[X] - \mu_X\E[Y] + \mu_X\mu_Y \\
+                    &= \E[XY] - \mu_X\mu_Y
+                \end{align*}
+        \item \hfill
+                \begin{align*}
+                    Cov(X, Y) &= \E[XY] - \mu_X\mu_Y \\
+                    &= \E[X^3] - \mu_X\mu_Y \\
+                    &= \E[X^3] - \E[X]\E[X^2] \\
+                    &= 0 - 0 \E[X^2] \\
+                    &= 0
+                \end{align*}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}{2}
+    \hfill
+    \begin{align*}
+        Var(\mathbf{X}) &= \E[(\mathbf{X} - \E[\mathbf{X}])(\mathbf{X} - \E[\mathbf{X}])^T] \\
+                        &=\E[(\mathbf{X} - \E[\mathbf{X}])(\mathbf{X}^T - \E[\mathbf{X}]^T)] \\
+                        &= \E[\mathbf{X}\mathbf{X}^T - \mathbf{X}\E[\mathbf{X}]^T - \E[\mathbf{X}]\mathbf{X}^T + \E[\mathbf{X}]\E[\mathbf{X}]^T] \\
+                        &= \E[\mathbf{X}\mathbf{X}^T] - \E[\mathbf{X}\E[\mathbf{X}]^T] - \E[\E[\mathbf{X}]\mathbf{X}^T] + \E[\E[\mathbf{X}]\E[\mathbf{X}]^T] \\
+                        &= \E[\mathbf{X}\mathbf{X}^T] - \E[\mathbf{X}]\E[\mathbf{X}]^T - \E[\mathbf{X}]\E[\mathbf{X}]^T + \E[\mathbf{X}]\E[\mathbf{X}]^T \\
+                        &= \E[\mathbf{X}\mathbf{X}^T] - \E[\mathbf{X}]\E[\mathbf{X}]^T.
+    \end{align*}
+
+
+
+\end{problem}
+
+\begin{problem}{3}
+    \hfill
+    \begin{enumerate}
+        \item First, we express \((a + b \cdot Y + c \cdot Z) - \tilde{m}(X)\) as:
+        \begin{align*}
+        (a + b \cdot Y + c \cdot Z) - (a + b \cdot \E[Y | X] + c \cdot \E[Z | X]) &= b \cdot (Y - \E[Y | X]) + c \cdot (Z - \E[Z | X]).
+        \end{align*}
+        
+        Taking the expectation and using the linearity of expectation, we get:
+        \begin{align*}
+        \E[((a + b \cdot Y + c \cdot Z) - \tilde{m}(X)) \cdot g(X)] &= \E[b \cdot (Y - \E[Y | X]) \cdot g(X) + c \cdot (Z - \E[Z | X]) \cdot g(X)] \\
+        &= b \cdot \E[(Y - \E[Y | X]) \cdot g(X)] + c \cdot \E[(Z - \E[Z | X]) \cdot g(X)] \\
+        &= b \cdot 0 + c \cdot 0 \\
+        &= 0.
+        \end{align*}
+
+        \item
+            We have shown in part (a) that
+            \[ \E[((a + b \cdot Y + c \cdot Z) - \tilde{m}(X)) \cdot g(X)] = 0 \quad \text{ for all } g. \]
+            Therefore, by the orthogonality principle proven in class, we can define that $\tilde{m}(X)$ is
+            $\E[a + b \cdot Y + c \cdot Z | X]$, the expected value of $a + b \cdot Y + c \cdot Z$ given $X$.
+    \end{enumerate}
+    
+\end{problem}
+
+\begin{problem}{4}`
+    \hfill
+    \begin{enumerate}
+        \item
+            To express \(\E[Y | X]\) as a linear function of \(X\), consider the two possible values of \(X\), which are 0 and 1. The conditional expectation of \(Y\) given \(X\) can thus be written as:
+            \begin{align*}
+            \E[Y | X = 0] &= \beta_0, \\
+            \E[Y | X = 1] &= \beta_0 + \beta_1.
+            \end{align*}
+            Hence, for \(X = 0\) and \(X = 1\), the conditional expectation \(\E[Y | X]\) can be represented as \(\beta_0 + \beta_1X\), where:
+            \begin{align*}
+            \beta_0 &= \E[Y | X = 0], \\
+            \beta_1 &= \E[Y | X = 1] - \E[Y | X = 0].
+            \end{align*}
+
+        \item
+            We use the law of iterated expectations and the result of part (a),
+            \begin{align*}
+            \E[Y] &= \E[\E[Y | X]] \\
+                  &= \E[\beta_0 + \beta_1X] \\
+                  &= \E[\E[Y | X = 0] + (\E[Y | X = 1] - \E[Y | X = 0])X] \\
+                  &= \E[\E[Y | X = 0]] + \E[(\E[Y | X = 1] - \E[Y | X = 0])X] \\
+                  &= \E[Y | X = 0] + (\E[Y | X = 1] - \E[Y | X = 0])\E[X] \\
+                  &= \E[Y | X = 0] + (\E[Y | X = 1] - \E[Y | X = 0])p \\
+                  &= p \cdot \E[Y | X = 1] + (1 - p) \cdot \E[Y | X = 0] \\
+            \end{align*}
+        \item
+            We use the law of iterated expectations at the result of part (a),
+            \begin{align*}
+                \E[XY] &= \E[\E[XY | X]] \\
+                       &= \sum_{x} \E[XY | X = x] \cdot \Pr[X = x] \\
+                       &= \E[XY | X = 0] \cdot (1-p) + \E[XY | X = 1] \cdot p \\
+                       &= p \cdot \E[Y | X = 1] \qquad \text{(by choosing $X=0$ or $X=1$)} \\
+            \end{align*}
+        \item
+            By definition,
+            \begin{align*}
+            \text{Cov}(X,Y) &= \E[XY] - \E[X]\E[Y], \\
+            \text{Var}(X) &= \E[X^2] - (\E[X])^2 = p - p^2.
+            \end{align*}
+
+            From (c), solving for $\E[Y | X = 1]$ gives:
+
+            \begin{align*}
+                \E[Y | X = 1] &= \frac{\E[XY]}{p}
+            \end{align*}
+
+            From (b), solving for $\E[Y | X = 0]$ gives:
+
+            \begin{align*}
+                \E[Y]-p\E[Y | X = 1] &= (1-p)\E[Y | X = 0] \\
+                \E[Y | X = 0] &= \frac{\E[Y] - p\E[Y | X = 1]}{1-p} \\
+                              &= \frac{\E[Y] - \E[XY]/p}{1-p}
+            \end{align*}
+
+            Solving for $\beta_1$ gives:
+
+            \begin{align*}
+            \beta_1 &= \E[Y | X = 1] - \E[Y | X = 0] \\
+                    &= \frac{\E[XY]}{p} - \frac{\E[Y] - \E[XY]/p}{1-p} \\
+                    &= \frac{(1-p)\E[XY] - p\E[Y] + \E[XY]}{p(1-p)} \\
+                    &= \frac{\E[XY] - \E[Y]\cdot p}{p(1-p)} \\
+                    &= \frac{\E[XY] - \E[X]\E[Y]}{p(1-p)} \\
+                    &= \frac{\text{Cov}(X,Y)}{\text{Var}(X)}
+            \end{align*}
+
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}{5}
+    \hfill
+    \begin{enumerate}
+        \item \hfill
+                \begin{align*}
+                    \E[X_1] &= \E[r_{B,1} - r_f] \\
+                    &= \E[r_{B,1}] - \E[r_f] \\
+                    &= 0.12 - 0.02 \\
+                    &= 0.10
+                \end{align*}
+                \begin{align*}
+                    Var(X_1) &= Var(r_{B,1} - r_f) \\
+                    &= Var(r_{B,1}) + Var(r_f) - 2Cov(r_{B,1}, r_f) \\
+                    &= Var(r_{B,1}) \\
+                    &= 0.01 = 0.1^2
+                \end{align*}
+                By the properties of the normal distribution, we have that $\frac{X_1 - 0.10}{0.1} \sim N(0, 1)$.
+        \item \hfill
+            \begin{enumerate}
+                \item Since we have shown that $\frac{X_1 - 0.10}{0.1} \sim N(0, 1)$, we can express:
+                    \begin{align*}
+                        Pr[X_1 \leq 0] &= Pr[\frac{X_1 - 0.10}{0.1} \leq \frac{0 - 0.10}{0.1}] \\
+                        &= Pr[Z \leq -1] \\
+                        &= \Phi(-1)
+                    \end{align*}
+                \item R code for calculating the probability:
+
+                    \begin{lstlisting}[style=Rstyle]
+probability <- pnorm(-1)
+print(probability)
+                \end{lstlisting}
+                    The probability is approximately 0.1587. There is about a 15.87\% chance of observing zero excess return or less in one year. The relatively low probability suggests that having a zero or negative excess return in one year is not extremely unlikely.
+                \item 
+                    If we use a significance level of $0.05$, the observed zero excess return in one year is not implausible because 
+                    \[0.1587 > 0.05\]
+            \end{enumerate}
+        \item \hfill
+                \begin{enumerate}
+                    \item The standard error of the mean for $\bar{X}_4$ is given by $\frac{\sigma}{\sqrt{n}}$, where $\sigma = 0.1$ is the standard deviation of $X_t$ and $n = 4$ is the number of years. Thus, the standard error is $\frac{0.1}{\sqrt{4}} = \frac{0.1}{2} = 0.05$. Since $\E[\bar{X}_4] = 0.10$, we can normalize $\bar{X}_4$ as follows:
+                        \begin{align*}
+                            Pr[\bar{X}_4 \leq 0] &= Pr\left[\frac{\bar{X}_4 - 0.10}{0.05} \leq \frac{0 - 0.10}{0.05}\right] \\
+                            &= Pr[Z \leq -2] \\
+                            &= \Phi(-2)
+                        \end{align*}
+                    \item Using R, the calculation is performed as follows:
+                        \begin{lstlisting}[style=Rstyle]
+        probability <- pnorm(-2)
+        print(probability)
+                        \end{lstlisting}
+                        The probability is approximately 0.0228. There is about a 2.28\% chance of observing zero or negative average excess return across four years. This low probability suggests that observing such an outcome is quite unlikely.
+                    \item 
+                    If we use a significance level of $0.05$, the observed zero excess return in one year is implausible because 
+                    \[0.0228 < 0.05\]
+                \end{enumerate}
+
+            \item \hfill
+                \begin{enumerate}
+                    \item 
+                        The probability in question can be decomposed into two tails of the distribution:
+                    \begin{align*}
+                        Pr[|\bar{X}_4 - 0.10| \geq 0.10] &= Pr[\bar{X}_4 \leq 0] + Pr[\bar{X}_4 \geq 0.20] \\
+                        &= \Phi\left(\frac{0 - 0.10}{0.05}\right) + \left(1 - \Phi\left(\frac{0.20 - 0.10}{0.05}\right)\right) \\
+                        &= \Phi(-2) + (1 - \Phi(2)).
+                    \end{align*}
+                \item Using R, we calculate this probability as follows:
+                    \begin{lstlisting}[style=Rstyle]
+    probability <- pnorm(-2) + (1 - pnorm(2))
+    print(probability)
+                    \end{lstlisting}
+                    This will yield a probability of approximately 0.0455. There is about a 4.55\% chance of observing an average excess return either 0.10 below or above the asserted expected excess return of 0.10 in one year. 
+            \end{enumerate}
+    \end{enumerate}
+\end{problem}
+\end{document}
