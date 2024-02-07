@@ -1,0 +1,537 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{\vspace{-2cm} Problem Set 2}
+\author{Math 255: Analysis I}
+\date{Due: Thursday, Feb 1st at 11:59pm EST}
+
+\maketitle
+
+\begin{problem}{1}\;
+	\begin{enumerate}
+		\item Using the Peano axioms and our subsequent definitions of addition and multiplication \underline{on $ \N $} prove:
+
+            Note that by lemma proved in class, we can induct on $\N_0$ instead of $\N$ for the following proofs.
+			\begin{enumerate}%[\alph*]
+				\item Commutativity of addition, $ \forall a,b \in \N \quad a+b=b+a $.
+
+                    \begin{proof}
+                        We will prove by induction on \( a \).
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            a + b &= 0 + b \\
+                                  &= b & \text{(by definition of addition)} \hfill \\
+                                  &= b + 0 & \text{(proven earlier through induction in class)} \hfill \\
+                                  &= b + a          
+                        \end{align*}
+                        Thus, the base case holds since \( a + b = b + a \).
+
+                        \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( a + b = b + a \). We need to show it holds for \( S(a) \).
+                        \begin{align*}
+                            S(a) + b &= S(a + b) \quad \text{(by definition of addition)} \hfill \\
+                                     &= S(b + a) \quad \text{(by the inductive hypothesis)} \hfill \\
+                                     &= b + S(a) \quad \text{(proven earlier through induction in class)} \hfill
+                        \end{align*}
+                        Therefore, the inductive case also holds, completing the proof.
+                    \end{proof}
+
+
+                \item Associativity of addition. $ \forall a,b,c \in \N \quad (a+b)+c=a+(b+c) $.
+                    \begin{proof}
+                        We will prove this by induction on $a$.
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            (a + b) + c &= (0 + b) + c &  \\
+                                        &= b + c & \text{(by definition of addition)} \hfill \\
+                                        &= 0 + (b + c) & \text{(by definition of addition)} \hfill \\
+                                        &= a + (b + c) & \text{(since \( a = 0 \))} \hfill
+                        \end{align*}
+                        Thus, the base case holds.
+
+                        \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( (a + b) + c = a + (b + c) \). We need to show it holds for \( S(a) \).
+                        Consider \( (S(a) + b) + c \).
+                        \begin{align*}
+                            (S(a) + b) + c &= S(a+b) + c & \text{(by the definition of addition)} \hfill \\
+                                           &= S((a+b) + c) & \text{(by the definition of addition)} \hfill \\
+                                           &= S(a + (b + c)) & \text{(by the inductive hypothesis)} \hfill \\
+                                           &= S(a) + (b + c) & \text{(by the definition of addition)} \hfill
+                        \end{align*}
+                        Therefore, the inductive step holds, completing the proof.
+                    \end{proof}
+
+				\item Commutativity of multiplication. $ \forall a,b \in \N \quad a \times b = b \times a $.
+
+                    \begin{proof}
+                        We will prove this by induction on \( a \).
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            a \times b &= 0 \times b \\
+                                       &= 0 & \text{(by definition of multiplication)} \hfill \\
+                            b \times a &= b \times 0 \\
+                                       &= 0 & \text{(we will prove this below)} \hfill
+                        \end{align*}
+
+                        We will prove \( b \times 0 = 0 \) by induction on \( b \).
+
+                        \textbf{Base Case':} Consider \( b = 0 \).
+                        \begin{align*}
+                            b \times 0 &= 0 \times 0 \\
+                                       &= 0 & \text{(by definition of multiplication)} \hfill
+                        \end{align*}
+
+                        \textbf{Inductive Step':} Assume the statement is true for some natural number \( b \), i.e., \( b \times 0 = 0 \). We need to show it holds for \( S(b) \).
+                        \begin{align*}
+                            S(b) \times 0 &= b \times 0 + 0 \\
+                                          &= 0 + 0 & \text{(by the inductive hypothesis)} \hfill \\
+                                          &= 0 & \text{(by definition of addition)} \hfill
+                        \end{align*}
+
+                        Therefore, the base case holds.
+
+                        \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( a \times b = b \times a \). We need to show it holds for \( S(a) \).
+                        Consider \( S(a) \times b \).
+                        \begin{align*}
+                            S(a) \times b &= (a \times b) + b & \text{(by definition of multiplication)} \hfill \\
+                                          &= (b \times a) + b & \text{(by the inductive hypothesis)} \hfill \\
+                                          &= b \times S(a) & \text{(we will prove this below)} \hfill
+                        \end{align*}
+
+                        We will prove $(b \times a) + b = b \times S(a)$ by induction on $b$.
+
+                        \textbf{Base Case'':} Consider \( b = 0 \).
+                        \begin{align*}
+                            (b \times a) + b &= (0 \times a) + 0 \\
+                                             &= 0 + 0 & \text{(by definition of multiplication)} \hfill \\
+                                             &= 0 & \text{(by definition of addition)} \hfill \\
+                                             &= 0 \times S(a) & \text{(by definition of multiplication)} \hfill \\
+                                             &= b \times S(a) 
+                        \end{align*}
+
+                        \textbf{Inductive Step'':} Assume the statement is true for some natural number \( b \), i.e., \( (b \times a) + b = b \times S(a) \). We need to show it holds for \( S(b) \).
+                        \begin{align*}
+                            (S(b) \times a) + S(b) &= ((b \times a) + a) + S(b) & \text{(by definition of multiplication)} \hfill \\
+                                                   &= S(b) + ((b \times a) + a) & \text{(by commutativity of addition)} \hfill \\
+                                                   &= S(b + ((b \times a) + a)) & \text{(by definition of addition)} \hfill \\
+                                                   &= S((b + (b \times a)) + a) & \text{(by associativity of addition)} \hfill \\
+                                                   &= S(b + (b \times a)) + S(a) & \text{(by definition of addition)} \hfill \\
+                                                   &= S((b \times a) + b) + S(a) & \text{(by commutativity of addition)} \hfill \\
+                                                   &= S(b \times S(a)) + S(a) & \text{(by the inductive hypothesis)} \hfill \\
+                                                   &= S(b) \times S(a) & \text{(by definition of multiplication)} \hfill
+                        \end{align*}
+
+                        Therefore, the inductive step holds, completing the proof.
+                        
+                    \end{proof}
+
+				\item Associativity of multiplication. $\forall a, b, c \in \N$, $(a \times b) \times c = a \times (b \times c)$.
+
+                    Before we prove associativity of multiplication, we will first prove distributivity holds in $\N$, i.e. that  $\forall a, b, c \in \N$, $(a + b) \times c = (a \times c) + (b \times c)$.
+                    \begin{proof}
+                        We will prove this by induction on \( a \).
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            (a + b) \times c &= (0 + b) \times c \\
+                                             &= b \times c & \text{(by definition of addition)} \hfill \\
+                                             &= 0 + (b \times c) & \text{(by definition of addition)} \hfill \\
+                                             &= (0 \times c) + (b \times c) & \text{(by definition of multiplication)} \hfill
+                        \end{align*}
+
+                        \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( (a + b) \times c = (a \times c) + (b \times c) \). We need to show it holds for \( S(a) \).
+                        \begin{align*}
+                            (S(a) + b) \times c &= S(a + b) \times c & \text{(by definition of addition)} \hfill \\
+                                               &= ((a + b) \times c) + c & \text{(by definition of multiplication)} \hfill \\
+                                               &= ((a \times c) + (b \times c)) + c & \text{(by the inductive hypothesis)} \hfill \\
+                                               &= ((a \times c) + c) + (b \times c) & \text{(by asso. and comm. of addition)} \hfill \\
+                                               &= (S(a) \times c) + (b \times c) & \text{(by definition of multiplication)} \hfill
+                        \end{align*}
+
+                        Therefore, the inductive step holds, completing the proof.
+                    \end{proof}
+
+                    No we return to the proof of associativity of multiplication.
+
+                    \begin{proof}
+                        We will prove this by induction on \( a \).
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            (a \times b) \times c &= (0 \times b) \times c \\
+                                                  &= 0 \times c & \text{(by definition of multiplication)} \hfill \\
+                                                  &= 0 & \text{(by definition of multiplication)} \hfill \\
+                                                  &= 0 \times (b \times c) & \text{(by definition of multiplication)} \hfill \\
+                                                  &= a \times (b \times c) & \text{(since \( a = 0 \))} \hfill
+                      \end{align*}
+
+                      \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( (a \times b) \times c = a \times (b \times c) \). We need to show it holds for \( S(a) \).
+                      \begin{align*}
+                          (S(a) \times b) \times c &= ((a \times b) + b) \times c & \text{(by definition of multiplication)} \hfill \\
+                                                   &= ((a \times b) \times c) + (b \times c) & \text{(by distributivity in $\N$)} \hfill \\
+                                                   &= (a \times (b \times c)) + (b \times c) & \text{(by the inductive hypothesis)} \hfill \\
+                                                   &= S(a) \times (b \times c) & \text{(by definition of multiplication)} \hfill
+                      \end{align*}
+                    \end{proof}
+
+                    Note that we have assumed $\forall a,b \in \N$, $a \times b \in \N$ in our application of distributivity. We will prove that addition and multiplication are well defined in $\N$, i.e. $\forall a,b \in \N$, $a+b \in N$ and $a \times b \in \N$.
+
+                    \begin{proof}
+                        We will prove that addition and multiplication are well defined in $\N$ by induction on $a$. First, addition.
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            a + b &= 0 + b \\
+                                  &= b & \text{(by definition of addition)} \hfill \\
+                                  &\in \N & \text{(since $b \in \N$)} \hfill
+                        \end{align*}
+
+                        \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( a + b \in \N \). We need to show it holds for \( S(a) \).
+                        \begin{align*}
+                            S(a) + b &= S(a + b) & \text{(by definition of addition)} \hfill \\
+                                     &\in \N & \text{($a + b \in \N$ by inductive step and Peano Axiom (II))} \hfill
+                        \end{align*}
+
+                        Therefore, addition is well defined in $\N$.
+
+                        Now, multiplication.
+
+                        \textbf{Base Case:} Consider \( a = 0 \).
+                        \begin{align*}
+                            a \times b &= 0 \times b \\
+                                      &= 0 & \text{(by definition of multiplication)} \hfill \\
+                                      &\in \N & \text{(since $0 \in \N$, in this case $\N_0$, but can treat the same because of lemma in class)} \hfill
+                        \end{align*}
+
+                        \textbf{Inductive Step:} Assume the statement is true for some natural number \( a \), i.e., \( a \times b \in \N \). We need to show it holds for \( S(a) \).
+                        \begin{align*}
+                            S(a) \times b &= (a \times b) + b & \text{(by definition of multiplication)} \hfill \\
+                                          &\in \N & \text{($a \times b \in \N$ by inductive step and addition well-defined)} \hfill
+                        \end{align*}
+
+                        Therefore, multiplication is well defined in $\N$.
+                    \end{proof}
+
+
+
+			\end{enumerate}
+		\item Using our formal construction of $ \Z $ from $ \N $ and the subsequent definition of addition on $ \Z $ - prove the commutativity of addition in $ \Z $.
+            \begin{proof}
+                We will prove that $\forall [n - m], [k - l] \in \Z$, $[n - m] + [k - l] = [k - l] + [n - m]$.
+                \begin{align*}
+                    [n - m] + [k - l] &= [(n + k) - (m + l)] & \text{(by definition of addition on $\Z$)} \hfill \\
+                                      &= [(k + n) - (l + m)] & \text{(by commutativity of addition in $\N$)} \hfill \\
+                                      &= [k - l] + [n - m] & \text{(by definition of addition on $\Z$)} \hfill
+                \end{align*}
+                Therefore, the commutativity of addition in $\Z$ holds.
+            \end{proof}
+
+		\item Using our formal construction of $ \Q $ from $ \Z $ and the subsequent definition of addition on $ \Z $ - prove the commutativity of addition in $ \Q $.\footnote{Try to convince yourselves that one can indeed prove all the properties of a field on $ \Q $ using our constructions.}
+            \begin{proof}
+                Before proving the commutativity of addition in $\Q$, we will prove the commutativity of multiplication in $\Z$.
+                We will prove that $\forall [n - m], [k - l] \in \Z$, $[n - m] \times [k - l] = [k - l] \times [n - m]$.
+                \begin{align*}
+                    [n - m] \times [k - l] &= [(n \times k + m \times l) - (m \times k + n \times l)] & \text{(by definition of multiplication on $\Z$)} \hfill \\
+                                           &= [(k \times n + l \times m) - (k \times m + l \times n)] & \text{(by commutativity of multiplication in $\N$)} \hfill \\
+                                           &= [(k \times n + l \times m) - (l \times n + k \times m)] & \text{(by commutativity of addition in $\N$)} \hfill \\
+                                           &= [k - l] \times [n - m] & \text{(by definition of multiplication on $\Z$)} \hfill
+                \end{align*}
+            \end{proof}
+
+            \begin{proof}
+                We will prove that $\forall [p // q], [r // s] \in \Q$, $[p // q] + [r // s] = [r // s] + [p // q]$.
+                \begin{align*}
+                    [p // q] + [r // s] &= [(p \times s + q \times r) // q \times s] & \text{(by definition of addition on $\Q$)} \hfill \\
+                                        &= [(r \times q + s \times p) // q \times s] & \text{(by commutativity of addition in $\Z$)} \hfill \\
+                                        &= [(r \times q + s \times p) // s \times q] & \text{(by commutativity of multiplication in $\Z$)} \hfill \\
+                                        &= [r // s] + [p // q] & \text{(by definition of addition on $\Q$)} \hfill
+                \end{align*}
+                Therefore, the commutativity of addition in $\Q$ holds.
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+\begin{problem}{2}
+	Using induction on $ \N_0=\N \cup \{0\} $ and the definition of addition prove the following:
+	\begin{enumerate}
+		\item Cancellation law: $ \forall n,m,k \in \N_0 $ if $ n+k=n+m $ then $ k=m $.
+            \begin{proof}
+                We will prove this by induction on \( n \).
+
+                \textbf{Base Case:} Consider \( n = 0 \).
+                \begin{align*}
+                    n +k = n + m &\implies 0 + k = 0 + m &  \hfill \\
+                                 &\implies k = m & \text{(by definition of addition)} \hfill
+                \end{align*}
+
+                Thus, the base case holds.
+
+                \textbf{Inductive Step:} Assume the statement is true for some natural number \( n \), i.e., \( n + k = n + m \) implies \( k = m \). We need to show it holds for \( S(n) \).
+                \begin{align*}
+                    S(n) + k = S(n) + m &\implies S(n + k) = S(n + m) & \text{(by definition of addition)} \hfill \\
+                                        &\implies S(k) = S(m) & \text{(by the inductive hypothesis)} \hfill \\
+                                        &\implies k = m & \text{(by Peano Axiom (IV), i.e., $S$ is surjective)} \hfill
+                \end{align*}
+
+                Therefore, the inductive step holds, completing the proof.
+            \end{proof}
+
+
+            \item If $ k_1, k_2 \in \N_0 $ satisfy $ k_1+k_2=0 $ then $ k_1=k_2=0 $.
+                \begin{proof}
+                    We will prove the contrapositive statement: If \( k_1 \neq 0 \) or \( k_2 \neq 0 \), then \( k_1 + k_2 \neq 0 \).
+
+                    Suppose, for the sake of contradiction, that \( k_1 \neq 0 \) or \( k_2 \neq 0 \) and \( k_1 + k_2 = 0 \). Without loss of generality, assume \( k_1 \neq 0 \). This means \( k_1 \) is a successor of some number in \( \N_0 \), say \( k_1 = S(p) \) for some \( p \in \N_0 \).
+
+                    By the definition of addition:
+                    \[ k_1 + k_2 = S(p) + k_2 = S(p + k_2) \]
+                    Since \( S(p) \) is the successor of \( p \), \( S(p + k_2) \) cannot be 0 by the properties of natural numbers (specifically, no natural number's successor is 0).
+
+                    Hence, \( k_1 + k_2 = S(p + k_2) \neq 0 \), which contradicts our assumption. Therefore, if \( k_1 + k_2 = 0 \), it must be the case that \( k_1 = k_2 = 0 \).
+                \end{proof}
+
+
+	\end{enumerate}
+\end{problem}
+
+\newpage
+\begin{problem}{3}
+	Recall that for all $ n,m \in \N_0 $ we defined $ n < m $ if and only if $ m=n+k $ for some $ k \in \N $.
+	Prove that $ \N_0 $ with this relation is an ordered set, i.e.~prove:
+	\begin{enumerate}
+		\item Trichotomy: $ \forall n,m \in \N_0 $ \textbf{exactly one} of the following holds
+		\[ n<m \quad \text{or}\quad n=m \quad \text{or}\quad m<n. \]
+
+        \begin{proof}
+            We consider the following cases:
+            \begin{itemize}
+                \item If \( n = m \), then neither \( n < m \) nor \( m < n \) can be true by the definition of \( < \) in \( \mathbb{N}_0 \).
+                \item If \( n < m \), i.e., \( m = n + k \) for some \( k \in \mathbb{N} \), then \( n \neq m \) and \( m \neq n + k' \) for any \( k' \in \mathbb{N} \), hence \( m < n \) cannot be true.
+                \item Similarly, if \( m < n \), then neither \( n < m \) nor \( n = m \) can be true.
+            \end{itemize}
+
+            Thus, exactly one of \( n < m \), \( n = m \), or \( m < n \) holds for any \( n, m \in \mathbb{N}_0 \).
+        \end{proof}
+
+		\item Transitivity: $ \forall n,m,k \in N_0 $ if $ n \leq m $ and $ m \leq k $ then $ n \leq k $.
+
+            \begin{proof}
+                We consider the following cases:
+                \begin{itemize}
+                    \item If \( n = m \) and \( m = k \), then clearly \( n = k \).
+                    \item If \( n = m \) and \( m < k \), i.e., \( k = m + r \) for some \( r \in \mathbb{N} \), then \( k = n + r \), implying \( n < k \).
+                    \item If \( n < m \) and \( m = k \), i.e., \( m = n + q \) for some \( q \in \mathbb{N} \), then \( k = n + q \), implying \( n < k \).
+                    \item If \( n < m \) and \( m < k \), i.e., \( m = n + q \) and \( k = m + r \) for some \( q, r \in \mathbb{N} \), then \( k = n + q + r \). Since \( q + r \in \mathbb{N} \), we have \( n < k \).
+                \end{itemize}
+
+                In all cases, \( n \leq k \).
+            \end{proof}
+
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+\begin{problem}{4}\;
+	\begin{enumerate}
+		\item Prove that $ \Q(\sqrt{2}):=\{ a+b\sqrt{2} : a,b \in \Q \} $, together with the usual addition and multiplication operations, is a field.
+            \begin{proof}
+                For any two elements \( a + b\sqrt{2}, c + d\sqrt{2} \in \Q(\sqrt{2}) \), we define addition and multiplication as follows:
+                \begin{align*}
+                    (a + b\sqrt{2}) + (c + d\sqrt{2}) &= (a + c) + (b + d)\sqrt{2} \\
+                    (a + b\sqrt{2}) \times (c + d\sqrt{2}) &= (ac + 2(bd)) + (ad + bc)\sqrt{2} 
+                \end{align*}
+                Note: We will use the shorthand for multiplication in $\Q$, i.e., \( a \times b = ab \).
+                
+                We will prove that $ \Q(\sqrt{2}) $ is a field by showing that it satisfies all the properties of a field.
+
+                \textbf{Commutativity of addition:} \( \forall a + b\sqrt{2}, c + d\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    (a + b\sqrt{2}) + (c + d\sqrt{2}) &= (a + c) + (b + d)\sqrt{2} & \text{(by definition of addition)} \hfill \\
+                                                      &= (c + a) + (d + b)\sqrt{2} & \text{(by commutativity of addition in $\Q$)} \hfill \\
+                                                      &= (c + d\sqrt{2}) + (a + b\sqrt{2}) & \text{(by definition of addition)} \hfill
+                \end{align*}
+
+                \textbf{Associativity of addition:} \( \forall a + b\sqrt{2}, c + d\sqrt{2}, e + f\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    & ((a + b\sqrt{2}) + (c + d\sqrt{2})) + (e + f\sqrt{2}) \\
+                    &= ((a + c) + (b + d)\sqrt{2}) + (e + f\sqrt{2}) & \text{(by def. of add.)} \hfill \\
+                                                                         &= ((a + c) + e) + ((b + d) + f)\sqrt{2} & \text{(by def. of add.)} \hfill \\
+                                                                         &= (a + (c + e)) + (b + (d + f)) \sqrt{2} & \text {(by asso. of addition in $\Q$)} \\
+                                                                         &= (a + b\sqrt{2}) + ((c + e) + (d + f)\sqrt{2}) & \text{(by def. of add.)} \hfill \\
+                                                                         &= (a + b\sqrt{2}) + ((c + d\sqrt{2}) + (e + f\sqrt{2})) & \text{(by def. of add.)} \hfill
+                \end{align*}
+
+                \textbf{Existence of neutral element for addition:} \( \exists 0 + 0\sqrt{2} \in \F \colon \forall a + b\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    (a + b\sqrt{2}) + (0 + 0\sqrt{2}) &= (a + 0) + (b + 0)\sqrt{2} & \text{(by definition of addition)} \hfill \\
+                                                      &= a + b\sqrt{2} & \text{(by $\Q$ is field, add. neutral element)} \hfill
+                \end{align*}
+
+                \textbf{Existence of additive inverse:} \( \forall a + b\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    (a + b\sqrt{2}) + ((-a) + (-b)\sqrt{2}) &= (a + (-a)) + (b + (-b))\sqrt{2} & \text{(by definition of addition)} \hfill \\
+                                                      &= 0 + 0\sqrt{2} & \text{(by $\Q$ is field, additive inverse)} \hfill \\
+                                                      &= 0 & \text{(by definition of addition in $\Q$)} \hfill
+                \end{align*}
+
+                \textbf{Commutativity of multiplication:} \( \forall a + b\sqrt{2}, c + d\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    (a + b\sqrt{2}) \times (c + d\sqrt{2}) &= (ac + 2(bd)) + (ad + bc)\sqrt{2} & \text{(by definition of multiplication)} \hfill \\
+                                                          &= (ca + 2(db)) + (da + cb)\sqrt{2} & \text{(by commutativity of multiplication in $\Q$)} \hfill \\
+                                                          &= (ca + 2(db)) + (cb + da)\sqrt{2} & \text{(by commutativity of addition in $\Q$)} \hfill \\
+                                                          &= (c + d\sqrt{2}) \times (a + b\sqrt{2}) & \text{(by definition of multiplication)} \hfill
+                \end{align*}
+
+                \textbf{Associativity of multiplication:} \( \forall a + b\sqrt{2}, c + d\sqrt{2}, e + f\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    & ((a + b\sqrt{2}) \times (c + d\sqrt{2})) \times (e + f\sqrt{2}) \\
+                    &= ((ac + 2(bd)) + (ad + bc)\sqrt{2}) \times (e + f\sqrt{2}) & \text{(by def. of multi.)} \hfill \\
+                    &= ((ac + 2bd)e + 2(ad + bc)f) + ((ac + 2(bd))f + (ad + bc)e)\sqrt{2} & \text{(by def. of multi.)} \hfill \\
+                    & = (ace + 2bde + 2adf + 2bcf) + (acf + 2bdf + ade + bce)\sqrt{2} & \text{(by distr. in $\Q$, field)} \hfill \\
+                    & = (ace + 2adf + 2bde + 2bcf) + (acf + ade + bce + 2bdf)\sqrt{2} & \text {(by comm. of add. in $\Q$)} \hfill \\
+                    &= (a(ce + 2(df)) + 2b(cf + de)) + (a(cf + de) + b(ce + 2(df)))\sqrt{2} & \text{(by distr. in $\Q$, field)} \hfill \\
+                    &= (a + b\sqrt{2}) \times ((ce + 2(df)) + (cf + de\sqrt{2})) & \text{(by def. of multi.)} \hfill \\
+                    &= (a + b\sqrt{2}) \times ((c + d\sqrt{2}) \times (e + f\sqrt{2})) & \text{(by def. of multi.)} \hfill
+                \end{align*}
+
+                \textbf{Existence of neutral element for multiplication:} \( \exists 1 + 0\sqrt{2} \in \F \colon \forall a + b\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    (a + b\sqrt{2}) \times (1 + 0\sqrt{2}) &= (a \times 1 + 2b \times 0) + (a \times 0 + b \times 1)\sqrt{2} & \text{(by definition of multiplication)} \hfill \\
+                                                          &= a + b\sqrt{2} & \text{(by definition of multiplication in $\Q$)} \hfill
+                \end{align*}
+
+                \textbf{Existence of multiplicative inverse:} \( \forall a + b\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    &(a + b\sqrt{2}) \times \left(\frac{a}{a^2 - 2b^2} + \left(- \frac{b}{a^2 - 2b^2}\right)\sqrt{2}\right) & \\
+                    &= \left(a \frac{a}{a^2 - 2b^2} + 2\left(b \left(-\frac{b}{a^2 - 2b^2}\right)\right)\right) + \left(a \left(-\frac{b}{a^2 - 2b^2}\right) + b \frac{a}{a^2 - 2b^2}\right)\sqrt{2} \\
+                    & \text{(by definition of multiplication)} & \\
+                    &= \left(\frac{a^2}{a^2 - 2b^2} + \frac{-2b^2}{a^2 - 2b^2}\right) + \left(\frac{-ab}{a^2 - 2b^2} + \frac{ab}{a^2 - 2b^2}\right)\sqrt{2} & \\ 
+                    & \text{(by definition of multiplication in $\Q$)} & \\
+                    &= \frac{a^2 - 2b^2}{a^2 - 2b^2} + 0\sqrt{2} \\
+                    & \text{(by definition of addition in $\Q$)} & \\
+                    &= 1 \\
+                    & \text{(by definition of multiplication in $\Q$)} &
+                \end{align*}
+
+
+                \textbf{Distributivity of multiplication over addition:} \( \forall a + b\sqrt{2}, c + d\sqrt{2}, e + f\sqrt{2} \in \Q(\sqrt{2}) \), we have
+                \begin{align*}
+                    & (a + b\sqrt{2}) \times ((c + d\sqrt{2}) + (e + f\sqrt{2})) \\
+                    &= (a + b\sqrt{2}) \times ((c + e) + (d + f)\sqrt{2}) & \text{(by definition of addition)} \hfill \\
+                                                                             &= (a(c + e) + 2b(d + f)) + (a(d + f) + b(c + e))\sqrt{2} & \text{(by definition of multiplication)} \hfill \\
+                                                                             &= (ac + ae + 2bd + 2bf) + (ad + af + bc + be)\sqrt{2} & \text{(by distributivity in $\Q$)} \hfill \\
+                                                                             &= (ac + ae + 2bd + 2bf) + (ad +bc)\sqrt{2} + (bc + be)\sqrt{2} & \text{(by distributivity in $\Q$)} \hfill \\
+                                                                             &= (ac + 2bd) + (ad + bc)\sqrt{2} + (ae + 2bf) + (af + be)\sqrt{2} & \text{(by asso., comm., in $\Q$)}\hfill \\
+                                                                             &= (a + b\sqrt{2}) \times (c + d\sqrt{2}) + (a + b\sqrt{2}) \times (e + f\sqrt{2}) & \text{(by definition of multiplication)} \hfill
+                \end{align*}
+
+                Therefore, \( \Q(\sqrt{2}) \) is a field.
+
+
+                
+            \end{proof}
+		\item Verify that in $ \F_5=\{0,1,2,3,4\} $ together with multiplication mod 5, every non-zero element has a multiplicative inverse.\footnote{This is indeed a field.}
+                \begin{proof}
+                    Here is the multiplication mod 5 table for \( \F_5 \):
+
+                    \begin{center}
+                        \begin{tabular}{c|c|c|c|c|c}
+                            $ \cdot $ & 0 & 1 & 2 & 3 & 4 \\
+                            \hline
+                            0 & 0 & 0 & 0 & 0 & 0 \\
+                            \hline
+                            1 & 0 & 1 & 2 & 3 & 4 \\
+                            \hline
+                            2 & 0 & 2 & 4 & 1 & 3 \\
+                            \hline
+                            3 & 0 & 3 & 1 & 4 & 2 \\
+                            \hline
+                            4 & 0 & 4 & 3 & 2 & 1
+                        \end{tabular}
+                    \end{center}
+
+                    We can see that every non-zero element has a multiplicative inverse, i.e., \( 1 \cdot 1 = 1 \), \( 2 \cdot 3 = 1 \), \( 3 \cdot 2 = 1 \), and \( 4 \cdot 4 = 1 \).
+                \end{proof}
+
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+\begin{problem}{5}\;
+	\begin{enumerate}
+		\item Let $ \F $ be any field and let $ x,y \in \F $. Prove that if $ x \cdot y=0 $ then $ x=0 $ or $ y=0 $.
+            \begin{proof}
+                Suppose, towards a contradiction, that both \( x \neq 0 \) and \( y \neq 0 \). In a field \( \mathbb{F} \), every non-zero element has a multiplicative inverse. Thus, there exist elements \( x^{-1} \) and \( y^{-1} \) in \( \mathbb{F} \) such that \( x \cdot x^{-1} = 1 \) and \( y \cdot y^{-1} = 1 \).
+
+                Multiply both sides of the equation \( x \cdot y = 0 \) by \( x^{-1} \) on the left and \( y^{-1} \) on the right:
+                \[ x^{-1} \cdot (x \cdot y) \cdot y^{-1} = x^{-1} \cdot 0 \cdot y^{-1}. \]
+
+                Using the associativity of multiplication in fields, we have:
+                \[ (x^{-1} \cdot x) \cdot y \cdot y^{-1} = 0. \]
+
+                Substituting the identity elements, we get:
+                \[ 1 \cdot y \cdot y^{-1} = 0. \]
+                \[ 1 \cdot 1 = 0. \]
+                \[ 1 = 0. \]
+
+                This is a contradiction because in a field, the identity elements for addition and multiplication are distinct. Therefore, either \( x = 0 \) or \( y = 0 \).
+            \end{proof}
+
+ 		\item Let $ \F_m=\{0,1,2,...,m-1 \} $ together with addition and multiplication mod $ m $. Prove that if $ m $ is not prime then $ \F_m $ is not a field.
+            \begin{proof}
+                Suppose, towards a contradiction, that \( \F_m \) is a field and $m$ not prime. Then there exist $x, y \in \F_m$ such that $x \neq 0$, $y \neq 0$, and $a \cdot b = m \mod m = 0$.
+                By Problem 5.1, this implies that $ x=0 $ or $y=0$, which is a contradiction. Therefore, $ \F_m $ is not a field.
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+
+\begin{problem}{6}
+    Let $ S $ be an ordered set and let $ A $ and $ B $ be two subsets of $ S $. Prove the following:
+    \begin{enumerate}
+        \item If $ A $ has a maximum then it also has a supremum and $ \sup A = \max A $.
+            \begin{proof}
+                Let $\max A = m$ be the maximum element of $A$. By definition, for all $a \in A$, $a \leq m$. To show $m$ is the supremum of $A$, we must prove that $m$ is an upper bound of $A$ and that any other upper bound of $A$ is greater than or equal to $m$.
+
+                Since $m$ is the maximum, it is an upper bound of $A$ (no element in $A$ is greater than $m$). Now suppose there is another upper bound $u$ of $A$. Since $m \in A$ and $u$ is an upper bound, it must be that $m \leq u$.
+
+                Therefore, $m$ is the least upper bound or supremum of $A$, and hence $\sup A = \max A$.
+            \end{proof}
+        \item Assume there exists a supremum for $A$ in $S$ and a supremum for $B$ in $S$. If for all $a \in A$ there exists $b \in B$ satisfying $a \leq b$ then $\sup A \leq \sup B$.
+            \begin{proof}
+                Let $\sup A = s_A$ and $\sup B = s_B$. By assumption, for each $a \in A$, there exists a $b \in B$ such that $a \leq b$. Since $s_B$ is an upper bound of $B$, it must be that $b \leq s_B$ for all $b \in B$. Combining these inequalities, we have $a \leq b \leq s_B$ for all $a \in A$. (By transitivity of order, shown in problem 3, part 2.)
+
+                This means $s_B$ is an upper bound of $A$. Since $s_A$ is the least upper bound of $A$, it follows that $s_A \leq s_B$.
+            \end{proof}
+        \item Assume as in (2) that $\sup A, \sup B$ exist and assume further that for all $a \in A$ there exists $b \in B$ satisfying $a < b$. Does this necessarily mean that $\sup A < \sup B$?
+            \begin{proof}
+                No, consider the following counterexample. Let $A = \{ \frac{n}{n+1} : n \in \N \}$ and $B = \{ \frac{n}{n+1} : n \in \N \} \cup \{ 1 \}$. Then for all $a \in A$, there exists $b \in B$ such that $a < b$, i.e. $1 \in B$. However, $\sup A = \sup B = 1$.
+            \end{proof}
+    \end{enumerate}
+\end{problem}
+
+
+\end{document}

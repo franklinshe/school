@@ -1,0 +1,218 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{\vspace{-2cm} Problem Set 1}
+\author{Math 255: Analysis I, Franklin She}
+\date{Due: Thursday, Jan 25th at 11:59pm EST}
+
+\maketitle
+ 
+\begin{problem}{1}
+	Let $ A,B,C $ be any sets. Show the following:
+	\begin{enumerate}
+		\item $ A \cap (B \cup C) = (A \cap B) \cup (A \cap C) $ and  $ A \cup (B \cap C) = (A \cup B) \cap (A \cup C) $ (Distributivity)
+            \begin{proof}
+                For the first statement, first we show that $A \cap (B \cup C) \subset (A \cap B) \cup (A \cap C)$. Let $x \in A \cap (B \cup C)$. Then $x \in A$ and $x \in B \cup C$. If $x \in B$, then $x \in A \cap B$, so $x \in (A \cap B) \cup (A \cap C)$. If $x \in C$, then $x \in A \cap C$, so $x \in (A \cap B) \cup (A \cap C)$. Thus, $A \cap (B \cup C) \subset (A \cap B) \cup (A \cap C)$.
+
+                Next we show that $A \cap (B \cup C) \supset (A \cap B) \cup (A \cap C)$. Let $x \in (A \cap B) \cup (A \cap C)$. Then $x \in A \cap B$ or $x \in A \cap C$. If $x \in A \cap B$, then $x \in A$ and $x \in B$, so $x \in A \cap (B \cup C)$. If $x \in A \cap C$, then $x \in A$ and $x \in C$, so $x \in A \cap (B \cup C)$. Thus, $A \cap (B \cup C) \supset (A \cap B) \cup (A \cap C)$. Therefore, $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$.
+
+                For the second statement, first we show that $A \cup (B \cap C) \subset (A \cup B) \cap (A \cup C)$. Let $x \in A \cup (B \cap C)$. Then $x \in A$ or $x \in B \cap C$. If $x \in A$, then $x \in A \cup B$ and $x \in A \cup C$, so $x \in (A \cup B) \cap (A \cup C)$. If $x \in B \cap C$, then $x \in B$ and $x \in C$, so $x \in A \cup B$ and $x \in A \cup C$, so $x \in (A \cup B) \cap (A \cup C)$. Thus, $A \cup (B \cap C) \subset (A \cup B) \cap (A \cup C)$.
+
+                Next we show that $A \cup (B \cap C) \supset (A \cup B) \cap (A \cup C)$. Let $x \in (A \cup B) \cap (A \cup C)$. Then $x \in A \cup B$ and $x \in A \cup C$. If $x \in A$, then $x \in A \cup (B \cap C)$. If $x \in B$, then $x \in B \cap C$, so $x \in A \cup (B \cap C)$. If $x \in C$, then $x \in B \cap C$, so $x \in A \cup (B \cap C)$. Thus, $A \cup (B \cap C) \supset (A \cup B) \cap (A \cup C)$. Therefore, $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+            \end{proof}
+		\item If $ A \subset X $ then $ A \cup (X \smallsetminus A) = X $ and $ A \cap (X \smallsetminus A) = \emptyset $
+
+            \begin{proof}
+                For the first statement, first we show that $A \cup (X \smallsetminus A) \subset X$. Let $x \in A \cup (X \smallsetminus A)$. Then $x \in A$ or $x \in X \smallsetminus A$. If $x \in A$, then $x \in X$. If $x \in X \smallsetminus A$, then $x \in X$. Thus, $A \cup (X \smallsetminus A) \subset X$.
+
+                Next we show that $A \cup (X \smallsetminus A) \supset X$. Let $x \in X$. Then $x \in A$ or $x \in X \smallsetminus A$ by our assumption $A \subset X$. If $x \in A$, then $x \in A \cup (X \smallsetminus A)$. If $x \in X \smallsetminus A$, then $x \in A \cup (X \smallsetminus A)$. Thus, $A \cup (X \smallsetminus A) \supset X$. Therefore, $A \cup (X \smallsetminus A) = X$.
+
+                For the second statement, we will show that no element can exist in this set. Let $x \in A \cap (X \smallsetminus A)$. Then $x \in A$ and $x \in X \smallsetminus A$. If $x \in A$, then $x \notin X \smallsetminus A$, so $x \notin A \cap (X \smallsetminus A)$. Thus, we have shown that no element can exist in $A \cap (X \smallsetminus A)$. Therefore, this set is the empty set.
+
+            \end{proof}
+		\item $ A \smallsetminus (B \cap C) = (A \smallsetminus B) \cup (A \smallsetminus C) $
+
+            \begin{proof}
+                First we show that $A \smallsetminus (B \cap C) \subset (A \smallsetminus B) \cup (A \smallsetminus C)$. Let $x \in A \smallsetminus (B \cap C)$. Then $x \in A$ and $x \notin B \cap C$. If $x \notin B$, then $x \in A \smallsetminus B$, so $x \in (A \smallsetminus B) \cup (A \smallsetminus C)$. If $x \notin C$, then $x \in A \smallsetminus C$, so $x \in (A \smallsetminus B) \cup (A \smallsetminus C)$. Thus, $A \smallsetminus (B \cap C) \subset (A \smallsetminus B) \cup (A \smallsetminus C)$.
+
+                Next we show that $A \smallsetminus (B \cap C) \supset (A \smallsetminus B) \cup (A \smallsetminus C)$. Let $x \in (A \smallsetminus B) \cup (A \smallsetminus C)$. Then $x \in A \smallsetminus B$ or $x \in A \smallsetminus C$. If $x \in A \smallsetminus B$, then $x \in A$ and $x \notin B$, so $x \notin B \cap C$, so $x \in A \smallsetminus (B \cap C)$. If $x \in A \smallsetminus C$, then $x \in A$ and $x \notin C$, so $x \notin B \cap C$, so $x \in A \smallsetminus (B \cap C)$. Thus, $A \smallsetminus (B \cap C) \supset (A \smallsetminus B) \cup (A \smallsetminus C)$. Therefore, $A \smallsetminus (B \cap C) = (A \smallsetminus B) \cup (A \smallsetminus C)$.
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\newpage
+
+\begin{problem}{2}
+	Let $ f: A \to B $ and $ g: B \to C $ be functions.
+	\begin{enumerate}
+		\item Show that if $ g \circ f $ is injective then $ f $ is injective. Is $ g $ also necessarily injective?
+            \begin{proof}
+                Assume \( g \circ f \) is injective. This means for all \( x_1, x_2 \) in the domain of \( f \) (say, set \( A \)), if \( g(f(x_1)) = g(f(x_2)) \), then \( x_1 = x_2 \). To show \( f \) is injective, assume for contradiction that \( f \) is not injective. Then, there exist \( x_1, x_2 \in A \) such that \( x_1 \neq x_2 \) but \( f(x_1) = f(x_2) \). Apply \( g \) to both sides of \( f(x_1) = f(x_2) \). Then \( g(f(x_1)) = g(f(x_2)) \). Since \( g \circ f \) is injective by assumption, this implies \( x_1 = x_2 \), which contradicts our assumption that \( x_1 \neq x_2 \). Therefore, \( f \) must be injective.
+
+                To see why \( g \) is not necessarily injective, consider a case where \( g \) is not injective but \( g \circ f \) is. Let \( f: A \to B \) be an injective function and \( g: B \to C \) a non-injective function. In this scenario, \( g \circ f \) can still be injective if \( f \) maps elements of \( A \) to distinct elements of \( B \) such that the application of \( g \) does not create any collisions.
+            \end{proof}
+		\item Show that if $ g \circ f $ is surjective then $ g $ is surjective. Is $ f $ also necessarily surjective?
+            \begin{proof}
+                Assume \( g \circ f \) is surjective. This means for all \( y \in C \), there exists \( x \in A \) such that \( g(f(x)) = y \). To show \( g \) is surjective, we must show that for all \( y \in C \), there exists \( b \in B \) such that \( g(b) = y \). Let \( y \in C \). Since \( g \circ f \) is surjective, there exists \( x \in A \) such that \( g(f(x)) = y \). Since \( f(x) \in B \), let \( b = f(x) \). Then \( g(b) = g(f(x)) = y \). Therefore, \( g \) is surjective.
+
+                However, the surjectivity of \( f \) is not necessarily implied by the surjectivity of \( g \circ f \). For example, consider a situation where \( f: A \to B \) is not surjective, but \( g: B \to C \) is such that it maps some elements in \( B \) not in the range of \( f \) to elements in \( C \) that are also images of elements in the range of \( f \). In this case, every element in \( C \) would have a pre-image in \( A \) through \( g \circ f \), despite \( f \) not being surjective.
+            \end{proof}
+		\item If both $ f $ and $ g $ are bijective then so is $ g \circ f $.
+            \begin{proof}
+                We need to show that \( g \circ f \) is bijective, meaning it must be both injective and surjective.
+
+                Assume \( x_1, x_2 \in A \) and \( g(f(x_1)) = g(f(x_2)) \). Since \( g \) is injective, from \( g(f(x_1)) = g(f(x_2)) \) it follows that \( f(x_1) = f(x_2) \). Furthermore, since \( f \) is injective, \( f(x_1) = f(x_2) \) implies \( x_1 = x_2 \). Therefore, \( g \circ f \) is injective.
+
+                To show surjectivity, let \( y \in C \). Since \( g \) is surjective, there exists \( b \in B \) such that \( g(b) = y \). Also, as \( f \) is surjective, there exists \( x \in A \) such that \( f(x) = b \). Thus, \( g(f(x)) = g(b) = y \), implying that \( g \circ f \) is surjective.
+
+                Since \( g \circ f \) is both injective and surjective, it is bijective. This completes the proof.
+            \end{proof}
+
+	\end{enumerate}
+\end{problem}
+
+\newpage
+\begin{problem}{3}
+    Prove that a function \( f: A \to B \) is a bijection if and only if there exists a function \( h: B \to A \) satisfying
+    \[ h \circ f = \text{Id}_A \quad \text{and}\quad f \circ h = \text{Id}_B, \]
+    where \( \text{Id}_A: A \to A \) is the identity function mapping every element of \( A \) to itself, and similarly \( \text{Id}_B \) for \( B \). Such a function \( h \) is called the \emph{inverse function} to \( f \) and typically denoted as \( f^{-1} \).
+
+    \begin{proof}
+        To prove this, we must show that \( f \) is a bijection if and only if it has an inverse \( h \) as described.
+
+        (\(\Rightarrow\)) Assume \( f \) is a bijection, meaning \( f \) is both injective and surjective.
+
+        Injectivity of \( f \) implies that for any \( x_1, x_2 \in A \), \( f(x_1) = f(x_2) \) only if \( x_1 = x_2 \). This uniqueness allows us to define a function \( h: B \to A \) where for each \( y \in B \), \( h(y) \) is the unique \( x \in A \) such that \( f(x) = y \).
+
+        Surjectivity of \( f \) ensures that for each \( y \in B \), there exists an \( x \in A \) such that \( f(x) = y \). This guarantees that \( h \) is well-defined for every \( y \in B \).
+
+        The function \( h \) thus defined satisfies \( h(f(x)) = x \) for all \( x \in A \) and \( f(h(y)) = y \) for all \( y \in B \), making \( h \circ f = \text{Id}_A \) and \( f \circ h = \text{Id}_B \).
+
+        (\(\Leftarrow\)) Conversely, assume the existence of a function \( h: B \to A \) such that \( h \circ f = \text{Id}_A \) and \( f \circ h = \text{Id}_B \).
+
+        To show \( f \) is injective, consider \( x_1, x_2 \in A \) with \( f(x_1) = f(x_2) \). Applying \( h \) to both sides gives \( h(f(x_1)) = h(f(x_2)) \). By \( h \circ f = \text{Id}_A \), we get \( x_1 = x_2 \).
+
+        To demonstrate \( f \)'s surjectivity, let \( y \in B \). The element \( x = h(y) \in A \) satisfies \( f(x) = f(h(y)) = y \), by \( f \circ h = \text{Id}_B \). Thus, every \( y \in B \) is the image of some \( x \in A \) under \( f \).
+
+        Therefore, \( f \) is both injective and surjective, making it a bijection.
+
+        Hence, \( f \) is a bijection if and only if there exists an inverse \( h \) satisfying the given conditions.
+    \end{proof}
+\end{problem}
+
+
+\newpage
+
+\begin{problem}{4}
+	Let $ f: A \to B $ be a function. The \emph{image} of a subset $ E \subset A $ by $ f $, denoted $ f(E) $, is the set of images  of all elements of $ E $. That is,
+	\[ f(E) = \{ f(x) : x \in E \}. \]
+	The \emph{pre-image}, or \emph{inverse image}, of a subset $ F \subset B $ by $ f $, denoted $ f^{-1}(F) $,\footnote{Note that even though we are using the notation $ f^{-1} $, we are not assuming that the function $ f $ is a bijection and hence has an inverse. This notation refers to a set (subset of the domain) and not an element.} is the set of all elements of $ A $ mapped into $ F $. That is,
+	\[ f^{-1}(F) = \{ x \in A : f(x) \in F \}. \]
+	Prove the following
+	\begin{enumerate}
+		\item For any subsets $ U,V \subset B $
+		\[ f^{-1}(U \cap V)=f^{-1}(U)\cap f^{-1}(V) \;\;,\;\; f^{-1}(U \cup V)=f^{-1}(U)\cup f^{-1}(V) \;\; \text{and}\;\; f^{-1}(U \smallsetminus V)=f^{-1}(U)\smallsetminus f^{-1}(V). \]
+        \begin{enumerate}
+            \item
+                \begin{proof}
+                    We first show that \( f^{-1}(U \cap V) \subset f^{-1}(U) \cap f^{-1}(V) \). Let \( x \in f^{-1}(U \cap V) \). Then \( f(x) \in U \cap V \). This implies \( f(x) \in U \) and \( f(x) \in V \), so \( x \in f^{-1}(U) \) and \( x \in f^{-1}(V) \). Therefore, \( x \in f^{-1}(U) \cap f^{-1}(V) \), and so \( f^{-1}(U \cap V) \subset f^{-1}(U) \cap f^{-1}(V) \).
+                    
+                    Next we show that \( f^{-1}(U) \cap f^{-1}(V) \subset f^{-1}(U \cap V) \). Let \( x \in f^{-1}(U) \cap f^{-1}(V) \). Then \( x \in f^{-1}(U) \) and \( x \in f^{-1}(V) \). This implies \( f(x) \in U \) and \( f(x) \in V \), so \( f(x) \in U \cap V \). Therefore, \( x \in f^{-1}(U \cap V) \), and so \( f^{-1}(U) \cap f^{-1}(V) \subset f^{-1}(U \cap V) \). Thus, \( f^{-1}(U \cap V) = f^{-1}(U) \cap f^{-1}(V) \).
+                \end{proof}
+            \item
+                \begin{proof}
+                    We first show that \( f^{-1}(U \cup V) \subset f^{-1}(U) \cup f^{-1}(V) \). Let \( x \in f^{-1}(U \cup V) \). Then \( f(x) \in U \cup V \). This implies \( f(x) \in U \) or \( f(x) \in V \), so \( x \in f^{-1}(U) \) or \( x \in f^{-1}(V) \). Therefore, \( x \in f^{-1}(U) \cup f^{-1}(V) \), and so \( f^{-1}(U \cup V) \subset f^{-1}(U) \cup f^{-1}(V) \).
+
+                    Next we show that \( f^{-1}(U) \cup f^{-1}(V) \subset f^{-1}(U \cup V) \). Let \( x \in f^{-1}(U) \cup f^{-1}(V) \). Then \( x \in f^{-1}(U) \) or \( x \in f^{-1}(V) \). This implies \( f(x) \in U \) or \( f(x) \in V \), so \( f(x) \in U \cup V \). Therefore, \( x \in f^{-1}(U \cup V) \), and so \( f^{-1}(U) \cup f^{-1}(V) \subset f^{-1}(U \cup V) \). Thus, \( f^{-1}(U \cup V) = f^{-1}(U) \cup f^{-1}(V) \).
+                \end{proof}
+            \item
+                \begin{proof}
+                    We first show that \( f^{-1}(U \smallsetminus V) \subset f^{-1}(U) \smallsetminus f^{-1}(V) \). Let \( x \in f^{-1}(U \smallsetminus V) \). Then \( f(x) \in U \smallsetminus V \). This implies \( f(x) \in U \) and \( f(x) \notin V \), so \( x \in f^{-1}(U) \) and \( x \notin f^{-1}(V) \). Therefore, \( x \in f^{-1}(U) \smallsetminus f^{-1}(V) \), and so \( f^{-1}(U \smallsetminus V) \subset f^{-1}(U) \smallsetminus f^{-1}(V) \).
+                    
+                    Next we show that \( f^{-1}(U) \smallsetminus f^{-1}(V) \subset f^{-1}(U \smallsetminus V) \). Let \( x \in f^{-1}(U) \smallsetminus f^{-1}(V) \). Then \( x \in f^{-1}(U) \) and \( x \notin f^{-1}(V) \). This implies \( f(x) \in U \) and \( f(x) \notin V \), so \( f(x) \in U \smallsetminus V \). Therefore, \( x \in f^{-1}(U \smallsetminus V) \), and so \( f^{-1}(U) \smallsetminus f^{-1}(V) \subset f^{-1}(U \smallsetminus V) \). Thus, \( f^{-1}(U \smallsetminus V) = f^{-1}(U) \smallsetminus f^{-1}(V) \).
+                \end{proof}
+        \end{enumerate}
+		\item For any subsets $ U,V \subset A $
+		\[ f(U \cap V)\subset f(U)\cap f(V) \quad,\quad f(U \cup V)\subset f(U)\cup f(V) \quad \text{and}\quad f(U \smallsetminus V)\subset f(U)\smallsetminus f(V). \]
+
+		%For each inclusion give an example where equality is not satisfied.
+        \begin{enumerate}
+            \item
+                \begin{proof}
+                    We show that \( f(U \cap V) \subset f(U) \cap f(V) \). Let \( y \in f(U \cap V) \). Then there exists \( x \in U \cap V \) such that \( f(x) = y \). This implies \( x \in U \) and \( x \in V \), so \( y \in f(U) \) and \( y \in f(V) \). Therefore, \( y \in f(U) \cap f(V) \), and so \( f(U \cap V) \subset f(U) \cap f(V) \).
+                    
+                \end{proof}
+            \item
+                \begin{proof}
+                    We show that \( f(U \cup V) \subset f(U) \cup f(V) \). Let \( y \in f(U \cup V) \). Then there exists \( x \in U \cup V \) such that \( f(x) = y \). This implies \( x \in U \) or \( x \in V \), so \( y \in f(U) \) or \( y \in f(V) \). Therefore, \( y \in f(U) \cup f(V) \), and so \( f(U \cup V) \subset f(U) \cup f(V) \).
+
+                \end{proof}
+            \item
+                \begin{proof}
+                    We show that \( f(U \smallsetminus V) \subset f(U) \smallsetminus f(V) \). Let \( y \in f(U \smallsetminus V) \). Then there exists \( x \in U \smallsetminus V \) such that \( f(x) = y \). This implies \( x \in U \) and \( x \notin V \), so \( y \in f(U) \) and \( y \notin f(V) \). Therefore, \( y \in f(U) \smallsetminus f(V) \), and so \( f(U \smallsetminus V) \subset f(U) \smallsetminus f(V) \).
+
+                \end{proof}
+        \end{enumerate}
+		\item If for all $ S \subset A $ we have $ f^{-1}(f(S))=S $ then $ f $ is injective. 
+            \begin{proof}
+                Assume \( f \) is not injective. Then there exist \( x_1, x_2 \in A \) with \( x_1 \neq x_2 \) such that \( f(x_1) = f(x_2) \). Let \( S = \{x_1\} \). Then \( f(S) = \{f(x_1)\} = \{f(x_2)\} \), and so \( x_2 \in f^{-1}(f(S)) \). However, \( x_2 \notin S \) since \( S = \{x_1\} \) and \( x_1 \neq x_2 \). This contradicts the assumption that \( f^{-1}(f(S)) = S \) for all \( S \subset A \). Therefore, \( f \) must be injective.
+            \end{proof}
+		\item If for all $ T \subset B $ we have $ f(f^{-1}(T))=T $ then $ f $ is surjective.
+        \begin{proof}
+            Let \( y \in B \). Consider the set \( T = \{y\} \subset B \). By assumption, \( f(f^{-1}(T)) = T \), which implies that \( y \in f(f^{-1}(T)) \). Therefore, there exists some \( x \in f^{-1}(T) \) such that \( f(x) = y \). Since this holds for any \( y \in B \), it follows that \( f \) is surjective.
+        \end{proof}
+	\end{enumerate}
+\end{problem}
+
+\newpage
+
+\begin{problem}{5}
+	Recall that a set $ X $ has cardinality equal to the set $ Y $ if there exists a bijection $ f: X \to Y $. Prove the following properties of the equal cardinality relation:
+	\begin{enumerate}
+		\item (Reflexivity) For any set $ X $, $ X $ has the same cardinality as itself.
+            \begin{proof}
+                For any set \( X \), consider the identity function \( \text{Id}_X: X \to X \) defined by \( \text{Id}_X(x) = x \) for all \( x \in X \). This function is clearly a bijection as it is both injective and surjective. Therefore, \( X \) has the same cardinality as itself.
+            \end{proof}
+		\item (Symmetry) For any two sets $ X $ and $ Y $, if $ X $ has the same cardinality as $ Y $ then $ Y $ has the same cardinality as $ X $.
+            \begin{proof}
+                Assume \( X \) and \( Y \) are sets such that there exists a bijection \( f: X \to Y \). This means that \( f \) is both injective and surjective. We want to show that the inverse function \( f^{-1}: Y \to X \) (defined as $\forall x \in X, y \in Y$ such that $f(x) = y$, $f^{-1}(y) = x$) exists and is also a bijection.
+
+                Suppose \( y_1, y_2 \in Y \) and \( f^{-1}(y_1) = f^{-1}(y_2) \). Since \( f \) is a bijection, for \( y_1 \) and \( y_2 \), there exist unique \( x_1, x_2 \in X \) such that \( f(x_1) = y_1 \) and \( f(x_2) = y_2 \). By the definition of inverse function, \( f^{-1}(y_1) = x_1 \) and \( f^{-1}(y_2) = x_2 \). Since \( f^{-1}(y_1) = f^{-1}(y_2) \), it follows that \( x_1 = x_2 \). Applying \( f \) to both sides, we get \( f(x_1) = f(x_2) \), thus \( y_1 = y_2 \). Therefore, \( f^{-1} \) is injective.
+
+                Let \( x \in X \). Since \( f \) is surjective, there exists a \( y \in Y \) such that \( f(x) = y \). Now, \( f^{-1}(y) \) must equal \( x \) because \( f(x) = y \). Therefore, for every \( x \in X \), there is a \( y \in Y \) such that \( f^{-1}(y) = x \), proving that \( f^{-1} \) is surjective.
+
+                Since \( f^{-1} \) is both injective and surjective, it is a bijection. Therefore, if \( X \) has the same cardinality as \( Y \), then \( Y \) has the same cardinality as \( X \).
+            \end{proof}
+		\item (Transitivity) For any three sets $ X,Y,Z $, if $ X $ has the same cardinality as $ Y $ and $ Y $ has the same cardinality as $ Z $ then $ X $ has the same cardinality as $ Z $.
+            \begin{proof}
+        Let \( X, Y, \) and \( Z \) be sets. Assume there are bijections \( f: X \to Y \) and \( g: Y \to Z \). The composition \( g \circ f: X \to Z \) is a bijection as the composition of two bijections is a bijection, proved in problem 2, part 3. Hence, if \( X \) has the same cardinality as \( Y \) and \( Y \) has the same cardinality as \( Z \), then \( X \) has the same cardinality as \( Z \).
+            \end{proof}
+	\end{enumerate}
+	A relation satisfying the reflexivity, symmetry and transitivity properties is called an \emph{equivalence relation}.
+\end{problem}
+\medskip
+
+%\begin{problem}{6}
+%	Use the Peano axioms for natural numbers and the definitions of addition and multiplication in $ \N $ to prove the following:
+%	\begin{enumerate}
+%		\item (Commutativity of Addition) $ \forall n,m \in \N \qquad n+m=m+n $
+%		\item (Associativity of Addition) $ \forall a,b,c \in \N \qquad a+(b+c)=(a+b)+c $
+%		\item (Commutativity of Multiplication) $ \forall n,m \in \N \qquad n\times m=m \times n $
+%		\item (Distributivity) $ \forall a,b,c \in \N \qquad a\times (b+c)=a \times b + a \times c $
+%	\end{enumerate}
+%\end{problem}
+
+\end{document}

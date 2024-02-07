@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{Problem Set 3}
+\author{Math 255: Analysis I}
+\date{Due: Thursday, Feb 8th at 11:59pm EST}
+
+\maketitle
+
+\begin{problem}{1}
+	Prove that the complex field $ \C=\{a+bi : a,b \in \R \} $, with $ i^2=-1 $, does not support an order relation which makes it an ordered field.
+    \begin{proof}
+        Assume in contradiction that $ \C $ supports an order relation which makes it an ordered field. Consider $i \in \C$. By definition, $i \neq 0$. Then, by trichotomy, either $i > 0$ or $i < 0$.
+        \begin{itemize}
+            \item If $i > 0$, then $i \cdot i = i^2 = -1 > 0$ by order respects multiplication. This is a contradiction, as $-1 < 0$.
+            \item If $i < 0$, then we have $-i > 0$. Then, $-i \cdot -i = i^2 = -1 > 0$ by order respects multiplication. This is a contradiction, as $-1 < 0$.
+        \end{itemize}
+        Both cases lead to a contradiction, so $ \C $ does not support an order relation which makes it an ordered field.
+    \end{proof}
+\end{problem}
+\medskip
+
+\newpage
+
+\begin{problem}{2} 
+	In this problem we will discuss a construction of $ \R $ using Dedekind cuts. 
+	
+	\noindent A \emph{cut set} in $ \Q $ is a subset $ \alpha \subset \Q $ satisfying:
+	\begin{itemize}
+		\item $ \alpha \neq \emptyset $ and $ \alpha \neq \Q $;
+		\item if $ q \in \alpha $ and $ p < q $ then $ p \in \alpha $; and
+		\item $ \alpha $ has no maximum, that is, for all $ q \in \alpha $ there exists $ q' \in \alpha $ with $ q < q' $.
+	\end{itemize}
+	
+	\noindent Consider 
+	\[ R = \{ \alpha \subset \Q : \alpha \text{ is a cut set} \}, \]
+	the set of all cut sets of $ \Q $. Moreover, we define the relation $ < $ on $ R $ by  
+	\[ \alpha < \beta \quad \text{if and only if } \quad \alpha \subsetneq \beta \qquad \text{for all } \alpha,\beta \in R. \] 
+	\begin{enumerate}
+		\item Prove that $ R $ with this relation is an ordered set (i.e.~show this relation satisfies the trichotomy and transitivity properties).
+            \begin{proof}
+                \textbf{Trichotomy:} Let $\alpha, \beta \in R$.
+                \begin{enumerate}
+                    \item If $\alpha < \beta$, then $\alpha \subsetneq \beta$.
+                        This implies that $\exists x \in \beta$ such that $x \notin \alpha$. Then, $\beta \nsubseteq \alpha$, so $\alpha \not> \beta$ and $\alpha \neq \beta$.
+                    \item If $\alpha = \beta$, then $\alpha \not\subsetneq \beta$ and $\beta \not\subsetneq \alpha$. Therefore, $\alpha \not < \beta$ and $\alpha \not > \beta$.
+                    \item If $\alpha > \beta$, then $\beta < \alpha$. Then, $\beta \subsetneq \alpha$. This implies that $\exists x \in \alpha$ such that $x \notin \beta$. Then, $\alpha \nsubseteq \beta$, so $\alpha \not> \beta$ and $\alpha \neq \beta$.
+                \end{enumerate}
+
+                \textbf{Transitivity:} Let $\alpha, \beta, \gamma \in R$ such that $\alpha < \beta$ and $\beta < \gamma$. Then, $\alpha \subsetneq \beta$ and $\beta \subsetneq \gamma$. This implies that $\alpha \subsetneq \gamma$, so $\alpha < \gamma$.
+            \end{proof}
+		\item Prove that $ R $ with this order has the least upper bound property. That is, prove that any non-empty $ A \subset R $ having an upper bound also has a supremum.
+             \begin{proof}
+                 Let $A \subset R$ be non-empty and have an upper bound. Let \[S = \bigcup_{\alpha \in A} \alpha.\]
+                 In other words, $S$ is the set of all rationals that belong to at least one cut set in $A$. We will show that $S$ is a cut set and that it is the supremum of $A$.
+
+                 \textbf{$S$ is a cut set:}
+                 \begin{itemize}
+                     \item $S \neq \emptyset$: Since $A$ is non-empty, there exists $\alpha \in A$. $\alpha$ is not empty by definition of cut set. Then, $\exists q \in \alpha$, so $q \in S$.
+                        \item $S \neq \Q$: Since $A$ has an upper bound, there exists $\beta \in R$ such that $\alpha \leq \beta$ for all $\alpha \in A$. Because $\beta$ is a cut set, $\beta \neq \Q$, so $\exists q \in \Q$ where $q \not\in \beta$. We also know that $q$ is greater than any element in $\beta$, and by transitivity, $q$ is greater than any element of any set $A$.
+                            Then, $q \not\in S$, so $S \neq \Q$.
+                        \item If $q \in S$ and $p < q$, then $p \in S$: Let $q \in S$ and $p < q$. Then, $q \in \alpha$ for some $\alpha \in A$. Since $\alpha$ is a cut set, $p \in \alpha$, so $p \in S$.
+                        \item $S$ has no maximum: For any $q \in S$, there exists $\alpha \in A$ such that $q \in \alpha$. Since $\alpha$ is a cut set, there exists $q' \in \alpha$ such that $q < q'$. Then, $q' \in S$.
+                 \end{itemize}
+
+                 \textbf{$S$ is the least upper bound of $A$:}
+
+                 By our construction of $S$, we have that for all $\alpha \in A$, $\alpha \subset S$, so $S$ is an upper bound of $A$. Now, we will show that $S$ is the least upper bound of $A$.
+                 Suppose in contradiction that there exists $T$ such that $T < S$ and $T$ is an upper bound of $A$. Then, $T \subsetneq S$.
+                 This implies that there exists $q \in S$ such that $q \notin T$. Since $q \in S$, there exists $\alpha \in A$ such that $q \in \alpha$. Since $T$ is an upper bound of $A$, $\alpha \subset T$. Then, $q \in T$, a contradiction. Thus, $S$ is the least upper bound of $A$.
+             \end{proof}
+		\item Let $ \alpha,\beta \in R $ be two cuts. Prove that
+		\[ \alpha+\beta = \{p+q : p \in \alpha , q \in \beta \} \]
+		is also a cut set of $ \Q $. Hence we can define an addition operation on $ R $.
+        \begin{proof}
+            Let us call $\alpha + \beta = \gamma$. We will show that $\gamma$ is a cut set of $\Q$.
+            \begin{itemize}
+                \item $\gamma \neq \emptyset$: Since $\alpha$ and $\beta$ are cut sets, there exists $p \in \alpha$ and $q \in \beta$. Then, $p+q \in \gamma$.
+
+                \item $\gamma \neq \Q$: Since $\alpha$ and $\beta$ are cut sets, $\alpha \neq \Q$ and $\beta \neq \Q$. Then, there exists $p', q' \in \Q$ such that $p' \not\in \alpha$ and $q' \not\in \beta$. Now consider some $p \in \alpha$, and $q \in \beta$. By definition of a cut set, $p < p'$ and $q < q'$, which implies $p + q < p' + q'$. Thus, $p' + q' \not\in \gamma$.
+
+                \item If $r \in \gamma$ and $s < r$, then $s \in \gamma$: For $r = p + q$ with $p \in \alpha$ and $q \in \beta$, if $s < r$, then $s < p + q$. Since $\alpha$ and $\beta$ are cut sets, if $p' < p$ for some $p' \in \mathbb{Q}$, then $p' \in \alpha$; similarly for $q' < q$. Therefore, we can always find $p' \in \alpha$ and $q' \in \beta$ such that $s = p' + q'$, thus $s \in \gamma$.
+    
+                \item $\gamma$ has no maximum: Suppose $r \in \gamma$, where $r = p + q$ for some $p \in \alpha$ and $q \in \beta$. Because $\alpha$ and $\beta$ have no maximum, there exists $p' > p$ in $\alpha$ and $q' > q$ in $\beta$. Thus, $r' = p' + q' > r$ is also in $\gamma$, proving $\gamma$ has no maximum.
+                
+            \end{itemize}
+        \end{proof}
+		\item How could you identify $ \Q $ as a subset of $ R $?
+            \begin{proof}
+                For any rational number $q \in \Q$, we define the cut set
+                \[ \alpha_q = \{ p \in \Q : p < q \}. \]
+                This is a cut set because
+                \begin{itemize}
+                    \item $\alpha_q \neq \emptyset$: $q-1 \in \alpha_q$. ($\Q$ has no minimum).
+                    \item $\alpha_q \neq \Q$: There exists $p \in \Q$ such that $p > q$, so $p \notin \alpha_q$.
+                    \item If $p \in \alpha_q$ and $r < p$, then $r \in \alpha_q$: If $r < p$, then $r < q$, so $r \in \alpha_q$.
+                    \item $\alpha_q$ has no maximum: We apply denseness of $\Q$ in $\R$ (proven in class) to use the denseness of $\Q$ in $\Q$ (proof is identical) to state that for any $p \in \alpha_q$, we can find an $r \in \Q$, such that $p < r < q$. Thus, $\alpha_q$ has no maximum.
+                \end{itemize}
+                Then, we can identify $\Q$ as a subset of $R$ by the map $q \mapsto \alpha_q$.
+            \end{proof}
+		\item \emph{(Not for submission)} How would you define multiplication in $ R $? Try to convince yourselves that these operations define an ordered field structure on $ R $, yielding a construction of $ \R $.
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+
+\begin{problem}{3}
+	Let $ A,B \subset \R $ be two subsets which are bounded above. Prove:
+	\begin{enumerate}
+		\item $ \sup(A \cup B) = \max(\sup A, \sup B) $.
+            \begin{proof}
+                We will show that $\max(\sup A, \sup B)$ is an upper bound for $A \cup B$ and that it is the least upper bound. This is sufficient to show that $\sup(A \cup B) = \max(\sup A, \sup B)$, because we have shown in class that the least upper bound is unique.
+
+                Let $a \in A \cup B$. Then, $a \in A$ or $a \in B$. If $a \in A$, then $a \leq \sup A \leq \max(\sup A, \sup B)$. If $a \in B$, then $a \leq \sup B \leq \max(\sup A, \sup B)$. Thus, $\max(\sup A, \sup B)$ is an upper bound for $A \cup B$.
+
+                Now, let $u$ be an upper bound for $A \cup B$. Then, for all $a \in A \cup B$, $a \leq u$. If $a \in A$, then $a \leq \sup A \leq u$. If $a \in B$, then $a \leq \sup B \leq u$.
+                Thus, $\sup A \leq u$ and $\sup B \leq u$. Then, $\max(\sup A, \sup B) \leq u$. Thus, $\max(\sup A, \sup B)$ is the least upper bound for $A \cup B$.
+                
+            \end{proof}
+		\item If $ A \cap B \neq \emptyset $ then $ \sup(A \cap B) \leq \min(\sup A, \sup B) $. Give an example where equality does not hold.
+            \begin{proof}
+                Let $A = \{ \frac{n-1}{n} : n \in \N \}$ and $B = \{ \frac{n-1}{2n} : n \in \N \}$. Then, $A \cap B = \{0\}$. We have $\sup A = 1$ and $\sup B = 1/2$. Then, $\sup(A \cap B) = 0 < 1/2 = \min(\sup A, \sup B)$.
+            \end{proof}
+		\item The set $ -A=\{ -x: x \in A \} $ is bounded below and satisfies $ \inf(-A)=-\sup A $.
+            \begin{proof}
+                First, we show that $-A$ is bounded below. By assumption, $A$ is bounded above, meaning $\exists u \in \R$ such that $\forall a \in A$, $a \leq u$. Then, $\forall -a \in -A$, $-a \geq -u$. Thus, $-A$ is bounded below by $-u$.
+                
+                Next, we show that $\inf(-A) = -\sup A$ by showing that $-\sup A$ is a lower bound for $-A$ and there exists lower bound of $-A$ in $\R$ greater than $-\sup A$.
+                Let $s = \sup A$, which we obtain by the LUB property of $\R$. By $s$ being an upper bound, we reason similarly to the previous paragraph that $-s$ is a lower bound for $-A$.
+
+                Assume in contradiction there exists $y> -s$ that is a lower bound for $-A$. This implies that for all $x \in -A$, we have $-x\geq y$. Thus, $x \leq -y$, which means $-y$ is an upper bound for $A$. However, since $y>-s$, we have $-y<s$, a contradiction of our assumption that $s = \sup A$. Therefore, no such $y > -s$ can exist, meaning that $-s$ is the greatest lower bound of $A$, i.e. $inf(-A) = -\sup A$. 
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+
+\newpage
+
+\begin{problem}{4}
+	For each of the following subsets in $ \R $
+	\[ A=\left\{ \frac{(-1)^n \cdot n}{n+1} : n \in \N \right\} \quad,\quad B=\left\{ \frac{(-1)^n}{n+1} : n \in \N \right\} \quad \text{, and}\quad C=\left\{ \frac{1}{(q-1)^2} : q \in \Q, q \neq 1 \right\}  \]
+	answer the following (justify your claims):
+	\begin{enumerate}
+		\item Is the set bounded above\footnote{i.e.~has an upper bound.}? bounded below?
+		\item If bounded above what is its supremum? If bounded below what is its infimum?
+		\item Does the set have a maximum? minimum?
+	\end{enumerate}
+    \begin{enumerate}
+        \item $A$
+            \begin{enumerate}
+                \item $A$ is bounded above and bounded below.
+                \item $\sup A = 1$ and $\inf A = -1$.
+                \item $A$ has no maximum and no minimum.
+            \end{enumerate}
+        \item $B$
+            \begin{enumerate}
+                \item $B$ is bounded above and bounded below.
+                \item $\sup B = 1/3$ and $\inf B = -1/2$.
+                \item $\max B = 1/3$ and $\min B = -1/2$.
+            \end{enumerate}
+        \item $C$
+            \begin{enumerate}
+                \item $C$ is only bounded below.
+                \item $\inf C = 0$.
+                \item $C$ has no maximum and no minimum.
+            \end{enumerate}
+    \end{enumerate}
+\end{problem}
+\medskip
+
+
+
+\end{document}
