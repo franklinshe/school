@@ -1,0 +1,1705 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+
+\usepackage{enumerate}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{Math 255: Analysis I Notes}
+\author{Franklin She}
+\date{Spring 2024}
+
+\maketitle
+\tableofcontents
+
+\newpage
+
+\section{Sets and functions}
+
+\begin{definition}
+    (Set, naively).
+    A set is an unordered collection of objects (elements) without multiplicity.
+\end{definition}
+
+\begin{definition}
+    (Injectivity).
+    A function $f: A \to B$ is injective (or one-to-one) if $\forall x, y \in A$, $f(x) = f(y) \implies x = y$.
+\end{definition}
+
+\begin{definition}
+    (Surjectivity).
+    A function $f: A \to B$ is surjective (or onto) if $\forall b \in B$, $\exists a \in A$ such that $f(a) = b$.
+\end{definition}
+
+
+
+\section{Natural numbers and the Peano axioms}
+
+\begin{definition}
+    (Natural numbers).
+    A set $\N$ with a successor function $S: \N \to \N$ that assigns to every element $n \in \N$ its successor. It has the following properties:
+    \begin{enumerate}[I.]
+        \item $1 \in \N$.
+        \item $\forall n \in \N$, $S(n) \in \N$.
+        \item $\forall n \in \N$, $S(n) \neq 1$.
+        \item $\forall n, m \in \N$, $S(n) = S(m) \implies n = m$. (Injectivity of $S$).
+        \item Any subset $A \subseteq \N$ such that $1 \in A$ and $\forall n \in A$, $S(n) \in A$ must be equal to $\N$.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    $4 \neq 1$.
+    \begin{proof}
+        By definition of $S$, $4 = S(3) = S(S(2)) = S(S(S(1)))$. By I and II, $3 \in \N$.
+        Suppose $4 = 1$. $S(3) = 1$. A contradiction to III.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    $6 \neq 2$.
+    \begin{proof}
+        Assume in contradiction that $6 = 2$. Then $S(5) = S(1)$. By IV, $5 = 1$. A contradiction to III by proof similar to $4 \neq 1$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    $\forall n \in \N$, $S(n) \neq n$.
+    \begin{proof}
+        By induction on $n$. For $n = 1$, if $S(1) = 1$, this contradicts III. Assume $S(n) \neq n$, want to show
+        $$S(S(n)) \neq S(n)$$
+        Assume by contradiction that $S(S(n)) = S(n)$. By IV, $S(n) = n$. A contradiction of our assumption.
+    \end{proof}
+\end{proposition}
+\begin{remark}
+    This strategy of proof via induction uses property V. We considered the subset
+    $$A = \{n \in \N \colon S(n) \neq n\} \subseteq \N$$
+    and showed that $1 \in A$ and $\forall n \in A$, $S(n) \in A$. This implies that $A = \N$ by V.
+\end{remark}
+
+\begin{axiom}
+    There exists a set satisfying I - V (Peano axioms). Such a set is called the set of natural numbers and is denoted by $\N$.
+\end{axiom}
+
+\subsection{Cardinality}
+
+\begin{definition}
+    (Equal cardinality).
+    Two sets $A$ and $B$ have equal cardinality, denoted $\abs{A} = \abs{B}$, if there exists a bijection $f: A \to B$.
+    Denote for $n \in \N$, $\underline{n} = \{1, 2, \ldots, n\}$.
+\end{definition}
+
+\begin{definition}
+    (Size $n$ set).
+    A set $A$ is said to have size $n$, $\abs{A} = n$, if $A$ has equal cardinality to $\underline{n}$.
+\end{definition}
+
+\begin{proposition}
+    The "equal cardinality" relation is an equivalence relation. That is, it is reflexive, symmetric, and transitive.
+    \begin{proof}
+        Problem Set 1.
+    \end{proof}
+\end{proposition}
+
+\begin{definition}
+    (Finite set).
+    A set $A$ is said to be finite if $\abs{A} = n$ for some $n \in \N$ or $A = \emptyset$
+    (where $\abs{\emptyset} = 0$).
+    Otherwise, $A$ is said to be infinite.
+\end{definition}
+
+\begin{theorem}
+    (Uniqueness of cardinality).
+    If $\abs{A} = n$ for some $n \in \N$, then $\abs{A} \neq m$ for any $m \in \N$ such that $m \neq n$.
+    \begin{lemma}
+        If $\abs{X} = n$ for some $n \in \N$, then given any $x \in X$, $\abs{X \setminus \{x\}} = n - 1$.
+        (Where $n-1 = 0$ if $n = 1$ and $n-1 = m$ when $n = S(m)$).
+    \end{lemma}
+
+    \begin{proof}
+        of lemma. Prove by induction on $n$.
+
+        \textbf{Base case:}
+        \begin{itemize}
+            \item 
+                For $n =1$, since $\abs{X} = 1$, there exists a bijection $f: X \to \{1\}$.
+            \item 
+        Since $f$ is onto, $\exists y \in X$ such that $f(y) = 1$. In particular, $X \neq \emptyset$.
+        \item
+        Since $f$ is injective, there are no other elements in $X$, because
+        $\forall x \in X$, $f(x) \in \{1\} \implies f(x) = 1 = f(y)$.
+    \item 
+        By injectivity, $x = y \implies X = \{y\}$. Hence $\forall x \in X$, $X \setminus \{x\} = \emptyset$.
+        \item
+        This implies $\abs{X \setminus \{x\}} = 0$. Hence the lemma holds for $n = 1$.
+        \end{itemize}
+        
+        \textbf{Inductive step:}
+        \begin{itemize}
+            \item 
+        Assume $\abs{X} = S(n)$ for some $n \in \N$. There exists a bijection
+        $$f: X \to \underline{S(n)} = \{1, 2, \ldots, S(n)\}$$
+            \item 
+            Let $x \in X$ be any element. Define $g: X \setminus \{x\} \to \underline{n}$ by
+        $$g(y) = \begin{cases} f(y) & \text{if } f(y) < f(x) \\ f(y) - 1 & \text{if } f(y) > f(x) \end{cases}$$
+            \item
+        We want to show that $g$ is a bijection. It is clearly onto because $f$ is onto.
+            \item 
+            It is also injective because $f$ is injective. If $g(y_1) = g(y_2)$, then $f(y_1) = f(y_2)$.
+            \item
+        If $f(y_1) < f(x)$, then $f(y_1) = g(y_1) = g(y_2) = f(y_2) = f(y_2) - 1$.
+        \item
+        If $f(y_1) > f(x)$, then $f(y_1) - 1 = g(y_1) = g(y_2) = f(y_2) - 1 \implies f(y_1) = f(y_2)$.
+        \item
+        By injectivity of $f$, $y_1 = y_2$. Therefore, $g$ is a bijection.
+        This implies that $\abs{X \setminus \{x\}} = n$.
+        \end{itemize}
+    \end{proof}
+
+    \begin{proof}
+        of theorem. Prove by induction on $n$.
+
+        \textbf{Base case:}
+        If $n = 1$. Assume in contradiction that $\exists m \in \N$ such that $m \neq 1$ and $\abs{X} = m$.
+        Since $n \neq m$, there exists $m -1 \in \N$ such that $m = S(m - 1)$.
+        By the lemma,
+        \begin{enumerate}
+            \item On one hand, $\abs{X \setminus \{x\}} = 0$ for any $x \in X \implies X \setminus \{x\} = \emptyset$.
+            \item But on the other hand, $\abs{X \setminus \{x\}} = m - 1 \in \N \implies X \setminus \{x\} \neq \emptyset$.
+        \end{enumerate}
+        This is a contradiction, proving the base case.
+
+        \textbf{Inductive step:} Assume theorem true for $n \in \N$. We want to show that the theorem holds for $S(n)$.
+
+        TODO: Finish this proof.
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    $\N$ is infinite.
+    \begin{proof}
+        Assume in contradiction that $\abs{\N} = n$ for some $n \in \N$. 
+        \begin{itemize}
+            \item
+            By the lemma, $\abs{\N \setminus \{1\}} = n - 1 \in \N$
+            \item
+            In particular, $\N \setminus \{1\} \neq \emptyset$.
+            \item
+            But the successor function $S: \N \to \N \setminus \{1\}$ is a bijection, so $\abs{\N} = \abs{\N \setminus \{1\}}$, a contradiction.
+        \end{itemize}
+    \end{proof}
+\end{corollary}
+
+\begin{remark}
+    Let $X$ be an infinite set. Does $\abs{X} = \abs{\N}$? No. We will come back to this later.
+\end{remark}
+
+\subsection{Arithmetic}
+
+\begin{remark}
+    Denote $\N_0 = \N \cup \{0\}$ and define $S(0) = 1$. Notice one can still induct on $\N_0$.
+\end{remark}
+
+\begin{lemma}
+    For any $A \subseteq \N_0$, if $0 \in A$ and $\forall n \in  A$, $S(n) \in A$, then $A = \N_0$.
+    \begin{proof}
+        Let $A$ be as above. Denote $A' = A \cap \N$. Since $0 \in A \implies S(0) = 1 \in A \implies 1 \in A'$.
+        For any $n \in A'$, $n \in A$ because $A' \subseteq A$. Hence, $S(n) \in A$.
+        Moreover, $S(n) \in \N$ because $A' \subseteq \N$. This implies that $S(n) \in A'$. By Peano axiom V, $A' = \N \implies A = \N_0$.
+    \end{proof}
+\end{lemma}
+
+\begin{definition}
+    We'll define the sum in $\N_0$ inductively. $\forall n \in \N_0$:
+    \begin{enumerate}
+        \item $0 + n = n$.
+        \item $\forall m \in \N_0$, $S(m) + n = S(m + n)$.
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    $\forall m \in \N_0$, $m + 0 = m$.
+    \begin{proof}
+        By induction of $m \in \N_0$. For $m = 0$, $0 + 0 = 0$ by definition. Assume $m + 0 = m$ for some $m \in \N_0$.
+        Then $S(m) + 0 = S(m + 0)$ by definition. By the induction hypothesis, $S(m + 0) = S(m)$. This implies that $S(m) + 0 = S(m)$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    $\forall m, n \in \N_0$, $m + S(n) = S(m + n)$.
+    \begin{proof}
+        By induction on $m \in \N_0$. For $m = 0$, $0 + S(n) = S(0 + n) = S(n)$.
+        Assume $m + S(n) = S(m + n)$. Then $S(m) + S(n) = S(m + S(n))$ by definition.
+        Then $S(m + S(n)) = S(S(m + n))$ by the induction hypothesis. 
+        Then $S(S(m + n)) = S(S(m) + n)$ by definition. 
+    \end{proof}
+\end{proposition}
+
+\begin{definition}
+    (Order).
+    For $a, b \in \N_0$, we say that $a \leq b$ if and only if $\exists n \in \N_0$ such that $a + n = b$.
+    $a < b$ if and only if $a \leq b$ and $a \neq b$.
+\end{definition}
+
+\begin{proposition}
+    The order relation satisfies:
+    \begin{enumerate}
+        \item Trichotomy: $\forall a, b \in \N_0$, exactly one of $a < b$, $a = b$, or $a > b$ holds.
+        \item Transitivity: $\forall a, b, c \in \N_0$, if $a \leq b$ and $b \leq c$, then $a \leq c$.
+    \end{enumerate}
+    \begin{proof}
+        Problem set.
+    \end{proof}
+\end{proposition}
+
+\subsection{Integers}
+
+\begin{definition}
+    (Integers).
+    The set of integers $\Z$, is the set of formal expressions of the form $[a - b]$, where $a, b \in N_0$.
+    We identify any two integers $[a - b] = [c - d]$ if and only if $a + d = b + c$.
+    We define addition on $\Z$ by
+    $$[a - b] + [c - d] = [(a + c) - (b - d)]$$
+    One can identify $\N \subseteq \Z$ by identifying $n \in \N$ with $[n - 0] \in \Z$.
+    This always us to define an order on $\Z$.
+\end{definition}
+
+\begin{definition}
+    (Order on $\Z$).
+    $[a - b] \leq [c - d]$ if and only if $[c - d] = [a - b] + [n - 0]$ for some $n \in \N_0$.
+\end{definition}
+
+\begin{proposition}
+    The above order relation on $\Z$ satisfies trichotomy and transitivity.
+    \begin{proof}
+        Also skipped.
+    \end{proof}
+\end{proposition}
+
+\begin{definition}
+    (Negation in $\Z$).
+    The negation of $[a - b] \in \Z$ is defined to be $-[a - b] = [b - a]$.
+\end{definition}
+
+\begin{definition}
+    (Subtraction in $\Z$).
+    Subtraction is defined by $[a - b] - [c - d] = [a - b] + (-[c - d])$.
+\end{definition}
+
+\begin{definition}
+    (Multiplication in $N_0$).
+    We define inductively $\forall n \in \N_0$:
+    \begin{enumerate}
+        \item $0 \times n = 0$.
+        \item $\forall m \in \N_0$, $S(m) \times n = (m \times n) + n$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    (Multiplication extended to $\Z$).
+    We define
+    $$[a - b] \times [c - d] = [(a \times c + b \times d) - (a \times d + b \times c)]$$
+\end{definition}
+
+\subsection{Rationals}
+
+\begin{definition}
+    The set of rationals $\Q$ is the set of formal expressions of the form $[p // q]$, where $p, q\in \Z$
+    and $q \neq [0 - 0]$. We identify any two rationals $[p // q] = [r // s]$ if and only if $p \times s = q \times r$.
+    We can identify $N_0 \subseteq \Q$ by identifying $n \in \N_0$ with $[[n - 0] // [1 - 0] \in \Q$.
+\end{definition}
+
+\begin{definition}
+    (Addition in $\Q$).
+    We define
+    $$[p // q] + [r // s] = [(p \times s + q \times r) // (q \times s)]$$
+\end{definition}
+
+\begin{definition}
+    (Multiplication in $\Q$).
+    We define
+    $$[p // q] \times [r // s] = [(p \times r) // (q \times s)]$$
+\end{definition}
+
+\begin{definition}
+    {Order on $\Q$}.
+    We can define an order on $\Q$ by
+    \begin{enumerate}
+        \item $0 \leq [p // q]$ iff $p = [n - 0], q = [m - 0]$ for some $n, m \in \N_0$.
+        \item $[p // q] \leq [r // s]$ iff $[r // s] = [p // q] + [x // y]$ where $0 \leq [x // y]$.
+    \end{enumerate}
+\end{definition}
+
+\newpage
+
+\section{Fields}
+
+\begin{definition}
+    (Field).
+    A field is a set $\F$ with a pair of operations
+    \begin{align*}
+        +: \F \times \F &\to \F \\
+        \times: \F \times \F &\to \F
+    \end{align*}
+    satisfying the following properties:
+    \begin{enumerate}
+        \item Commutativity of addition: $\forall x, y \in \F$, $x + y = y + x$.
+        \item Associativity of addition: $\forall x, y, z \in \F$, $(x + y) + z = x + (y + z)$.
+        \item Existence of neutral element for addition: $\exists 0 \in \F$ such that $\forall x \in \F$, $x + 0 = x$.
+        \item Existence of additive inverse: $\forall x \in \F$, $\exists y \in \F$ such that $x + y = 0$.
+        \item Commutativity of multiplication: $\forall x, y \in \F$, $x \times y = y \times x$.
+        \item Associativity of multiplication: $\forall x, y, z \in \F$, $(x \times y) \times z = x \times (y \times z)$.
+        \item Existence of neutral element for multiplication: $\exists 1 \in \F$ such that $\forall x \in \F$, $x \times 1 = x$.
+        \item Existence of multiplicative inverse: $\forall x \in \F \setminus \{0\}$, $\exists y \in \F$ such that $x \times y = 1$.
+        \item Distributivity: $\forall x, y, z \in \F$, $x \times (y + z) = x \times y + x \times z$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    \hfill
+    \begin{enumerate}
+        \item $\Q$, $\R$, $\C$ are fields with the usual operations.
+        \item $\F_3 = \{0, 1, 2\}$ with addition and multiplication modulo 3.
+    \end{enumerate}
+    Anti-examples:
+    \begin{enumerate}
+        \item $F_6$ is not a field with addition and multiplication modulo 6.
+        \item $\Z$ is not a field, no multiplicative inverses. ($\Z$ is a ring).
+        \item $R^2$ is not a field, no "natural" multiplication operation.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    (Cancellation law).
+    $\forall x, y, z \in \F$, if $x + y = x + z$, then $y = z$.
+    \begin{proof}
+        By 4, $\exists (-x) \in \F$ such that $x + (-x) = 0$.
+        By $+$ being well-defined, $(-x) + (x + y) = (-x) + (x + z) \overset{2}{\implies}
+        ((-x) + x) + y = ((-x) + x) + z \overset{4}{\implies}
+        0 + y = 0 + z \overset{3}{\implies}
+        y = z$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    $\forall x \in \F$, $x \cdot 0 = 0$.
+    \begin{proof}
+        $x \cdot 0 \overset{3}{=} x \cdot (0 + 0) \overset{9}{=} x \cdot 0 + x \cdot 0
+        \overset{3}{\implies} 0 + x \cdot 0 = x \cdot 0 + x \cdot 0$.
+        By the cancellation law, $0 = x \cdot 0$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    $0 \in \F$ does not have a multiplicative inverse.
+    \begin{proof}
+        Assume in contradiction $\exists y \in \F$ such that $0 \cdot y = 1$.
+        By proposition above, $\forall x \in \F$, $x \cdot 0 = 0$.
+        This implies that $1 = 0$ by the cancellation law, a contradiction of 7.
+    \end{proof}
+\end{proposition}
+
+\begin{remark}
+    This is why we disallow taking the multiplicative inverse of 0.
+\end{remark}
+
+\subsection{Ordered sets}
+
+\begin{definition}
+    (Ordered set).
+    An ordered set is a set $S$ with a relation $<$ satisfying:
+    \begin{enumerate}
+        \item Trichotomy: $\forall a, b, c \in S$, exactly one of $a < b$, $a = b$, or $a > b$ holds.
+        \item Transitivity: $\forall a, b, c \in S$, if $a < b$ and $b < c$, then $a < c$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    $\Q$, $\N$, $\{-1, 0, 15\}$, $\{a, aa, b, ba, c\}$ with the lexicographic order.
+\end{example}
+
+\begin{definition}
+    (Maximum).
+    A maximum for an ordered set $S$ is an element $y \in S$ such that $\forall x \in S$, $x \leq y$.
+\end{definition}
+
+\begin{remark}
+    Not all ordered sets have a maximum. For example, $\N$ does not have a maximum. Also
+    $\{\frac{n-1}{n} \colon n \in \N\}$ does not have a maximum.
+\end{remark}
+
+\begin{proposition}
+    $S = \{\frac{n-1}{n} \colon n \in \N\}$ does not have a maximum.
+    \begin{proposition}
+        Assume in contradiction that $\exists y \in S$ such that $\forall x \in S$, $x \leq y$.
+        Then $y = \frac{m-1}{m}$ for some $m \in \N$.
+        But then $y < \frac{m}{m + 1} = \frac{(m+1) - 1}{m+1} \in S$, a contradiction that $y$ is the maximum.
+    \end{proposition}
+\end{proposition}
+
+\begin{proposition}
+    If a ordered set $S$ has a maximum, then it is unique. In such a case, we denote the maximum by $\max S$.
+    \begin{proof}
+        Let $y$ and $y'$ be maxima for $S$. Then by the definition of maximum, $y   \leq y'$ and $y' \leq y$.
+        By trichotomy, $y = y'$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    Every finite non-empty ordered set has a maximum.
+
+    \begin{proof}
+        Proof by induction on $n = \abs{S}$. For $n = 1$, $S = \{x\}$, then $x$ is the maximum, trivially.
+        Assume claim true for all ordered sets of size $n \in \N$. Let $S$ be an ordered set of size $n + 1$.
+        Pick $s_0 \in S$ and set $T = S \setminus \{s_0\}$ with some (restricted) order.
+        By the induction hypothesis, $\exists \max T = t_0$. Now there are two cases.
+        \begin{enumerate}
+            \item $s_0 \leq t_0$. Then $\forall x \in T \cup \{s_0\}$, $x \leq t_0 \implies t_0 = \max S$
+            \item $t_0 < s_0$. Then $\forall t\in T$, $t \leq t_0 < s_0 \implies t \leq s_0$.
+                This implies that $\forall x \in S = T \cup \{s_0\}$, $x \leq s_0 \implies s_0 = \max S$.
+        \end{enumerate}
+        In either case, $\max S$ exists.
+    \end{proof}
+\end{proposition}
+
+\begin{definition}
+    (Upper bound).
+    Let $S$ be an ordered set and let $A \subseteq S$. An upper bound for $A$ in $S$ is an element $z \in S$ such that $\forall a \in A$, $a \leq z$.
+\end{definition}
+
+\begin{example}
+    $T = \{\frac{n-1}{n} \colon n \in \N\}$ has upper bounds in $\Q$, e.g. 1, 4, 1000, etc.
+\end{example}
+
+\begin{definition}
+    (Least upper bound).
+    A least upper bound for $A \subseteq S$ is an upper bound $z$
+    such that for any other upper bound $z'$, they satisfy $z \leq z'$.
+\end{definition}
+
+\begin{proposition}
+    If $A\subseteq S$ has a least upper bound, it is unique and it is called the supremum of $A$ (in $S$), denoted $\sup A$.
+\end{proposition}
+
+\begin{remark}
+    Not all $A \subseteq S$ have a least upper bound. E.g. $\N \subseteq \Q$.
+\end{remark}
+
+\begin{proposition}
+    $T = \{\frac{n-1}{n} \colon n \in \N\} \subseteq \Q$ has $\sup T = 1$.
+    \begin{proof}
+        First $\forall n \in \N$, $\frac{n-1}{n} \leq 1$. This implies $1$ is an upper bound for $T$.
+        Assume there exists an upper bound $z \in T \subseteq \Q$ such that $z < 1$. Then $z = p / q$ for some $p, q \in \Z$, and we may assume $q \in \N$.
+        This implies $z < \frac{q}{q+1} \in T$, a contradiction that $z$ is an upper bound.
+        Hence $1$ is the least upper bound for $T$.
+    \end{proof}
+\end{proposition}
+
+\subsection{Ordered fields}
+\begin{definition}
+    (Ordered field).
+    An ordered field is a field $\F$ which is also an ordered set, satisfying:
+    \begin{enumerate}
+        \item Order respects addition: $\forall x, y, z \in \F$, if $x < y$, then $x + z < y + z$.
+        \item Order respects multiplication: If $x, y \in \F$ satisfy $x> 0$, $y > 0$, then $x \times y > 0$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    (Fact). $\Q$ with the order we constructed is an ordered field.
+\end{example}
+
+\begin{proposition}
+    Let $\F$ be an ordered field. If $x > 0$ and $y < 0$, then $x \times y < 0$.
+    \begin{proof}
+        By order respects addition, $y < 0 \implies 0 < -y$. By order respects multiplication, $x \times (-y) > 0$. By order respects addition, we add $x \cdot y$ to both sides.
+        The LHS:
+        \begin{align*}
+            x \times (-y) + x \times y &= x \times (-y + y) \\
+            &= x \times 0 \\
+            &= 0
+        \end{align*}
+        This implies $x \times y < 0$, as $x \times y$ is the RHS.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    Let $\F$ be an ordered field. Then $\forall x \in \F$, $x < x + 1$.
+    \begin{proof}
+        Assume in contradiction that $1 < 0$. (This is enough, because of order respects addition).
+        $1 < 0 \implies 0 < -1 \implies 0 < -1 \times -1 = 1$, a contradiction to trichotomy.
+        Therefore $0 \leq 1$. However, $0 \neq 1$ by an axiom of fields. This implies $0 < 1$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    There exists no order on the field $\F_3$ making it an ordered field.
+    \begin{proof}
+        Assume in contradiction that $\F_3$ has such a structure.
+        Then $0 < 1$ and $1 < 2$ and $2 < 2 + 1 = 0$.
+        By transitivity, $0 < 2$, a contradiction to trichotomy.
+    \end{proof}
+\end{proposition}
+
+\begin{example}
+    $\C$ has no structure of an ordered field. Problem set 3.
+\end{example}
+
+\subsection{A hole in $\Q$}
+
+\begin{lemma}
+    $\sqrt{2} \notin \Q$. That is, there exists no $x \in \Q$ such that $x^2 = 2$.
+    \begin{proof}
+        Assume in contradiction that there exists $x \in  \Q$ such that $x^2 = 2$.
+        \begin{itemize}
+            \item
+            Then $\exists m, n \in \Z$ such that $x = m / n$. (We assume that this is a reduced fraction, i.e. there exists no integer $k \in \Z \setminus \{1\}$ such that $k$ divides both $m$ and $n$ to remainder.)
+            \item   
+            This implies $\left(\frac{m}{n}\right)^2 = 2 \implies m^2 = 2n^2$.
+        \end{itemize}
+
+        \begin{lemma}
+            The square power of an odd integer is odd.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item
+                Let $2k + 1 \in \Z$ be any integer, which is odd.
+                    \item
+                Then $(2k + 1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$.
+                    \item   
+                As $2k^2 + 2k \in \Z$, this implies that $(2k + 1)^2$ is odd.
+                \end{itemize}
+            \end{proof}
+        \end{lemma}
+        \begin{itemize}
+            \item
+        We know $m^2 = 2n^2$ is an even number (dichotomy). Therefore $m$ is even. Then $m = 2k$ for some $k \in \Z$.
+            \item
+        Then, $(2k)^2 = 4k^2 = 2n^2 \implies 2k^2 = n^2$. This implies that $n^2$ is even, implying $n$ is also even.
+            \item
+        This is a contradiction to $m / n$ being a reduced fraction.
+        \end{itemize}
+    \end{proof}
+\end{lemma}
+
+\begin{proposition}
+    Consider $A = \{x \in \Q \colon x^2 < 2\}$. Then $y \in \Q$ is an upper bound for $A$ if and only if $y > 0$ and $y^2 > 2$.
+    \begin{proof}
+        ($\impliedby$).
+
+        \begin{itemize}
+            \item
+            If $y > 0$ and $y^2 > 2$, let $x \in A$ be any element.
+            \item
+            Assume in contradiction $y < x$. Then both $y > 0$ and $x > 0$ (transitivity).
+            \item
+            This implies $x \cdot y > y^2$ and $x^2 > x \cdot y$ (order respects multiplication).
+            \item
+            This implies $x^2 > y^2$ (transitivity). However, we know that $x^2 < 2$ and $2 < y^2$ by $x \in A$ and our assumption.
+            \item
+            This means $x^2 < y^2$, a contradiction to trichotomy.
+            \item
+            Therefore, $\forall x \in A$, $x \leq y$.
+        \end{itemize}
+
+
+        ($\implies$).
+        \begin{itemize}
+            \item
+        Assume that $y \in \Q$ is an upper bound for $A$.
+        Since $1 \in A$, we know that $0 < 1 \leq y$.
+            \item
+        Assume in contradiction that $y^2 \leq 2$. Since $y \in \Q$ we know $y^2 \neq 2$ hence $y^2 < 2$.
+            \item
+        The idea: Find $\epsilon \in \Q$, $\epsilon > 0$ for which $(y + \epsilon)^2 < 2$.
+            \item
+        This would imply that $y + \epsilon \in A$ and $y < y + \epsilon$, a contradiction to $y$ being an upper bound.
+        \end{itemize}
+
+        Draft:
+
+        \begin{align*}
+            (y + \epsilon)^2 < 2 &\iff y^2 + 2y\epsilon + \epsilon^2 < 2 \\
+                                 &\iff \epsilon(2y + \epsilon) < 2 - y^2 \\
+                                 &\iff \epsilon < \frac{2 - y^2}{2y + \epsilon} &\text{if $y>0$, $\epsilon > 0$}
+        \end{align*}
+        Assume $\epsilon < 1$. Therefore
+        \begin{align*}
+            \epsilon < \frac{2 - y^2}{2y + 1} < \frac{2 - y^2}{2y + \epsilon} \implies (y + \epsilon)^2 < 2
+        \end{align*}
+        Now, continuing the proof. Let's fix:
+        \begin{align*}
+            \epsilon = 1/2 \min\left\{1, \frac{2 - y^2}{2y + 1}\right\}
+        \end{align*}
+        \begin{itemize}
+            \item
+        This implies $0 < \epsilon \leq 1/2 < 1$ and $\epsilon < \frac{2 - y^2}{2y + 1}$.
+        Therefore, $\epsilon \in \Q$.
+            \item
+        This implies $y+ \epsilon \in \Q$ and $(y + \epsilon)^2 < 2 \implies y + \epsilon \in A$.
+            \item
+        This is a contradiction to $y$ being an upper bound for $A$.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    $A \subseteq \Q$ is bounded above but has no supremum.
+    \begin{proof}
+        First $2^2 > 2$ and $2 > 0$. This implies $2$ is an upper bound for $A$. (by the proposition above).
+        Let $y \in \Q$ be an upper bound for $A$. We will show there exists $y' \in \Q$ such that $y' < y$ which is also an upper bound. That would imply $A$ has no least upper bound.
+        Fix some upper bound $y \in \Q$. By the proposition above, $y > 0$ and $y^2 > 2$.
+
+        Draft: We are looking for $\epsilon > 0 \in \Q$ such that $y - \epsilon > 0 \iff \epsilon < y$ and $(y - \epsilon)^2 > 2 \iff y^2 - 2y\epsilon + \epsilon^2 > 2$.
+        It's enough for $y^2 - 2y\epsilon > 2 \iff \epsilon < \frac{y^2 - 2}{2y}$. So we pick
+        \begin{align*}
+            \epsilon = 1/3 \min\left\{y, \frac{y^2 - 2}{2y}\right\}
+        \end{align*}
+
+        This implies $0 < \epsilon \in \Q$ and $\epsilon < y$ and $\epsilon < \frac{y^2 - 2}{2y}$.
+        This implies $y - \epsilon > 0$ and $(y - \epsilon)^2 > 2$. By previous proposition, $y - \epsilon$ is also an upper bound for $A$.
+    \end{proof}
+\end{corollary}
+
+\subsection{Least upper bound (LUB) property}
+
+\begin{definition}
+    (Least upper bound property).
+    An ordered set $S$ is said to satisfy the LUB property if any $\emptyset \neq A \subseteq S$ which is bounded above has a supremum.
+\end{definition}
+
+\begin{theorem}
+    There exists an ordered field, containing $\Q$ with the LUB property. Moreover, any two such fields are "isomorphic". We call such a field $\R$.
+\end{theorem}
+
+\begin{remark}
+    In ordered set $S$, $A \subseteq S$
+    \begin{itemize}
+        \item $y \in S$ is a lower bound for $A$ if $\forall x \in A$, $y \leq x$.
+        \item $y = \min A$ if $y \in A$ and $y$ is a lower bound for $A$.
+        \item $y = \inf A$ if $y$ is a lower bound for $A$ and $\forall z \in S$, if $z$ is a lower bound for $A$, then $z \leq y$.
+    \end{itemize}
+\end{remark}
+
+\begin{remark}
+    It follows from problem set 3 if $\emptyset \neq A \subseteq \R$ is bounded below, then $A$ has an infimum in $\R$.
+\end{remark}
+
+\subsection{Properties of $\R$}
+
+\begin{proposition}
+    $\forall x, y \in \R$, $x > 0$, $\exists n \in \N$ such that $nx > y$.
+    \begin{proof}
+        \begin{itemize}
+            \item
+        Assume in contradiction that $y$ is an upper bound for $\emptyset \neq A = \{nx \colon n \in \N\}$.
+            \item
+        By the LUB property, there exists $z = \sup A \in \R$. In particular $z - x$ is not an upper bound for $A$.
+            \item
+        This implies $\exists n_0 \in \N$ such that $n_0x \in A$ satisfies $n_0x > z - x$.
+            \item
+        This implies $(n_0 + 1)x > z$. This is a contradiction to $z$ being an upper bound for $A$.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    (Archimedean property of $\R$).
+    \begin{enumerate}
+        \item $\forall y \in \R$, $\exists n \in \N$ such that $n > y$.
+        \item $\forall \epsilon > 0 \in \R$, $\exists n \in \N$ such that $1/n < \epsilon$.
+    \end{enumerate}
+    That is, $\R$ does not contain an infinitely large element nor an infinitesimally small element.
+    \begin{proof}
+        For the first part, take $x = 1$ in the proposition above.
+        For the second part, take $y = 1$ and $x = \epsilon$ in the proposition above.
+        This implies $\exists n \in \N$ such that $n \epsilon > 1 \implies 1/n < \epsilon$.
+    \end{proof}
+\end{corollary}
+
+\begin{lemma}
+    Any $\emptyset \neq A \subseteq \N$ has a minimum.
+    \begin{proof}
+        Let $\emptyset \neq A \subseteq \N$. Consider $1 \in L = \{l \in \N : \forall a \in A, l \leq a\}$.
+        $L$ is the set of lower bounds for $A$. Either
+        \begin{enumerate}
+            \item $\exists n \in \N$ such that $n \in L$ but $n + 1\not\in L \implies \exists a \in A$ such that $n \leq a < n + 1 \implies a = n \implies a = \min A$.
+            \item $\forall n \in L$, $n + 1 \in L \implies L = \N$ by induction. By corollary, $A = \emptyset$, a contradiction.
+        \end{enumerate}
+    \end{proof}
+\end{lemma}
+
+\begin{corollary}
+    Every $\emptyset \neq A \subseteq \Z$ which is bounded below has a minimum.
+    \begin{proof}
+        If $\exists n \in \N$ such that $n$ is a lower bound for $A$, then $\emptyset \neq A \subseteq \N$. By the lemma, this implies $\exists \min A$.
+        Otherwise, the set $A \cap \{-n \colon n \in \N_0\}$ is finite.
+        This implies $A \cap \{-n \colon n \in \N_0\}$ has a minimum. That will also be a minimum for $A$. (Exercise, fill in details.)
+    \end{proof}
+\end{corollary}
+
+\begin{definition}
+    (Ceiling).
+    The ceiling of $x \in \R$ is $\lceil x \rceil := \min\{k \in \Z : x \geq k\}$.
+\end{definition}
+
+\begin{proposition}
+    (Denseness of $\Q$ in $\R$).
+    $\forall x, y \in \R$, $x < y$, $\exists q \in \Q$ such that $x < q < y$.
+    
+    \begin{proof}
+        Let $x < y \in \R$. Since $y - x > 0$. There exists $m \in \N$ such that $m(y - x) > 1$, i.e. $my - mx > 1$. (think rescaling distance between $x$ and $y$).
+        It'll suffice to show $\exists k \in \Z$ with $mx < k < my$. Then $x < k/m < y$ with $k/m \in \Q$.
+        In fact, take $k = \lceil mx \rceil + 1$. Indeed,
+        \begin{itemize}
+            \item $k < my$ because $k < \min\{l \in \Z : l \geq my\} = \lceil my \rceil$.
+            \item $k - mx = \lceil mx \rceil + 1 - mx \geq my - 1 - mx = (my - mx) - 1 > 0$.
+        This implies $mx < k$.
+        \end{itemize}
+        Therefore, we have found $k \in \Z$ such that $mx < k < my$. This implies $\exists q = k/m \in \Q$ such that $x < q < y$.
+    \end{proof}
+\end{proposition}
+
+\subsection{Roots and exponents}
+\begin{proposition}
+    $\forall n \in \N$ and $\forall x > 0$, there exists a unique $y > 0$ such that $y^n = x$.
+    We denote this number $y = x^{1/n} = \sqrt[n]{x}$.
+    \begin{proof}
+        \textbf{Uniqueness}: $\forall 0 < y_1 < y_2$, $y_1^n < y_2^n$. This implies $y_1^n \neq x \neq y_2^n$.
+        
+        \textbf{Existence}: Consider $E = \{z \in \R : z^n < x\}$.
+        First, if $t = \frac{x}{1+ x}$, then $t  < 1$ and $t  < x$. This implies $t^n \leq t < x \implies E \neq \emptyset$.
+        Second, $\forall t > 1 + x$ $t^n \geq t > x \implies t \not\in E$.
+        This implies if $z \in E$, then $z \leq 1 + x$, so $E$ is bounded above.
+
+        \begin{proposition}
+            $y = \sup E$ satisfies $y^n = x$.
+            \begin{proof}
+                Proof for all $n$ by induction, an exercise.
+            \end{proof}
+        \end{proposition}
+
+        Proof of existence continues. TODO.
+
+    \end{proof}
+\end{proposition}
+
+
+\newpage
+
+\section{Countability}
+
+\begin{proposition}
+    If $S$ is countable and $A \subseteq S$ is infinite, then $A$ is countable.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item
+        $S$ is countable, so $\exists g: \N \to S$ that is a bijection.
+            \item
+        We can write $S = \{x_1, x_2, \ldots\}$ where $x_n = g(n)$.
+            \item
+        We define $m_1 = \min\{l \in \N : x_l \in A\}$.
+            \item
+        For all $n \in \N$, we define $m_{n+1} = \min\{l \in \N : l > m_n, x_l \in A\}$.
+            \item
+        Denote $f: \N \to A$ by $f(n) = x_{m_n}$. Since $A$ is infinite, $f$ is well-defined, i.e. $f(n)$ is unique for all $n$.
+        \end{itemize}
+        \begin{itemize}
+            \item $f$ is injective since by definition $m_{n+1} > m_n \implies m_n < m_k$ for all $k > n$.
+                Since $g$ is injective, if $n < k$, $x_{m_n} \neq x_{m_k}$.
+            \item $f$ is surjective. Let $a \in A$.
+                Since $g$ is surjective, $\exists N \in \N$ such that $a = x_N$.
+                Consider $n = \min \{l \in \N : m_l \geq N\}$. 
+                We want to show $a = x_{m_n}$, showing that $f(n) = a$.
+                By definition $m_n \geq N$ and $m_{n-1} < N$.
+                By construction of $m_n$ from $m_{n-1}$, we know $m_n \leq N$ because $x_N = \in A$.
+                This implies $m_n = N$ and $a \in f(\N)$.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    $\Q$ is countable.
+    \begin{proof}
+        Consider the following function $h : \Q \to \Z^2$ sending $q \in \Q$ to $(m, n) \in \Z^2$ where $(m, n)$ is the unique pair satisfying $q = m/n$ is reduced and $n \in \N$.
+        Denote $A = h(\Q) \subseteq \Z^2$. Then $A$ is infinite. (e.g. $(m, 1) \in A$ for all $m \in \Z$).
+        This implies that $A$ is countable by the proposition above ($\Z^2$ is countable).
+        Since $h$ is injective, we deduce that $\abs{\Q} = \abs{A}$.
+    \end{proof}
+\end{corollary}
+
+\begin{corollary}
+    The set of prime numbers is countable.
+\end{corollary}
+
+\begin{lemma}
+    The union of a countable collection of countable sets, i.e., given
+    $\{S_1, S_2, \ldots\} = \{S_n : n \in \N\}$ where $\abs{S_n} = \abs{\N}$ for all $n \in \N$,
+    then $\bigcup_{n \in \N} S_n$ is countable.
+    \begin{proof}
+        (Sketch). Assume disjoint, that $S_{n_1} \cap S_{n_2} = \emptyset$ for all $n_1 \neq n_2$.
+        There exists a bijection $f_n: \N \to S_n$ for all $n \in \N$.
+        Construct $F: \N \times \N \to \bigcup_{n \in \N} S_n$ by $F(n, m) = f_n(m)$.
+        $F$ is a bijection.
+    \end{proof}
+\end{lemma}
+
+\begin{corollary}
+    Any union of countably many finite sets is at most countable. That is, it is either finite or countable.
+\end{corollary}
+
+\begin{theorem}
+    (Cantor).
+    $(0, 1) \subseteq \R$ is uncountable.
+    \begin{proof}
+        Assume in contradiction that $(0, 1)$ is countable. Hence, we can write $(0, 1) = \{x_1, x_2, \ldots\}$.
+        \begin{enumerate}
+            \item
+                Pick $I_1 = [a_1,  b_1] \subseteq (0, 1)$ such that $a_1 < b_1$ and which satisfies $x_1 \not\in I_1$.
+            \item For $n = 2$ pick, $I_2 = [a_2, b_2] \subseteq I_1$ that $x_2 \not\in I_2$.
+            \item Once we have chosen $I_1 \supseteq I_2 \supseteq \ldots \supseteq I_n$, such that $x_k \not\in I_k$ for all $1 \leq k \leq n$.
+            \item Pick $I_{n+1} = [a_{n+1}, b_{n+1}] \subseteq I_n$ such that $x_{n+1} \not\in I_{n+1}$.
+        \end{enumerate}
+        Denote $A = \{a_n : n \in \N\} \subseteq (0, 1)$, then $A \neq \emptyset$ is bounded above by $b_1$ because $A \subseteq I_1$.
+        By the lower bound property, $\exists z = \sup A \in \R$.
+        (Actually, $\forall k \in \N$, $b_k$ is an upper bound for $A$, verify).
+        This implies $z \leq b_k$ for all $k \in \N$ and $a_k \leq z$.
+        $\implies z \in I_k$ for all $k \in \N \implies z \in \bigcap_{n \in \N} I_n \neq \emptyset$.
+        However, $x_n \not\in \cap_{k \in \N} I_k$ for all $n \in \N$, a contradiction of our assumption that
+        $(0, 1) = \{x_1, x_2, \ldots\}$ and in particular that $z$ is in this list.
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    $\R$ is uncountable.
+\end{corollary}
+
+\begin{theorem}
+    (Cantor's diagonal argument, sketch).
+    \begin{proof}
+        Assume in contradiction that $(0, 1)$ is countable. Hence, we can write $(0, 1) = \{x_1, x_2, \ldots\}$.
+        E.g. $x_1 = 0.1246789\ldots$, $x_2 = 0.9876543\ldots$, etc. Let's construct $y \in (0, 1)$ such that $y \neq x_n$ for all $n \in \N$.
+        We do this by choosing $y$ such that its $n-th$ digit is not equal to the $n-th$ digit of $x_n$.
+        Therefore, $y \neq x_n$ for all $n \in \N$, a contradiction.
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    There are uncountably many irrational numbers in $\R$. I.e., $\R \setminus \Q$ is uncountable.
+    \begin{proof}
+        If $\R \setminus \Q$ were countable, then $\R$ would be countable, a contradiction.
+    \end{proof}
+\end{corollary}
+
+\subsection{Power sets}
+
+\begin{definition}
+    (Power set).
+    The power set of a set $A$ is the set of all subsets of $A$.
+    We denote the power set of $A$ by $\mathcal{P}(A) = \{E : E \subseteq A\}$.
+\end{definition}
+
+\begin{theorem}
+    (Cantor, again).
+    For any set $A$, $\abs{A} \neq \abs{\mathcal{P}(A)}$.
+    \begin{proof}
+        Assume in contradiction that there exists a bijection $\Phi : A \to \mathcal{P}(A)$. 
+        Consider $E = \{y \in A : y \not\in \Phi(y)\} \in \mathcal{P}(A)$.
+        Since $\Phi$ is onto, $\exists e \in A$ such that $\Phi(e) = E$.
+        \begin{enumerate}
+            \item If $e \in E$, then $e \in \Phi(e) = E$, implying $e \not\in E$, a contradiction.
+            \item If $e \not\in E$, then $e \not\in \Phi(e) = E$, implying $e \in E$, a contradiction.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+\begin{corollary}
+    $\mathcal{P}(\N)$ is uncountable.
+\end{corollary}
+
+\newpage
+
+\section{Metric spaces}
+
+\begin{definition}
+    (Metric space).
+    A metric space is a set $X$ together with a distance function $d: X \times X \to \R$ satisfying:
+    \begin{enumerate}
+        \item Positivity: $d(x, y) \geq 0$ for all $x, y \in X$ and $d(x, y) = 0$ if and only if $x = y$.
+        \item Symmetry: $d(x, y) = d(y, x)$ for all $x, y \in X$.
+        \item Triangle-inequality: $d(x, y) + d(y, z) \geq d(x, z)$ for all $x, y, z \in X$.
+    \end{enumerate}
+\end{definition}
+
+\begin{example} \hfill
+    \begin{enumerate}
+        \item $\R$ with the standard metric $d(x, y) = |x - y|$.
+        \item $\R^k$ with the standard metric $d(x, y) = \sqrt{\sum_{i=1}^k (x_i - y_i)^2}$.
+        \item Any set $X$ with the discrete metric $d(x, y) = \begin{cases} 0 & \text{if } x = y \\ 1 & \text{if } x \neq y \end{cases}$.
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    ($r$-neighborhood).
+    Let $(X, d)$ be a metric space. The $r$-neighborhood of a point $p \in X$ is the set $N_r(p) = \{x \in X : d(x, p) < r\}$ with $r > 0$.
+\end{definition}
+
+\begin{example}
+    In $\R$, the interval $(a, b) = N_{\frac{b - a}{2}}\left(\frac{a + b}{2}\right)$.
+\end{example}
+
+\begin{definition}
+    (Interior point).
+    Let $(X, d)$ be a metric space and $E \subseteq X$. A point $p \in X$ is an interior point in $E$ if there exists $\epsilon > 0$ such that $N_\epsilon(p) \subseteq E$.
+\end{definition}
+
+\begin{definition}
+    (Open set).
+    A set $E \subseteq X$ is open if every point in $E$ is an interior point.
+\end{definition}
+
+\begin{example}
+    $(0, 1) \subseteq \R$ is open because $\forall x \in (0, 1)$, $x$ is an interior point by taking $\epsilon = \min\{x, 1 - x\}$.
+\end{example}
+
+\begin{lemma}
+    Let $(X, d)$ be a metric space. $\forall p \in X, r > 0$, $N_r(p)$ is open.
+    \begin{proof}
+        Let $q \in N_r(p)$. We want to find an $\epsilon > 0$ such that $N_\epsilon(q) \subseteq N_r(p)$. Let $\epsilon < r - d(p, q)$. $r - d(p, q) > 0$ because $q \in N_r(p)$.
+        For any $x \in N_\epsilon(q)$,
+        \begin{align*}
+            d(x, p) &\leq d(x, q) + d(q, p) & \text{(Triangle inequality)} \\
+                    &< \epsilon + d(q, p) & \text{($x \in N_\epsilon(q)$)} \\
+                    &= r & \text{($\epsilon < r - d(p, q)$)}
+        \end{align*}
+        This implies that $x \in N_r(p)$, so $N_\epsilon(q) \subseteq N_r(p)$, so $q$ is an interior point of $N_r(p)$.
+    \end{proof}
+\end{lemma}
+
+\begin{proposition}
+    Let $(X, d)$ be a metric space.
+    \begin{enumerate}
+        \item Let $\{G_\alpha\}_{\alpha \in I}$ be any collection of open sets in $X$. Then $\bigcup_{\alpha \in I} G_\alpha$ is open.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Let $p \in \bigcup_{\alpha \in I} G_\alpha$. 
+                    \item Then $\exists \alpha_0 \in I$ such that $p \in G_{\alpha_0}$. 
+                    \item Since $G_{\alpha_0}$ is open, $\exists \epsilon > 0$ such that $N_\epsilon(p) \subseteq G_{\alpha_0} \subseteq \bigcup_{\alpha \in I} G_\alpha$.
+                    \item Therefore, $p$ is an interior point of $\bigcup_{\alpha \in I} G_\alpha$, so $\bigcup_{\alpha \in I} G_\alpha$ is open.
+                \end{itemize}
+            \end{proof}
+        \item If $G_1, G_2, \ldots, G_n$ are open, then $\bigcap_{i=1}^n G_i$ is open.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Let $p \in \bigcap_{i=1}^n G_i$.
+                    \item Since $G_i$ is open for all $1 \leq i \leq n$, there exists $\epsilon_1, \ldots, \epsilon_n$ such that
+            $N_{\epsilon_i}(p) \subseteq G_i$ for all $1 \leq i \leq n$. 
+                    \item Let $\epsilon = \min\{\epsilon_1, \ldots, \epsilon_n\} > 0$.
+                    \item Then $N_\epsilon(p) \subseteq N_{\epsilon_i}(p) \subseteq G_i$ for all $1 \leq i \leq n$, so $N_\epsilon(p) \subseteq \bigcap_{i=1}^n G_i$.
+                    \item Therefore, $p$ is an interior point of $\bigcap_{i=1}^n G_i$, so $\bigcap_{i=1}^n G_i$ is open.
+                \end{itemize}
+            \end{proof}
+    \end{enumerate}
+\end{proposition}
+
+\begin{example}
+    Counterexample for an infinite intersection. Consider $\left\{G_n = \left(-\frac{1}{n}, \frac{1}{n}\right) \colon n \in \N \right\}$. Then $\bigcap_{n=1}^\infty G_n = \{0\}$, which is not open.
+\end{example}
+
+\subsection{Limit points and closed sets}
+
+\begin{definition}
+    (Limit point, isolated point, closed set).
+    Let $(X, d)$ be a metric space. Let $E\subseteq X$.
+    \begin{enumerate}
+        \item A point $p \in X$ is a limit point of $E$ if $\forall \epsilon > 0$, $N_\epsilon(p) \cap (E \setminus \{p\}) \neq \emptyset$. In other words, $\forall \epsilon > 0$, $N_\epsilon(p) \cap E$ contains $q\neq p$.
+        \item A point $p \in E$ is called isolated if it is not a limit point. Equivalently, $\exists \epsilon > 0$ such that $N_\epsilon(p) \cap E = \{p\}$.
+        \item A set $E$ is closed if it contains all of its limit points.
+    \end{enumerate}
+\end{definition}
+
+\begin{example}
+    All examples in $\R$.
+    \begin{enumerate}
+        \item $E = (0, 1)$. The set of limit points of $E$ is $[0, 1]$, so $E$ is not closed.
+        \item $E = [0, 1]$. The set of limit points of $E$ is $[0, 1]$, so $E$ is closed.
+        \item $\emptyset$ and $\R$ are both open and closed.
+        \item $E = \left\{\frac{1}{n} \colon n \in \N\right\}$. All elements in this set are isolated, so $E$ is not closed. But set of limit points of $E$ is $\{0\}$.
+        \item $E = \Q$. The set of all limit points of $E$ is $\R$ (density of $\Q$ in $\R$).
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    Any neighborhood of a limit point $p$ of $E \subseteq X$ contains infinitely many points of $E$.
+    \begin{proof}
+        We want to show that if $p \in X$ is a limit point of $E$ and $\epsilon > 0$, then $N_\epsilon(p) \cap E$ is infinite.
+        Assume in contradiction that $\exists \epsilon_0 > 0$ such that $N_{\epsilon_0}(p) \cap E = \{p_1, \ldots, p_n\}$ is finite.
+        Let $\delta = \min\{d(p, p_i) : 1 \leq i \leq n \text{ and } p_i \neq p\}$. Then $N_\frac{\delta}{2}(p) \cap E = \{p\}$ (verify).
+        Therefore, $p$ is not a limit point of $E$, which is a contradiction.
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    Finite sets have no limit points.
+\end{corollary}
+
+\begin{corollary}
+    All finite sets are closed.
+\end{corollary}
+
+\begin{proposition}
+    $E$ is open iff $E^c := X \setminus E$ is closed.
+    \begin{proof}
+        $(\implies)$ Assume $E$ is open.
+
+        \begin{itemize}
+            \item Let $p$ be a limit point of $E^c$. This means that $\forall \epsilon > 0$, $N_\epsilon(p)$ contains elements of $E^c$.
+            \item In particular, $N_\epsilon(p) \not\subseteq E$, so $p$ is not an interior point of $E$. This implies that $p$ cannot be in $E$ because $E$ is open.
+            \item Therefore, $p \in E^c$, so $E^c$ is closed.
+        \end{itemize}
+
+        $(\impliedby)$ Assume $E^c$ is closed.
+        \begin{itemize}
+            \item Hence, $\forall p \in E$, $p$ is not a limit point of $E^c$.
+            \item This implies $\exists \epsilon > 0$ such that $N_\epsilon(p) \cap E^c = \emptyset$.
+            \item This means that $N_\epsilon(p) \subseteq E$, so $p$ is an interior point of $E$.
+            \item Therefore, $E$ is open.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{remark}
+    \hfill
+    \begin{enumerate}
+        \item Since $(E^c)^c = E$, we have that $E$ is closed iff $E^c$ is open.
+        \item Some metric spaces have non-empty clopen subsets that are not $X$. For example $X = [0, 1] \cup [2, 3]$ with $d(x, y) = |x - y|$. Check with $[0, 1]$ is open and closed.
+    \end{enumerate}
+\end{remark}
+
+\begin{corollary}
+    Let $(X, d)$ be a metric space.
+    \begin{enumerate}
+        \item Let $\{F_\alpha\}_{\alpha \in I}$ be any collection of closed sets. Then $\bigcap_{\alpha \in I} F_\alpha$ is closed.
+        \item If $F_1, F_2, \ldots, F_n$ are closed, then $\bigcup_{i=1}^n F_i$ is closed.
+    \end{enumerate}
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item
+        Notice that $\left(\bigcap_{\alpha \in I} F_\alpha\right)^c = \bigcup_{\alpha \in I} F_\alpha^c$ and $\left(\bigcup_{i=1}^n F_i\right)^c = \bigcap_{i=1}^n F_i^c$.
+            \item
+        To prove the first statement, since $F_\alpha$ is closed $\forall \alpha \in I$, $F_\alpha^c$ is open.
+            \item
+        This implies that $\bigcup_{\alpha \in I} F_\alpha^c$ is open (arbitrary union of open sets are open).
+            \item
+        This implies $\left(\bigcap_{\alpha \in I} F_\alpha\right)^c$ is open, so $\bigcap_{\alpha \in I} F_\alpha$ is closed.
+            \item
+        The second statement follows similarly.
+        \end{itemize}
+        
+    \end{proof}
+\end{corollary}
+
+\begin{remark}
+    There exists sets in $\R$ that are neither open nor closed. For example, $\Q$, $\left\{\frac{1}{n} \colon n \in \N\right\}$.
+\end{remark}
+
+\begin{definition}
+    (Closure).
+    The closure of a set $E \subseteq X$ is the set $$\overline{E} := \{x \in X \colon x \in E \text{ or } x \text{ is a limit point of } E\}$$.
+\end{definition}
+\begin{example} \hfill
+    \begin{enumerate}
+        \item $\overline{(0, 1)} = [0, 1]$.
+        \item $\overline{\Q} = \R$.
+        \item $\overline{\left\{\frac{1}{n} \colon n \in \N\right\}} = \{0\} \cup \left\{\frac{1}{n} \colon n \in \N\right\}$.
+    \end{enumerate}
+\end{example}
+
+\begin{remark}
+    A set $A \subseteq B$ is said to be dense in $B$ if $\overline{A} = B$.
+\end{remark}
+
+\begin{proposition}
+    For any $E \subseteq X$, $\overline{E}$ is the smallest closed set containing $E$. That is, $\overline{E}$ is closed and for any closed set $F \subseteq X$ with $E \subseteq F$, $\overline{E} \subseteq F$.
+    \begin{proof}
+        First we show $\overline{E}^c$ is open. Let $p \in \overline{E}^c$. Since $p \not\in \overline{E}$, we know that $p \not\in E$ and $p$ is not a limit point of $E$.
+        This implies that $\exists \epsilon > 0$ such that $N_\epsilon(p) \cap E = $ FINISH THIS PROOF.
+
+        Let $F \subseteq X$ be closed with $E \subseteq F$ and let $p$ be a limit point of $E$. This means that $\forall \epsilon > 0$, $N_\epsilon(p) \cap (E \setminus \{p\}) \neq \emptyset$.
+        Because $N_\epsilon(p) \cap (E \setminus \{p\}) \subseteq N_\epsilon(p) \cap (F \setminus \{p\})$, we have that $p$ is a limit point of $F$.
+        This implies that $p \in  F$, so $\overline{E} \subseteq F$.
+    \end{proof}
+\end{proposition}
+
+\begin{remark}
+    Consider $\F = \{F \subseteq X \colon E \subseteq F \text{ and $F$ is closed}\}$. Then $\overline{E} = \bigcap_{F \in \F} F$.
+    \begin{proof}
+        $\overline{E} \in \F$ implies $\bigcap_{F \in \F} F \subseteq \overline{E}$. $\forall F \in \F$, $\overline{E} \subseteq F$ implies $\overline{E} \subseteq \bigcap_{F \in \F} F$.
+    \end{proof}
+\end{remark}
+
+\begin{proposition}
+    If $\emptyset \neq E \subseteq \R$ is bounded above then $\sup E \in \overline{E}$.
+    \begin{proof}
+        Let $z = \sup E$. If $z \in E$, then $z \in \overline{E}$. Otherwise, we show that $z$ is a limit point of $E$.
+        $\forall \epsilon > 0$, $z - \epsilon$ is not an upper bound of $E$. This implies that $\exists q \in E$ such that $z - \epsilon < q \leq z$.
+        Since $z \not\in E$, we have the strict inequality $z - \epsilon < q < z$. Or in other words, $q \in N_\epsilon(z) \cap E \setminus \{z\}$.
+        Therefore, $z$ is a limit point of $E$, so $z \in \overline{E}$.
+    \end{proof}
+\end{proposition}
+\subsection{Bounded sets}
+\begin{definition}
+    (Bounded set).
+    A set $E \subseteq X$ is bounded if $\exists M > 0$ such that $\forall p, q \in E$, $d(p, q) \leq M$.
+\end{definition}
+\begin{proposition}
+    For any $\emptyset \neq E \subseteq \R$, $E$ is bounded if and only if $\exists \tilde{M} > 0$ and $p_0 \in X$ such that $E \subseteq N_{\tilde{M}}(p_0)$.
+    \begin{proof}
+        $(\implies)$ Assume $E$ is bounded. Fix $p_0 \in E$. Then $\exists M > 0$ such that $\forall q \in E$, $d(p_0, q) \leq M$. This implies that $E \subseteq N_M(p_0)$.
+
+        $(\impliedby)$ Assume $\exists \tilde{M} > 0$ and $p_0 \in X$ such that $E \subseteq N_{\tilde{M}}(p_0)$. Then $\forall p, q \in E$,
+        $$d(p, q) \leq d(p, p_0) + d(p_0, q) \leq \tilde{M} + \tilde{M} = 2\tilde{M}.$$
+        So $E$ is bounded by a constant $2\tilde{M}$.
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    $E \subseteq \R$ is bounded if any only if it is bounded both above and below.
+\end{corollary}
+
+\subsection{Connected sets}
+
+\begin{definition}
+    $E \subseteq X$ is disconnected if there exists two non-empty subsets $A, B \subseteq X$ such that $E = A \cup B$ and both $A \cap \overline{B} = \emptyset$ and $\overline{A} \cap B = \emptyset$.
+    A set is called connected if it is not disconnected.
+\end{definition}
+
+\begin{example}
+    \hfill
+    \begin{enumerate}
+        \item $\{0, 1\}$ is disconnected by taking $A = \{0\}$ and $B = \{1\}$.
+        \item $[-1, 0) \cup (0, 1]$ is disconnected by taking $A = [-1, 0)$ and $B = (0, 1]$.
+        \item $\Q$ is disconnected by taking $A = \Q \cap (-\infty, \sqrt{2})$ and $B = \Q \cap (\sqrt{2}, \infty)$.
+        \item $[-1, 1]$, $(-1, 1)$, and $\R$ are all connected.
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    $E \subseteq \R$ is connected if and only if $\forall x < y \in E$, then $[x, y] \subseteq E$.
+    \begin{proof}
+        $(\implies)$
+        \begin{itemize}
+            \item Assume $E$ is connected and assume in contradiction that $\exists x < z < y$ such that $x, y \in E$ but $z \not\in E$. 
+            \item Consider $E = A \cup B$ where $A = E \cap (-\infty, z)$ and $B = E \cap (z, \infty)$.
+            \item Since $x \in A$, $y \in B$, we have $A \neq \emptyset$ and $B \neq \emptyset$. 
+            \item
+        Next $\overline{A} \subseteq \overline{(-\infty, z)} = (-\infty, z]$.
+            \item
+        Hence, $\overline{A} \cap B \subseteq (-\infty, z] \cap (z, \infty) = \emptyset$.
+            \item
+        Similarly, $A \cap \overline{B} \subseteq (-\infty, z) \cap [z, \infty) = \emptyset$.
+        \item  This implies that $E$ is disconnected, which is a contradiction.
+        \end{itemize}
+
+        $(\impliedby)$
+        \begin{itemize}
+            \item
+        Assume $\forall x < y \in E$, then $[x, y] \subseteq E$.
+            \item
+        Let $E = A \cup B$ where $A \neq \emptyset$, $B \neq \emptyset$, and $A \cap B = \emptyset$.
+            \item
+        Without loss of generality, let $x \in A$, $y \in B$ such that $x < y$.
+            \item
+        Denote $z = \sup\{t \in A \colon t < y\} = \sup(A \cap (-\infty, y))$.
+            \item
+        Then $z \in \overline{A}$ by a previous proposition (because $z \in (A \cap (-\infty, y)) \subseteq \overline{A}$).
+            \item
+        We have two cases:
+        \begin{enumerate}
+            \item If $z \in B$, then $\overline{A} \cap B \neq \emptyset$. Hence, $E = A \cup B$ is not a witness to $E$ being disconnected.
+            \item If $z \not\in B$, then in particular $z \neq y$ and hence $x \leq z < y \implies [z, y] \subseteq [x, y] \subseteq E \implies (z, y) \subseteq E \setminus A \subseteq B \implies z \in \overline{(z, y)} \subseteq \overline{B}$.
+                Also, since $z \not\in B \implies z \in A$, so we conclude that $z \in A \cap \overline{B} \neq \emptyset$. Again showing $E = A \cup B$ is not a witness to $E$ being disconnected.
+        \end{enumerate}
+    \item 
+        Therefore, $E$ is connected.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    $X$ is disconnected if and only if $X = A \cup B$ where $A$ and $B$ are non-empty and disjoint open sets.
+    \begin{proof}
+        (Idea). If $X = A \cup B$ and $A \cap \overline{B} = \emptyset$, then $\overline{B} = A^c$ is closed.
+    \end{proof}
+\end{proposition}
+
+\begin{remark}
+    The induced metric on a subset $Y \subseteq X$ is just the restriction of $d$ to $Y \times Y$, i.e. the distance in $Y$ between any two points in $Y$ is the same as their distance in $X$.
+    A set $U \subseteq Y \subseteq X$ is open if it is open as a subset $U \subseteq Y$ with respect to the induced metric on $Y$.
+    $Y \subseteq X$ is disconnected if and only if $Y = A \cup B$ where $A$ and $B$ are non-empty and disjoint open sets in $Y$.
+\end{remark}
+
+\subsection{Compact sets}
+
+\begin{definition}
+    A collection $\{G_\alpha\}_{\alpha \in I}$ is called an open cover of a subset $E\subseteq X$ if each $G_\alpha$, $\alpha \in I$, is an open set and $E \subseteq \bigcup_{\alpha \in I} G_\alpha$
+
+    An open cover is called finite if it contains finitely many open sets.
+    It is called infinite otherwise.
+
+    Given an open cover $\{G_\alpha\}_{\alpha \in I}$ of a subset $E\subseteq X$, a subcover is a subcollection 
+    $\{V_\beta\}_{\beta \in J} \subseteq \{G_\alpha\}_{\alpha \in I}$ that is still an open cover of $E$.
+    That is, still satisfying $E \subseteq \bigcup_{\beta \in J} V_\beta$.
+\end{definition}
+\begin{example}
+    \hfill
+    \begin{enumerate}
+        \item $E = [0, 1]$ with
+            $$\left\{G_x = \left(x - \frac{1}{10}, x + \frac{1}{10}\right)\right\}_{x \in [0, 1]}$$ has a finite sub-cover. E.g.
+            $$\left\{G_0, G_{\frac{1}{10}}, \ldots, G_{\frac{9}{10}}, G_1\right\}$$
+        \item $A = (0, 1)$ with
+            $$\left\{G_x = \left(x - \frac{1}{10}, x + \frac{1}{10}\right)\right\}_{x \in [0, 1]}$$ has a finite sub-cover.
+        \item $\left\{W_n = \left(\frac{1}{n}, 2\right)\right\}_{n \in \mathbb{N}}$ is also an open cover of $A$ without a finite subcover. This is because any finite subcollection
+            $$\left\{W_{n_1}, \ldots, W_{n_k}\right\} \subseteq \left\{W_n\right\}_{n \in \mathbb{N}}$$
+            would satisfy
+            $$\bigcup_{i=1}^k W_{n_i} \subseteq \left(\frac{1}{M} 2\right)$$
+            where $M = \max\left\{n_1, \ldots, n_k\right\}$.
+    \end{enumerate}
+\end{example}
+\begin{definition}
+    (Compact set).
+    A subset $K \subseteq X$ is called compact if every open cover of $K$ has a finite subcover.
+\end{definition}
+\begin{example}
+    \hfill
+    \begin{enumerate}
+        \item In $\mathbb{R}$, $A = (0, 1]$ is not compact. See above example 2.
+        \item In $\mathbb{R}$, $\mathbb{Z}$ is not compact.
+        \item Every finite set in $X$ is compact.
+        \item In $\mathbb{R}$, $E = \{0\} \cup \left\{\frac{1}{n} \colon n \in \mathbb{N}\right\}$ is compact.
+            \begin{proof}
+                Let $\{G_\alpha\}_{\alpha \in I}$ be an open cover of $E$.
+                Then, $\exists \alpha_0$ such that $0 \in G_{\alpha_0}$.
+                Since $G_{\alpha_0}$ is open, there exists $\epsilon >0$ such that $N_\epsilon(0) = (-\epsilon, \epsilon) \subseteq G_{\alpha_0}$.
+                Take $m = \max\left\{n \colon \frac{1}{n} \geq \epsilon\right\}$.
+                Then $E \setminus G_{\alpha_0} \subseteq \left\{1, \frac{1}{2}, \ldots, \frac{1}{m}\right\}$.
+                So we can pick $m$ more elements of $\{G_\alpha \colon G_{\alpha_1}, \ldots, G_{\alpha_m}\}$ such that
+                $E \subseteq \bigcup_{i=0}^m G_{\alpha_i}$.
+            \end{proof}
+    \end{enumerate}
+\end{example}
+
+\begin{proposition}
+    If $K \subseteq X$ is compact then $K$ is closed.
+    \begin{proof}
+        We'll show $K^c$ is open. Let $p \in K^c$. For any $q \in K$, since $p \neq q$, $d(p, q) > 0$ and 
+        $$p \not\in N_{\frac{d(p,q)}{2}}(q) =: V_q$$
+        Consider $\{V_q\}_{q \in K}$. Then $\{V_q\}_{q \in K}$ is an open cover of $K$.
+        Since $K$ is compact, there exists a finite subcover
+        $\{V_{q_1}, \ldots, V_{q_n}\} \subseteq \{V_q\}_{q \in K}$ such that $K \subseteq \bigcup_{i=1}^n V_{q_i}$
+        Denote $$r = \min\left\{\frac{d(p, q_i)}{2} \colon 1 \leq i \leq n\right\} > 0$$.
+        Then
+        $$N_r(p) \cap \bigcup_{i=1}^n V_{q_i} = \emptyset$$
+        Otherwise, if
+        $$x \in  N_r(p) \cap \bigcup_{i=1}^n V_{q_i}$$
+        then $\exists 1 \leq j \leq n$ such that $x \in N_r(p) \cap V_{q_j}$. This implies
+        $$d(p, q_j) \leq d(p, x) + d(x, q_j) < r + \frac{d(p, q_j)}{2} \leq d(p, q_j)$$
+        A contradiction. This implies that $N_r(p) \subseteq \left(\bigcup_{i=1}^n V_{q_i}\right)^c \subset K^c$. This implies $p$ is an interior point of $K^c$.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    If $K \subseteq X$ is compact, then $K$ is bounded.
+    \begin{proof}
+        Consider the following open cover of $K$:
+        $$\left\{N_1(q) \right\}_{q \in K}$$
+        Since $K$ is compact, $\exists q_1, \ldots, q_n \in K$ such that
+        $$\forall p \in k \exists 1 \leq i \leq n \text{ such that } d(p, q_i) < 1$$
+        Denote $D = \max\{d(q_i, q_j) \colon 1 \leq i, j \leq n\}$. Let $x, y \in K$. Then
+        $\exists 1 \leq i \leq n$ such that $d(x, q_i) < 1$ and $\exists 1 \leq j \leq n$ such that $d(y, q_j) < 1$.
+        Using the triangle inequality, we have
+        $$d(x, y) \leq d(x, q_i) + d(q_i, q_j) + d(q_j, y) < 1 + D + 1 = D + 2 =: M$$
+        Hence, we've shown that $\forall x, y \in K$, $d(x, y) \leq M$. Therefore $K$ is bounded.
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    Let $K \subseteq X$ be compact. Any infinite subset $E \subseteq K$ has a limit point in $K$.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item
+        Let $E \subseteq K$ be a set without a limit point in $K$. We will show $E$ is finite (or empty).
+            \item
+        Let $q \in K$. Since $q$ is not a limit point of $E$ we know there exists a neighborhood $V_q$ of $q$ satisfying $E \cap V_q \subseteq \{q\}$
+            \item
+        Consider the open cover $\{V_q\}_{q \in K}$. Since $K$ is compact, there exists a finite subcover $\{V_{q_1}, \ldots, V_{q_n}\} \subseteq \{V_q\}_{q \in K}$
+        such that $K \subseteq \bigcup_{i=1}^n V_{q_i}$. 
+        $$E = E \cap \left(\bigcup_{i=1}^n V_{q_i}\right) = \bigcup_{i=1}^n (E \cap V_{q_i}) \subseteq \bigcup_{i=1}^n \{q_i\}$$
+            \item
+        Therefore, $E$ is finite.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{proposition}
+    For any $a < b$, $[a, b]\subseteq \R$ is compact.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item
+        Assume in contradiction that there exists an open cover $\{G_\alpha\}_{\alpha}$ of $I = [a, b]$ which does not contain a finite sub-cover.
+            \item
+        Notation: Given an interval $J = [c, d]$. Denote $J^L = [c, \frac{c + d}{2}]$ and $J^R = [\frac{c + d}{2}, d]$.
+            \item
+        At most one of $\{ I^L, I^R \}$ can be covered by finitely many $G_\alpha$.
+        (Since if $\exists \alpha_1, \ldots, \alpha_n, \beta_1, \ldots, \beta_m$ such that $I^L \subseteq \bigcup_{i=1}^n G_{\alpha_i}$ and $I^R \subseteq \bigcup_{i=1}^m G_{\beta_i}$, then
+            \item
+        $\{G_{\alpha_1}, \ldots, G_{\alpha_n}, G_{\beta_1}, \ldots, G_{\beta_m}\}$ is a finite subcover of $I$.)
+            \item
+        Denote $I_1 = I^L$ if $I^L$ cannot be covered by finitely many $G_\alpha$ and set $I_1 = I^R$ otherwise.
+            \item
+        For  any $n \geq 1$, if $I_n$ cannot be covered by finitely many $G_\alpha$, then at least one of
+            \item
+        $\{I_n^L, I_n^R\}$ also cannot be covered by finitely many $G_\alpha$.
+            \item
+        Denote $I_{n+1} = I_n^L$ if it cannot be covered by finitely many $G_\alpha$
+        and set $I_{n+1} = I_n^R$ otherwise.
+            \item
+        Notice that the length of $I^n$ is $2^{-n}(b - a)$.
+            \item
+        Also notice that
+        $I \supseteq I_1 \supseteq I_2 \supseteq \ldots$
+            \item
+        We've seen before (in the proof of Cantor's Theorem) that in this situation in $\R$,
+        $\bigcap_{n \in \N} I_n \neq \emptyset$.
+            \item
+        Let $z \in \bigcap_{n \in \N} I_n$. In particular, $z \in [a, b]$.
+            \item
+        Since $\{G_\alpha\}$ covers $[a, b]$, $\exists \alpha_0$ is open, $\exists \epsilon > 0$ for which $N_\epsilon(z) \subseteq G_{\alpha_0}$
+            \item
+        Since $\exists n_0 \in \N$ with $2^{-n_0}(b - a) < \epsilon$, and since $z \in I_{n_0}$, we have that $I_{n_0} \subseteq N_\epsilon(z) \subseteq G_{\alpha_0}$.
+            \item
+        This is a contradiction of our construction which ensured that $I_{n_0}$ cannot be covered by finitely many $G_\alpha$.
+        \end{itemize}
+
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    Every infinite subset of $[a, b] \in \R$ has a limit point.
+\end{corollary}
+
+\begin{remark}
+    A similar statement holds for $k$-cells in $\R^n$.
+    $$[a_1, b_1] \times \ldots \times [a_k, b_k]$$
+    These are all compact in $\R^n$.
+\end{remark}
+
+\newpage
+
+\begin{proposition}
+    If $K \subseteq X$ is compact and $F \subseteq K$ is closed, then $F$ is compact.
+
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item
+                Let $\{G_\alpha\}_{\alpha \in I}$ be an arbitrary open cover of $F$.
+            \item 
+                Then $\{G_\alpha\}_{\alpha \in I} \cup \{F^c\}$ is an open cover of $K$.
+                ($\{F^c\}$ is open because $F$ is closed).
+            \item 
+                Since $K$ is compact, there exists a finite subcover $\{G_{\alpha_1}, \ldots, G_{\alpha_n}, F^c\}$ of $K$.
+            \item $\implies \{G_{\alpha_1}, \ldots, G_{\alpha_n}\}$ is a finite subcover of $F$.
+            \item Since $\{G_\alpha\}_{\alpha \in I}$ was arbitrary, this implies that $F$ is compact.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{corollary}
+    If $K \subseteq X$ is compact and $F \subseteq X$ is closed then $F \cap K$ is compact.
+    \begin{proof}
+        $F \cap K$ is closed in $K$ and $K$ is compact.
+    \end{proof}
+\end{corollary}
+
+\begin{theorem}
+    In $R^n$, the following are equivalent (TFAE) for $E \subseteq \R^n$:
+    \begin{enumerate}
+        \item $E$ is bounded and closed.
+        \item $E$ is compact.
+        \item Every infinite subset of $E$ has a limit point in $E$.
+    \end{enumerate}
+
+    \begin{proof}
+        We'll show that (1) $\implies$ (2) $\implies$ (3) $\implies$ (1).
+        \begin{enumerate}
+            \item
+            \textbf{(1) $\implies$ (2)}.
+            \begin{itemize}
+                \item Assume $E$ is bounded and closed. Then there exists a cell $C = [a_1, b_1] \times \ldots \times [a_n, b_n]$ such that $E \subseteq C$.
+                    (E.g. $R^n = \cup_{k \in \N} [-k, k] \times \ldots \times [-k, k]$).
+                \item $\implies E \subseteq C$ is a closed subset of a compact set, so $E$ is compact.
+            \end{itemize}
+        \item 
+            \textbf{(2) $\implies$ (3)}. Shown in previous proposition.
+        \item 
+            \textbf{(3) $\implies$ (1)}. Prove by contrapositive.
+            \begin{itemize}
+                \item Assume $E$ is unbounded. Then $\forall n \in \N$, $\exists x_n \in E$ such that $d(x_n, x_0) \geq n$ for some $x_0 \in R^n$ (e.g. the origin).
+                \item Consider $J_1 = \{x_n\}_{n \in \N}$. Then $J_1$ is infinite (verify). If $J_1$ were finite, then it would have been bounded.
+                \item $J_1$ is without a limit point (verify). If it had a limit point, it would see infinite amount of points in its neighborhood, which is impossible.
+                \item Assume $E$ is not closed. Then $\exists q \in X \setminus E$ such that $q$ is a limit point of $E$.
+                \item Since $q$ is a limit point of $E$, $\forall n \in \N$, $\exists y_n \in E$ such that $y_n \in N_{1/n}(q)$
+                \item Consider $J_2 = \{y_n\}_{n \in \N}$. Then $J_2$ is infinite (verify).
+                \item We claim that the only limit point of $J_2$ is $q$. Hence, $J_2$ is without a limit point in $E$.
+                \item Assume $q'$ is a limit point of $J_2$. For any $n \in \N$, there exists infinitely many elements of $J_2$ in $N_{1/n}(q')$.
+                \item In particular, $\exists  k > n$ such that $y_k \in N_{1/n}(q')$.
+                $\implies$
+                    \begin{align*}
+                        d(q, q') &\leq d(q, y_k) + d(y_k, q') \\
+                        &< \frac{1}{k} + \frac{1}{n} \leq \frac{2}{n}
+                    \end{align*}
+                \item Since this holds for all $n \in \N \implies d(q, q') = 0 \implies q' = q$.
+            \end{itemize}
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+\begin{remark}
+    The equivalence of (2) $\iff$ (3) holds in any metric space. So does (2) $\implies$ (1).
+    The structure of $\R^n$ is used to show (1) $\implies$ (2).
+    (1) $\implies$ (2) does not hold in general, e.g. if $X$ is infinite with the discrete metric. (Every subset of $X$ are closed and bounded, but only finite sets are compact)
+\end{remark}
+
+\begin{example}
+    Middle-$\frac{1}{3}$ Cantor set.
+    \begin{itemize}
+        \item $C_0 = [0, 1]$.
+        \item $C_1 = \left[0, \frac{1}{3}\right] \cup \left[\frac{2}{3}, 1\right]$.
+        \item $C_2 = \left[0, \frac{1}{9}\right] \cup \left[\frac{2}{9}, \frac{1}{3}\right] \cup \left[\frac{2}{3}, \frac{7}{9}\right] \cup \left[\frac{8}{9}, 1\right]$.
+        \item This process continues.
+        \item The middle-$\frac{1}{3}$ Cantor set is defined as $C_{\frac{1}{3}} = \bigcap_{n \in \N} C_n$.
+        \item For each $n$: $C_n$ is the union of $2^n$ closed intervals of length $3^{-n}$.
+            $C_{n+1}$ is given by removing the middle $\frac{1}{3}$ of each of these intervals in $C_n$.
+    \end{itemize}
+    Facts:
+    \begin{enumerate}
+        \item $C_{\frac{1}{3}} \neq \emptyset$ and $C_{\frac{1}{3}}$ is compact.
+        \item $C_{\frac{1}{3}}$ is uncountable. 
+        \item The "length" of $C_{\frac{1}{3}}$ is 0.
+        \item Every point in $C_{\frac{1}{3}}$ is a limit point. (No isolated points).
+        \item There are no interior points in $C_{\frac{1}{3}}$.
+    \end{enumerate}
+\end{example}
+
+\newpage
+
+\section{Sequences}
+
+\subsection{Convergence}
+\begin{definition}
+    (Sequence).
+    A sequence $(p_n)_{n = 1}^\infty$ in $X$ is a function $p \colon \N \to X$.
+\end{definition}
+
+\begin{remark}
+    We're allowed repetitions in sequences. Order matters.
+\end{remark}
+
+\begin{example}
+    in $\R$:
+    \begin{enumerate}
+        \item $a_n \equiv 0$ $\forall n \in \N$.
+        \item $b_n = \begin{cases} n & \text{if $n$ is odd} \\ \frac{1}{n^2} & \text{if $n$ is even} \end{cases}$.
+        \item $q_n$ some enumeration of $\Q$. ($q: \N \to \Q$ is a bijection).
+    \end{enumerate}
+\end{example}
+
+\begin{definition}
+    (Convergence).
+    A sequence $(p_n)_n$ in $X$ is said to converge to $q \in X$, denoted $p_n \to q$ or $\lim_{n \to \infty} p_n = q$, if
+    \begin{align*}
+        \forall \epsilon > 0, \exists N \in \N \text{ such that } \forall n \geq N, p_n \in N_\epsilon(q)
+    \end{align*}
+\end{definition}
+
+\begin{example}
+    \hfill
+    \begin{itemize}
+        \item $a_n \equiv 0$ converges to 0.
+        \item $b_n = \frac{1}{n^2}$ converges to 0. $\forall \epsilon > 0$, take $N > \frac{1}{\sqrt{\epsilon}}$
+            $\implies \forall n \geq N$, $|b_n| = \frac{1}{n^2} < \frac{1}{N} < \epsilon$.
+            $\implies b_n \in N_\epsilon(0)$.
+    \end{itemize}
+\end{example}
+
+\begin{definition}
+    (Convergent sequence).
+    A sequence $(p_n)_n$ in $X$ is called convergent if $\exists q \in X$ such that $p_n \to q$.
+    Otherwise, $(p_n)_n$ is called divergent.
+\end{definition}
+
+\begin{example}
+    Divergent sequences:
+    \begin{itemize}
+        \item $a_n = n$ in $\R$ is divergent.
+        \item $b_n = \frac{1}{n}$ in $(0, 1]$ is divergent.
+        \item $c_n = (-1)^n = \{-1, 1, -1, \ldots\}$ in $\R$ is divergent.
+        \item $q_n =$ some enumeration of $\Q$ in $\R$ is divergent.
+    \end{itemize}
+\end{example}
+
+\begin{proposition}
+    (Uniqueness of limit).
+    If $p_n \to q$ and $p_n \to q'$, then $q = q'$.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item Let $\epsilon > 0$, there exists $N_1 \in \N$ such that $\forall n \geq N_1$, $p_n \in N_\epsilon(q)$.
+            \item Also, there exists $N_2 \in \N$ such that $\forall n \geq N_2$, $p_n \in N_\epsilon(q')$.
+            \item So, for all $n \geq \max\{N_1, N_2\}$, $p_n \in N_\epsilon(q) \cap N_\epsilon(q')$.
+            \item This implies $d(q, q') \leq d(q, p_n) + d(p_n, q') < 2\epsilon$.
+            \item But, $\epsilon > 0$ was arbitrary. So, $d(q, q') = 0 \implies q = q'$.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{definition}
+    (Subsequence).
+    A subsequence $(p_{n_k})_k$ of a sequence $(p_n)_n$ in $X$ is given by a function
+    $\N \to \N$ sending $k \mapsto n_k$ where $n_{k+1} > n_k$ for all $k \in \N$.
+    That is, $(p_{n_k})_k$ is the function $k \mapsto p_{n_k}$.
+\end{definition}
+
+\begin{remark}
+    The idea is that $(p_1, p_2, p_3, \ldots)$ is a sequence and $(p_{n_1}, p_{n_2}, p_{n_3}, \ldots)$ is a subsequence, where we never pick the same element twice and we never backtrack.
+\end{remark}
+
+\begin{example}
+    Let $b_n = \frac{1}{n}$ in $\R$ be our sequence
+    \begin{itemize}
+        \item $a_k = b_{k^2}$ is a subsequence where $n_k = k^2$. Explicitly, $a_k = \frac{1}{k^2}$.
+    \end{itemize}
+\end{example}
+
+\begin{proposition}
+    (Limits are hereditary).
+    If $p_n \to q$, then any subsequence $(p_{n_k})_k$ of $(p_n)_n$ also converges to $q$.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item Notice that for all $k \in \N$, $n_k \geq k$.
+            \item Let $\epsilon > 0$, then $\exists N \in \N$ such that $\forall n \geq N$, $p_n \in N_\epsilon(q)$.
+            \item In particular for all $k \geq N$, $n_k \geq k \geq N \implies p_{n_k} \in N_\epsilon(q)$.
+            \item Hence, $p_{n_k} \to q$ as $k \to \infty$ by definition.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\begin{example}
+    $c_n = (-1)^n$ in $\R$ is divergent. Because otherwise, there exists $x \in \R$ such that
+    $a_k = c_{2k} = 1 \to x$ and $b_k = c_{2k+1} = -1 \to x$.
+    This implies $1 = x = -1$, which is a contradiction.
+\end{example}
+
+\begin{proposition}
+    If $K \subseteq X$ is compact and $(p_n)_n$ is a sequence in $K$, then $(p_n)_n$ has a convergent subsequence withe a limit in $K$.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item Denote $E = \{p_n \in K : n \in \N\}$.
+            \item If $E$ is finite, $E = \{p_1, \ldots, p_m\}$, then $\exists 1 \leq i < m$ such that $p_{n_k} = p_i$ for some sequence $n_k \in \N$ with $n_{k+1} > n_k$.
+            \item In particular, $p_{n_k} \to p_i \in K$ as $k \to \infty$.
+            \item If $E$ is infinite, then by a previous proposition we've shown, $E$ has a limit point $q \in K$.
+            \item Recall that this means that $\forall \epsilon> 0$, $N_\epsilon(q) \setminus \{q\}$ contains infinitely many elements of $E$.
+            \item For all $k \in \N$, pick $p_{n_1} = p_1$. For each $k \in \N$, pick $n_{k+1} > n_k$ satisfying that $p_{n_k + 1} \in N_{\frac{1}{k+1}}(q)$.
+            \item We can always pick such an $n_{k+1}$ because $E \cap N_{\frac{1}{k+1}}(q) \setminus \{p_i : 1 \leq i \leq n_k\}$ is infinite.
+            \item By construction, $(p_{n_k})_k$ is a subsequence of $(p_n)_n$.
+            \item And, $\forall \epsilon> 0$ take $N \geq 2$ such that $\frac{1}{N} < \epsilon$.
+            \item Then $\forall k \geq N$, $p_{n_k} \in N_{\frac{1}{k}}(q) \subseteq N_{\frac{1}{N}}(q) \subseteq N_\epsilon(q)$.
+            \item $\implies \lim_{k \to \infty} p_{n_k} = q$.
+        \end{itemize}
+    \end{proof}
+    \begin{corollary}
+        Any sequence $(a_n)_n$ in $[a, b] \subseteq \R$ has a convergent subsequence.
+    \end{corollary}
+\end{proposition}
+
+\begin{definition}
+    (Bounded sequence).
+    A sequence $(p_n)_n$ is called bounded if $E = \{p_n : n \in \N\} \subseteq X$ is a bounded set.
+\end{definition}
+
+\begin{proposition}
+    If $(p_n)_n$ is convergent, then it is bounded.
+    \begin{proof}
+        \hfill
+        \begin{itemize}
+            \item Denote $q = \lim_{n \to \infty} p_n$. Then $\exists N \in \N$ such that $\forall n \geq N$, $p_n \in N_1(q)$.
+            \item Set $M = \max\{1, d(p_1, q), \ldots, d(p_{N-1}, q)\} \implies 0 < M < \infty$.
+            \item Then $\forall n \in \N$, $p_n \in N_{M+\frac{1}{2}}(q)$.
+            \item Then $(p_n)_n$ is bounded.
+        \end{itemize}
+    \end{proof}
+\end{proposition}
+
+\subsection{Cauchy sequences}
+
+\begin{example}
+    Consider the sequence:
+    $$a_n = \sum_{p \text{ prime, } p \leq n} 2^{-p}$$
+    For example, $a_{10} = 2^{-2} + 2^{-3} + 2^{-5} + 2^{-7}$. Notice that $\forall n > m$
+    $$a_n - a_m = \sum_{p \text{ prime, } m < p \leq n} 2^{-p} \leq \sum_{k = m+1}^\infty 2^{-k} = 2^{-m}$$
+    For example, $a_{10^9} - a_{10^6} \leq 2^{-10^6}$.
+\end{example}
+
+\begin{definition}
+    (Cauchy sequence).
+    A sequence $(p_n)_n$ in $X$ is called Cauchy if
+    $$\forall \epsilon > 0, \exists N \in \N \text{ such that } \forall n, m \geq N, d(p_n, p_m) < \epsilon$$
+\end{definition}
+
+\begin{example}
+    $b_n = \frac{1}{n}$ in $(0, 1]$ is divergent, but it is Cauchy. $\forall \epsilon > 0$, take $N > \frac{1}{\epsilon}$.
+    Then $\forall n, m \geq N$, $|b_n - b_m| = \frac{1}{n} + \frac{1}{m} < \frac{2}{N} < \epsilon$.
+\end{example}
+
+\begin{definition}
+    (Complete metric space).
+    A metric space $X$ is called complete if every Cauchy sequence in $X$ is convergent.
+\end{definition}
+
+\end{document}
