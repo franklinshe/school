@@ -1,0 +1,136 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+\usepackage{listings}
+\usepackage{color}
+
+\lstdefinestyle{Rstyle}{
+  language=R,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{black},
+  stringstyle=\color{purple},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  frame=single,
+  rulecolor=\color{black},
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=true,
+  title=\lstname,
+  showstringspaces=false,
+  tabsize=2,
+  belowskip=1em,
+  aboveskip=1em,
+}
+
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\E}{\mathbb{E}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{\vspace{-2cm} EENG 431 - Homework 2}
+\author{Franklin She}
+
+\maketitle
+
+\begin{problem}{2}
+    \hfill
+    \begin{enumerate}
+        \item
+            $$\mathcal{H}_{=k}^\mathcal{X} = \{h \in \{0, 1\}^\mathcal{H}: |\{x : h(x) = 1\}| = k\}$$
+            First, we can see that $\text{VCdim}(\mathcal{H}_{=k}) \leq k$, because it is impossible for $h \in \mathcal{H}_{=k}$ to correctly label $k+1$ positive points. Secondly, we can see that $\text{VCdim}(\mathcal{H}_{=k}) \leq |\mathcal{X}| - k$, because it is impossible for $h \in \mathcal{H}_{=k}$ to correctly label $|\mathcal{X}| - k + 1$ negative points. Combining the two, $\text{VCdim}(\mathcal{H}_{=k}) \leq \min{\{k, |\mathcal{X}| - k + 1\}}$.
+            
+            Now, consider a set $C$ of size $\min{\{k, |\mathcal{X}| - k + 1\}}$. The total of positive points in $C$ is at most $k$. We can define $h$ as
+            $$h(x) = \begin{cases}
+                1 & \text{if } x \in \mathcal{X} \setminus C \\
+                1 & \text{if } x \in C \text{ and has positive label} \\
+                0 & \text{if } x \in C \text{ and has negative label} \\
+                0 & \text{otherwise}
+            \end{cases}$$
+            This $h$ shatters this set $C$, therefore we can conclude that $\text{VCdim}(\mathcal{H}_{=k}) = \min{\{k, |\mathcal{X}| - k + 1\}}$.
+        \item
+            $$\mathcal{H}_{at-most-k} = \{h \in \{0, 1\}^\mathcal{H}: |\{x : h(x) = 1\}| \leq k
+                \text{ or } |\{x : h(x) = 0\}| \leq k\}$$
+            First, we can see that $\text{VCdim}(\mathcal{H}_{at-most-k}) \leq k$, because it is impossible for $h \in \mathcal{H}_{at-most-k}$ to correctly label $k+1$ positive points. 
+            Now, consider a set $C$ of size $k$. We define $h$ as
+            $$h(x) = \begin{cases}
+                1 & \text{if } x \in C \text{ and has positive label} \\
+                0 & \text{if } x \in C \text{ and has negative label} \\
+                0 & \text{otherwise}
+            \end{cases}$$
+            This $h$ shatters this set $C$, therefore we can conclude that $\text{VCdim}(\mathcal{H}_{at-most-k}) = k$.
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}{5}
+    $$\mathcal{H}_{\text{rec}}^d \text{ is the class of axis-aligned rectangles in } \R^d$$
+
+    First, we can see that $\text{VCdim}(\mathcal{H}_{\text{rec}}^d) \leq 2d$, because it is impossible for $h \in \mathcal{H}_{\text{rec}}^d$ to shatter a set $C$ with $2d+1$ points. We locate an "inside" point $x \in C$, defined as $\forall j \in [d]$, $\exists x', x'' \in C$ such that $x'_j \leq x_j$ and $x''_j \geq x_j$. Setting the label of $x$ as negative, and all other points as positive is an example of a configuration in which all points cannot be correctly labeled by $h \in \mathcal{H}_{\text{rec}}^d$.
+    
+    Now considering a set $C$ of size $2d$, positioning each point in a way such that $\forall x, x' \in C$ and $\forall j \in [d]$, $x_j \neq x'_j$, we have a set in which $\mathcal{H}_{\text{rec}}^d$ shatters. Taking any arbitrary subset of $C$ to be positive labeled points and the rest negative, we can still find a $\R_d$ rectangle identifying only and all positive labeled points.
+
+\end{problem}
+
+\begin{problem}{7}
+    \hfill
+    \begin{enumerate}
+        \item
+            We have seen in class that the set of threshold functions:
+            $$\mathcal{H} = \{h_a : a \in \R\} \text{ where } h_a(x) = \mathbbm{1}_{x \leq a}$$
+            is infinite, but $\text{VCdim}(\mathcal{H}) = 1$.
+        \item 
+            Consider
+            $$\mathcal{H} = \{h_1, h_{1/2}\}$$
+            We have 
+            $\lfloor \log_2(|\mathcal{H}|) \rfloor = \lfloor \log_2(2) \rfloor = 1$.
+            We also have
+            $\text{VCdim}(\mathcal{H}) = 1$
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}{9}
+    $$\mathcal{H} = \{h_{a,b,s} : a \leq b, s \in \{-1, 1\}\}$$ where
+    $$h_{a,b,s}(x) = \begin{cases}
+        s & \text{if } x \in [a, b] \\
+        -s & \text{if } x \notin [a, b]
+    \end{cases}$$
+    As this was an example in class, we will show $\text{VCdim}(\mathcal{H}) = 3$. We will approach this explicitly finding a set $C$ with three elements shattered by $\mathcal{H}$ and then showing that any set of four elements cannot be shattered by $\mathcal{H}$.
+    Let $C = \{0, 1, 2\}$. For each of the $2^3 = 8$ configurations, we will define $h_{a,b,s}$ correctly labeling all elements.
+    \begin{itemize}
+        \item $((0, -1), (1, -1), (2, -1))$: $a = -0.5$, $b = 2.5$, $s = -1$
+        \item $((0, -1), (1, -1), (2, +1))$: $a = 1.5$, $b = 2.5$, $s = +1$
+        \item $((0, -1), (1, +1), (2, -1))$: $a = 0.5$, $b = 1.5$, $s = +1$
+        \item $((0, -1), (1, +1), (2, +1))$: $a = 0.5$, $b = 2.5$, $s = +1$
+        \item $((0, +1), (1, -1), (2, -1))$: $a =-0.5$, $b = 0.5$, $s = +1$
+        \item $((0, +1), (1, -1), (2, +1))$: $a = 0.5$, $b = 1.5$, $s = -1$
+        \item $((0, +1), (1, +1), (2, -1))$: $a = -0.5$, $b = 1.5$, $s = +1$
+        \item $((0, +1), (1, +1), (2, +1))$: $a = -0.5$, $b = 2.5$, $s = +1$
+    \end{itemize}
+    Now consider a set $\{a, b, c, d\}$. WLOG, take $a < b < c < d$. The labeling $((a, +1), (b, -1), (c, +1), (d, -1))$ cannot be correctly labeled by any $h \in \mathcal{H}$.
+
+\end{problem}
+
+\begin{problem}{11 (part 1)}
+    Let $d = \max_i \text{VCdim}(\mathcal{H}_i)$ and $d \geq 3$. Let $\text{VCdim}(\bigcup_i^r \mathcal{H}_i) = k$.
+    Because the VC dimension of the union of hypothesis classes is at most any of the VC dimensions of the individual classes, we know that $\forall 1 \leq i \leq r$, $\text{VCdim}(\mathcal{H}_i) \leq d \leq k$.
+    Let $C$ be a subset of size $k$ in which $\bigcup_i^r \mathcal{H}_i$ shatters, meaning $\bigcup_i^r \mathcal{H}_i$ can produce all $2^k$ labeling configurations of $C$.
+    By Sauer's lemma, we have $\tau_{\mathcal{H}_i}(k) \leq \left(\frac{ek}{d}\right)^d$. As $d \geq 3$, we can bound this with $\tau_{\mathcal{H}_i}(k) \leq k^d$.
+    By the definition of the growth function, we also have $\tau_\mathcal{H}(k) \leq \sum_{i = 1}^r \tau_{\mathcal{H}_i}(k)$.
+    Therefore, we have $\tau_\mathcal{H}(k) \leq r k^d \implies 2^k \leq r k^d \implies k \leq d \log k + \log r$. Using Lemma A.2, we have $k < 4d \log (2d) + 2 \log r$.
+\end{problem}
+
+\end{document}
