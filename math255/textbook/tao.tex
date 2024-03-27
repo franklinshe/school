@@ -970,4 +970,57 @@ This proposition needs to following lemma to be proved.
 \subsection{Ordering the reals}
 \subsection{The least upper bound property}
 \subsection{Real exponentiation, part 1}
+
+\section{Compact Sets}
+
+\begin{definition}
+    A collection $\{G_\alpha\}_{\alpha \in I}$ is called an open cover of a subset $E\subseteq X$ if each $G_\alpha$, $\alpha \in I$, is an open set and $E \subseteq \bigcup_{\alpha \in I} G_\alpha$
+
+    An open cover is called finite if it contains finitely many open sets.
+    It is called infinite otherwise.
+
+    Given an open cover $\{G_\alpha\}_{\alpha \in I}$ of a subset $E\subseteq X$, a subcover is a subcollection 
+    $\{V_\beta\}_{\beta \in J} \subseteq \{G_\alpha\}_{\alpha \in I}$ that is still an open cover of $E$.
+    That is, still satisfying $E \subseteq \bigcup_{\beta \in J} V_\beta$.
+\end{definition}
+\begin{example}
+    \hfill
+    \begin{enumerate}
+        \item $E = [0, 1]$ with
+            $$\left\{G_x = \left(x - \frac{1}{10}, x + \frac{1}{10}\right)\right\}_{x \in [0, 1]}$$ has a finite sub-cover. E.g.
+            $$\left\{G_0, G_{\frac{1}{10}}, \ldots, G_{\frac{9}{10}}, G_1\right\}$$
+        \item $A = (0, 1)$ with
+            $$\left\{G_x = \left(x - \frac{1}{10}, x + \frac{1}{10}\right)\right\}_{x \in [0, 1]}$$ has a finite sub-cover.
+        \item $\left\{W_n = \left(\frac{1}{n}, 2\right)\right\}_{n \in \mathbb{N}}$ is also an open cover of $A$ without a finite subcover. This is because any finite subcollection
+            $$\left\{W_{n_1}, \ldots, W_{n_k}\right\} \subseteq \left\{W_n\right\}_{n \in \mathbb{N}}$$
+            would satisfy
+            $$\bigcup_{i=1}^k W_{n_i} \subseteq \left(\frac{1}{M} 2\right)$$
+            where $M = \max\left\{n_1, \ldots, n_k\right\}$.
+    \end{enumerate}
+\end{example}
+\begin{definition}
+    A subset $K \subseteq X$ is called compact if every open cover of $K$ has a finite subcover.
+\end{definition}
+\begin{example}
+    \hfill
+    \begin{enumerate}
+        \item In $\mathbb{R}$, $A = (0, 1]$ is not compact. See above example 2.
+        \item In $\mathbb{R}$, $\mathbb{Z}$ is not compact.
+        \item Every finite set in $X$ is compact.
+        \item In $\mathbb{R}$, $E = \{0\} \cup \left\{\frac{1}{n} \colon n \in \mathbb{N}\right\}$ is compact.
+            \begin{proof}
+                Let $\{G_\alpha\}_{\alpha \in I}$ be an open cover of $E$.
+                Then, $\exists \alpha_0$ such that $0 \in G_{\alpha_0}$.
+                Since $G_{\alpha_0}$ is open, there exists $\epsilon >0$ such that $N_\epsilon(0) = (-\epsilon, \epsilon) \subseteq G_{\alpha_0}$.
+                Take $m = \max\left\{n \colon \frac{1}{n} \geq \epsilon\right\}$.
+                Then $E \setminus G_{\alpha_0} \subseteq \left\{1, \frac{1}{2}, \ldots, \frac{1}{m}\right\}$.
+                So we can pick $m$ more elements of $\{G_\alpha \colon G_{\alpha_1}, \ldots, G_{\alpha_m}\}$ such that
+                $E \subseteq \bigcup_{i=0}^m G_{\alpha_i}$.
+            \end{proof}
+    \end{enumerate}
+\end{example}
+\begin{proposition}
+    If $K \subseteq X$ is compact then $K$ is closed and bounded.
+\end{proposition}
+
 \end{document}
