@@ -1,0 +1,259 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{Problem Set 5}
+\author{Math 255: Analysis I}
+\date{Due: Thursday, Feb 22nd at 11:59pm EST}
+
+\maketitle
+
+\begin{problem}{1}
+	Show that the following subset of $\R^2$ is open\footnote{Whenever not explicitly stated otherwise, $ \R^n $ is considered with the ``natural'' Euclidean metric $ d(v,w)=[\sum_{i=1}^n (v_i-w_i)^2]^{\frac{1}{2}} $.}:
+	$$E = \{(x,y) \in \R^2 \, \vert \, x < y\}.$$
+
+    \begin{proof}
+        We will prove that for every point in $E$, there exists an $\epsilon$-neighborhood of that point contained within $E$.
+        An $\epsilon$-neighborhood of a point $p = (a, b) \in E$ is the set
+        $$N_\epsilon(p) = \{q \in R^2 \mid \sqrt{(x-a)^2 + (y-b)^2} < \epsilon\}$$
+        We will find an $\epsilon$ such that for all $(x, y) \in N_\epsilon(p)$, $x < y$.
+        Let $\epsilon = \frac{b-a}{3} > 0$, because $b > a$.
+        Then, every point $(x, y) \in N_\epsilon(p)$ satisfies
+        $$\sqrt{(x-a)^2 + (y-b)^2} < \frac{b-a}{3}.$$
+        Notice, that this expression implies the following two inequalities:
+        \begin{align*}
+            |x - a| &< \frac{b-a}{3} \\
+            |y - b| &< \frac{b-a}{3}
+        \end{align*}
+        This in turn implies:
+        \begin{align*}
+            a - \frac{b-a}{3} < x < a + \frac{b-a}{3} \\
+            b - \frac{b-a}{3} < y < b + \frac{b-a}{3}
+        \end{align*}
+        To prove that $x < y$, we will take the highest possible value of $x$ and the lowest possible value of $y$ and show that $y - x > 0$.
+        Let $x = a + \frac{b-a}{3}$ and $y = b - \frac{b-a}{3}$.
+        Then, 
+        \begin{align*}
+            y - x &= b - \frac{b-a}{3} - (a + \frac{b-a}{3}) \\
+                  &= b - a - \frac{b-a}{3} - \frac{b-a}{3} \\
+                  &= \frac{b-a}{3} > 0. & \text{(since $b > a$)}
+        \end{align*}
+        Hence, $x < y$ for every point $(x, y) \in N_\epsilon(p)$, implying $N_\epsilon(p) \subseteq E$. This applies to every point $p \in E$. Therefore, every point in $E$ is an interior point, proving $E$ is open in $\R^2$.
+    \end{proof}
+\end{problem}
+\medskip
+
+\newpage
+
+\begin{problem}{2}
+	For each of the following subsets of $ \R $ describe all of their interior points and all of their limit points. Determine whether these sets are open, closed or neither. Justify your answers.
+	\begin{enumerate}
+		\item $ A=\N \cup \left\{ n+\frac{1}{n} : n \in \N \right\} $
+            \begin{proof} First, let's enumerate some elements of $A$. Notice that $A$ doesn't contain any irrational numbers.
+                $$A = \{1, 2, 2 + \frac{1}{2}, 3, 3 + \frac{1}{3}, 4, 4 + \frac{1}{4}, \dots\}$$
+                \textbf{Interior Points:} $A$ has no interior points. We will show that $\forall a \in  A$, $\forall \epsilon > 0$, $\exists x \in N_\epsilon(a)$, such that $x \not\in A$(implying that $N_\epsilon(c) \not\subseteq C$). After choosing any $\epsilon$ for any $a$, we examine the case where $\epsilon$ is rational and the case where $\epsilon$ is irrational. In both cases, we will find an $x \in N_\epsilon(a)$, but $x \not\in A$.
+                \begin{enumerate}
+                    \item $\epsilon$ is rational: Let $x = a + \frac{\sqrt{2}}{2} \cdot \epsilon$
+                    \item $\epsilon$ is irrational: Let $x = a + \frac{1}{2} \cdot \epsilon$
+                \end{enumerate}
+                We can see that $d(a, x) < \epsilon$, so $x \in N_\epsilon(a)$, but $x$ is irrational, so $x \not\in A$.
+                Therefore, $A$ has no interior points.
+
+                \textbf{Limit Points:} $A$ has no limit points, that is, $A$ is composed entirely of isolated points. We will show $\forall a \in A$, $\exists \epsilon > 0$, such that $N_\epsilon(a) \cap A = \{a\}$.
+
+                Let $a \in A$. Either $a = n \in \N$ or $a = n + \frac{1}{n}$ for some $n \in \N$. 
+                Notice that the closest point to $a$ in $A$ which is not $a$ is always a distance $\frac{1}{n}$ away. Let's take $\epsilon = \frac{1}{2n}$. Therefore, the $\epsilon$-neighborhood of point $a$ will see no points other points in $A$, showing that $a$ is an isolated point with $\epsilon = \frac{1}{2n}$.
+
+                \textbf{Open/Closed:} $A$ is not open because $A$ has no interior points. $A$ is closed as it contains all its limits points, which is none.
+            \end{proof}
+		\item $ B=[-1,1] \smallsetminus \left\{ \frac{1}{2n} : n \in \N \right\} $
+            \begin{proof}
+                \textbf{Interior Points:} The set of interior points of $B$ is $(-1, 1) \smallsetminus \left\{ \frac{1}{2n} : n \in \N \right\} $.
+                $B$ is a closed interval with "holes" at $\left\{ \frac{1}{2n} : n \in \N \right\} $. Therefore, the interior points of $B$ are all the points in $(-1, 1)$ that are not in $\left\{ \frac{1}{2n} : n \in \N \right\} $.
+
+                \textbf{Limit Points:} The set of limit points of $B$ is $[-1, 1]$. It is trivial that all points in $B$ are limit points. To see why all points of $\left\{ \frac{1}{2n} : n \in \N \right\} $ are limit points, any point $p$ in this set exists in the interval $(-1, 1)$. Therefore, any $\epsilon$-neighborhood around $p$ will contain (infinitely many) elements of $(-1, 1) \subseteq B$.
+
+                \textbf{Open/Closed:} $B$ is not open because $-1$ and $1$ are not interior points but are in $B$.
+                $B$ is not closed because $ \left\{ \frac{1}{2n} : n \in \N \right\} $ are limit points of $B$ not contained in $B$.
+                
+            \end{proof}
+		\item $ C=\left\{ \frac{1}{q^2} : q \in \Q, q \neq 0 \right\} $
+            \begin{proof}
+                First, let's rewrite the set $C$. Notice that $C$ doesn't contain any irrational numbers.
+                $$ C = \left\{\frac{1}{\left(\frac{p}{q}\right)^2} : p, q \in \Z, p, q \neq 0\right\} = \left\{\frac{q^2}{p^2} : p, q \in \Z, p, q \neq 0\right\} $$
+
+                \textbf{Interior Points:} $C$ has no interior points. We will show that $\forall c \in  C$, $\forall \epsilon > 0$, $\exists x \in N_\epsilon(c)$, such that $x \not\in C$ (implying that $N_\epsilon(c) \not\subseteq C$). After choosing any $\epsilon$ for any $c$, we examine the case where $\epsilon$ is rational and the case where $\epsilon$ is irrational. In both cases, we will find an $x \in N_\epsilon(c)$, but $x \not\in C$.
+                \begin{enumerate}
+                    \item $\epsilon$ is rational: Let $x = c + \frac{\sqrt{2}}{2} \cdot \epsilon$
+                    \item $\epsilon$ is irrational: Let $x = c + \frac{1}{2} \cdot \epsilon$
+                \end{enumerate}
+                We can see that $d(c, x) < \epsilon$, so $x \in N_\epsilon(c)$, but $x$ is irrational, so $x \not\in C$.
+                Therefore, $C$ has no interior points.
+
+                \textbf{Limit Points:} The set of limit points of $C$ are the positive real numbers and $0$. This is similar to how the set of limit points of $\Q$ is $\R$. However $C$ is contained to positive squared rationals. Still, we can get arbitrarily close to any positive point in $\R$.
+                For any positive real number or $0$, you can find fractions $\frac{q^2}{p^2}$ approaches that real number as closely as desired.
+
+                \textbf{Open/Closed:} $C$ is not open because $C$ has no interior points. $C$ is not closed because it does not contain all its limit points, e.g. $0$.
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+\begin{problem}{3} 
+	Let $A_1$, $A_2$, \dots\ be subsets of a metric space $X$.
+	
+	\begin{enumerate}
+		\item If $B_n = \bigcup_{i=1}^n A_i$, prove that $\overline{B}_n = \bigcup_{i=1}^n \overline{A}_i$, for any $n \in {\mathbb N}$.
+            \begin{proof}
+                Remember that the closure of a set A is defined as the set of all points in $X$ that are either in $A$ or are limit points of $A$. 
+
+                First, we show $\bigcup_{i=1}^n \overline{A}_i \subseteq \overline{B}_n$.
+
+                Let $x \in \bigcup_{i=1}^n \overline{A}_i$.
+                This means that there exists some $j \in {1, 2, \dots, n}$ such that $x \in \overline{A}_j$.
+                Since $x \in \overline{A}_j$, $x$ is either in $A_j$ or is a limit point of $A_j$.
+                \begin{enumerate}
+                    \item 
+                        If $x$ is in $A_j$, then clearly $x$ is in $B_n = \bigcup_{i=1}^n A_i$, and thus in $\overline{B}_n$.
+                    \item
+                        If $x$ is a limit point of $A_j$, then every neighborhood of $x$ contains at least one point of $A_j$ different from $x$. Since $A_j \subseteq B_n$, every neighborhood of $x$ also contains at least one point of $B_n$ different from $x$, making $x$ a limit point of $B_n$. Thus, $x \in \overline{B}_n$.
+                \end{enumerate}
+
+                This shows that every element of $\bigcup_{i=1}^n \overline{A}_i$ is also an element of $\overline{B}_n$.
+
+                Second, we show $\overline{B}_n \subseteq \bigcup_{i=1}^n \overline{A}_i$
+
+                Let $x \in \overline{B}_n$. This means $x$ is either in $B_n$ or is a limit point of $B_n$.
+
+                \begin{enumerate}
+                    \item
+                        If $x$ is in $B_n$, then $x$ is in at least one $A_i$ for some $i \in {1, 2, \dots, n}$, and hence $x$ is in at least one $\overline{A}_i$ since $A_i \subseteq \overline{A}_i$.
+                    \item
+                        If $x$ is a limit point of $B_n$, then every neighborhood of $x$ contains at least one point of $B_n$ different from $x$. Since $B_n = \bigcup_{i=1}^n A_i$, this point must be in at least one $A_i$. Therefore, $x$ must also be a limit point at least this particular $A_i$, and thus $x \in \overline{A}_i$ for some $i$.
+                \end{enumerate}
+
+                This shows that every element of $\overline{B}_n$ is also an element of $\bigcup_{i=1}^n \overline{A}_i$.
+            \end{proof}
+		\item If $B = \bigcup_{i=1}^\infty A_i$, prove that $\overline{B} \supset \bigcup_{i=1}^\infty \overline{A}_i$.
+		Show, by an example, that this inclusion can be proper, i.e. it may happen that $\overline{B} \neq \bigcup_{i=1}^\infty \overline{A}_i$.
+            \begin{proof}
+                Let $x \in \bigcup_{i=1}^\infty \overline{A}_i$.
+                This means that $x \in \overline{A}_j$ for some $j$. This implies that $x$ is either in $A_j$ or is a limit point of $A_j$.
+
+                \begin{enumerate}
+                    \item 
+                        If $x$ is in $A_j$, then clearly $x$ is in $B = \bigcup_{i=1}^\infty A_i$, and thus in $\overline{B}$.
+                    \item
+                        If $x$ is a limit point of $A_j$, then every neighborhood of $x$ contains at least one point of $A_j$ different from $x$. Since $A_j \subseteq B$, every neighborhood of $x$ also contains at least one point of $B$ different from $x$, making $x$ a limit point of $B$. Thus, $x \in \overline{B}$.
+                \end{enumerate}
+
+                This shows that every element of $\bigcup_{i=1}^\infty \overline{A}_i$ is also an element of $\overline{B}$.
+
+                \textbf{Proper Inclusion Example:}
+
+                Consider the metric space $X = \mathbb{R}$ with the usual metric, and let $A_n = \left\{\frac{1}{n}\right\}$ for each $n \in \mathbb{N}$.
+                Thus, we have $A_1 = {1}, A_2 = \left\{\frac{1}{2}\right\},$ and so on.
+                Then, $$B = \bigcup_{i=1}^\infty A_i = \left\{1, \frac{1}{2}, \frac{1}{3}, \ldots\right\}$$.
+                The closure of each $A_n$ is $\overline{A}_n = A_n$ since each $A_n$ contains a single point and is therefore closed.
+                So, $$\bigcup_{i=1}^\infty \overline{A}_i = \left\{1, \frac{1}{2}, \frac{1}{3}, \dots\right\}$$
+                However, $\overline{B} = B \cup {0}$, because $0$ is a limit point of $B$ and it is not contained in any $A_i$.
+                Thus, $\overline{B}$ is strictly larger than $\bigcup_{i=1}^\infty \overline{A}_i$, demonstrating that the inclusion can be proper.
+
+                
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+\begin{problem}{4}
+	Given two sets $ A $ and $ B $ in $ \R $, consider the set
+	\[ A-B := \left\{ a-b : a \in A,\; b \in B \right\}.\footnote{For example, if $ A=\{0,1\} $ and $ B=\{1,2\} $ then $ A-B=\{-2,-1,0\} $ and $ A-A=\{-1,0,1\} $.} \]
+	\begin{enumerate}
+		\item Prove that if $ A $ is open then so is $ A-B $, for any $ B $.
+            \begin{proof}
+                Let $z$ be a point in $A - B$. By definition, there exist elements $a \in A$ and $b \in B$ such that $z = a - b$.
+
+                Since $A$ is open and $a \in A$, $a$ is an interior point of $A$. Therefore, there exists an $\epsilon > 0$ such that the $r$-neighborhood $N_\epsilon(a) \subseteq A$.
+
+                We aim to show there exists a $\delta > 0$ such that $N_\delta(z) \subseteq A - B$. Consider $\delta = \epsilon$ and let $z' \in N_\delta(z)$. This means $|z' - z| < \delta$.
+
+                For $z' = a' - b$, we want to find an $a'$ such that $a' \in A$ (which implies $z' \in A - B$). Since $z' - z = (a' - b) - (a - b) = a' - a$, we have $|a' - a| < \delta = \epsilon$. This implies that $a' \in N_\epsilon(a)$. $A$ is open, meaning $N_\epsilon(a) \subseteq A$, so we have $a' \in A$. This means for every $z' \in N_\delta(z)$, we can find such an $a'$ in $A$. Therefore, $z' = a' - b \in A - B$, showing that $N_\delta(z) \subseteq A - B$.
+
+                Since we have found a $\delta$-neighborhood of $z$ that is entirely contained within $A - B$, $z$ is an interior point of $A - B$. Because our choice of $z$ in $A - B$, every point in $A - B$ is an interior point of $A - B$. Therefore, $A - B$ is open.
+            \end{proof}
+
+		\item Give an example of a closed set $ A $ and a set $ B $ for which $ A-B $ is not closed. 
+            \begin{proof}
+                Let \(A = \{0\}\) and \(B = (0, 1)\). Then \[A - B = \{0 - b \mid b \in B\} = \{-b \mid b \in (0, 1)\} = (-1, 0)\] Since \((-1, 0)\) is not closed, we have found an example of a closed set \(A\) and a set \(B\) for which \(A - B\) is not closed.
+            \end{proof}
+
+            \item Prove that if the set $ A $ has a limit point then $ 0 $ is a limit point of $ A-A $.
+            \begin{proof}
+                Assume $A$ has a limit point, say $c$. By definition, for every $\epsilon > 0$, there exists a point $a \in A$ such that $a \neq c$ and $|a - c| < \epsilon$. This means that within any arbitrarily small distance around $c$, we can find a distinct point $a$ from $A$.
+
+To show $0$ is a limit point of $A-A$, we must show that for every $\epsilon > 0$, there exists a $y \in A-A$ such that $y \neq 0$ and $|y - 0| < \epsilon$.
+
+Since $c$ is a limit point of $A$, for any given $\epsilon > 0$, there exists $a_1, a_2 \in A$ such that $|a_1 - c| < \frac{\epsilon}{2}$ and $|a_2 - c| < \frac{\epsilon}{2}$, with $a_1 \neq a_2$ ($c$ being a limit point guarantees the presence of infinitely many points of $A$ in every neighborhood of $c$).
+
+Consider $y = a_1 - a_2$, which is an element of $A-A$. We want to show that $|y| = |a_1 - a_2| < \epsilon$. Since both $a_1$ and $a_2$ are within $\frac{\epsilon}{2}$ of $c$, we can use the triangle inequality to deduce that:
+
+$$|y| = |a_1 - a_2| = |(a_1 - c) - (a_2 - c)| \leq |a_1 - c| + |c - a_2| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+
+
+This shows that $y = a_1 - a_2$ is within $\epsilon$ of $0$ and $y \neq 0$ since $a_1 \neq a_2$. Thus, for every $\epsilon > 0$, there exists a $y \in A-A$ such that $|y| < \epsilon$ and $y \neq 0$, proving that $0$ is a limit point of $A-A$.
+            \end{proof}
+
+	\end{enumerate}
+\end{problem}
+\medskip
+%\vfill\hfill \emph{turn page}$ \longrightarrow $
+%\newpage
+
+\newpage
+\begin{problem}{5}
+	Provide an example of a subset $ E $ in $ \R^2 $ satisfying that 
+	\begin{itemize}
+		\item $ E $ has no interior points;
+		\item $ E $ is not closed; but
+		\item $ E \cup \{0\} $ is closed.
+	\end{itemize}
+	You do not need to provide a rigorous proof, but do explain your answers (an illustration may help!).
+
+    \begin{proof}
+        Let $E$ be the set of points in the plane that lie on the $x$-axis, excluding the origin. That is,
+        $$E = \{(x, 0) \in \R^2 \, \vert \, x \neq 0\}$$
+
+        \textbf{$E$ has no interior points:}
+        An interior point of a set $E$ in $\mathbb{R}^2$ requires that there exists some $\epsilon > 0$ such that an $\epsilon$-neighborhood around that point is entirely contained within $E$. For any point $(x, 0) \in E$, every $\epsilon$-neighborhood will include points that do not lie on the $x$-axis (since neighborhoods in $\mathbb{R}^2$ are circular), thus including points not in $E$. Therefore, no point of $E$ is an interior point, as you cannot find an $\epsilon$-neighborhood around any point in $E$ that lies completely within $E$.
+
+        \textbf{$E$ is not closed:}
+        A set is closed if it contains all its limit points. The origin $(0,0)$ is a limit point of $E$ because, for any $\epsilon > 0$, the $\epsilon$-neighborhood of $(0,0)$ includes points of $E$ (any point $(x,0)$ with $0 < |x| < \epsilon$). Since $(0,0)$ is not included in $E$, $E$ does not contain all its limit points, making it not closed.
+
+        \textbf{$E \cup \{0\}$ is closed:}
+        By adding the origin $(0,0)$ to $E$, we form the set $E \cup \{0\} = {(x, 0) \in \mathbb{R}^2}$, which is the entire $x$-axis. This set includes all its limit points, including the origin. Any limit point of this set would have to lie on the $x$-axis, and since the set now includes every point on the $x$-axis, it is closed. There are no points in $\mathbb{R}^2$ that are limit points of $E \cup {0}$ without being included in the set itself.
+
+    \end{proof}
+\end{problem}
+
+
+\vspace{1cm}\hfill \emph{Good luck!}
+
+\end{document}

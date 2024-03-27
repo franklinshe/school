@@ -24,35 +24,30 @@
 
 \maketitle
 
-%\begin{problem}{1}
-%	Prove that a union of countably many countable sets is countable. That is, if $ S_1,S_2,... $ are countable sets for all $ n \in \N $ then $ \bigcup_{n=1}^\infty S_n $ is a countable set.
-%\end{problem}
-
-%\begin{problem}{1}
-%	Given a set $ A $, we denote by $ \mathcal{P}(A) $ the set of all subsets of $ A $:
-%	\[ \mathcal{P}(A) = \{ E : E \subset A \}. \]
-%	In this problem we will prove that $ A $ and $ \mathcal{P}(A) $ do \textbf{not} have equal cardinality, for any $ A $.
-%	\begin{enumerate}
-%		\item As a warm-up, consider $ A=\{1,2,3\} $. What size is $ \mathcal{P}(A) $?
-%		\item Let $ A $ be any set. Assume in contradiction that there exists a bijection 
-%		\[ \phi: A \to \mathcal{P}(A), \]
-%		and consider the set
-%		\[ E = \{ a \in A : a \in \phi(a) \}. \]
-%		Prove that there exists no element $ z \in A $ with $ \phi(z)=E $. Deduce that $ |A| \neq |\mathcal{P}(A)| $.
-%		\item Conclude that the set of all subsets of $ \N $ is uncountable.
-%	\end{enumerate}
-%\end{problem}
-%\medskip
-
 \begin{problem}{1}
 	In this problem we give another proof that $ \mathcal{P}(\N) $, the set of all subsets of $ \N $, is uncountable.
 	\begin{enumerate}
 		\item Consider the set of all binary sequences:
 		\[ \{0,1\}^{\N} = \{ (a_1,a_2,a_3,...) : a_n \in \{0,1\} \text{ for all } n \in \N \}. \]
 		Find a bijection between $ \cal{P}(\N) $ and $ \{0,1\}^{\N} $.
+        \begin{proof}
+            We can define a function $f: \{0,1\}^{\N} \to \mathcal{P}(\N)$ by
+            \[f((a_1,a_2,a_3,...)) = \{n \in \N : a_n = 1\}.\]
+            \textbf{Injectivity:} Suppose $f((a_1,a_2,a_3,...)) = f((b_1,b_2,b_3,...))$. Then $\{n \in \N : a_n = 1\} = \{n \in \N : b_n = 1\}$. This means that $a_n = b_n$ for all $n \in \N$, so $(a_1,a_2,a_3,...) = (b_1,b_2,b_3,...)$. Thus, $f$ is injective.
+
+            \textbf{Surjectivity:} Let $E \in \mathcal{P}(\N)$. Then we can define a sequence $(a_1,a_2,a_3,...)$ by
+            \[a_n = \begin{cases} 1 & \text{if } n \in E \\ 0 & \text{if } n \notin E \end{cases}.\]
+            Then $f((a_1,a_2,a_3,...)) = E$. Thus, $f$ is surjective.
+        \end{proof}
 		\item Use Cantor's diagonal argument to show that $ \{0,1\}^{\N} $ is uncountable, and conclude that $ \cal{P}(\N) $ is uncountable.
+            \begin{proof}
+            Assume in contradiction that  $ \{0,1\}^{\N} $ is countable. Hence, $ \{0,1\}^{\N} = \{x_1, x_2, \ldots \} $. We can construct $y \in \{0,1\}^{\N} $ not appearing in the list.
+            Choose $y$ such that its $n$-th entry is different from the $n$-th entry of $x_n$. Then $y \neq x_n$ for all $n$, so $y$ is not in the list. This is a contradiction, so $ \{0,1\}^{\N} $ is uncountable. Since $ \{0,1\}^{\N} $ is uncountable and there is a bijection between $ \{0,1\}^{\N} $ and $ \mathcal{P}(\N) $, we conclude that $ \mathcal{P}(\N) $ is uncountable.
+            \end{proof}
 	\end{enumerate}
 \end{problem}
+
+\newpage
 
 \begin{problem}{2} 
 A real number $x$ is called \emph{algebraic} if it is a root of an integer polynomial. That is, if there exists an $n \in \N$ and integers $a_0, \dots, a_n$, not all zero, such that
@@ -63,17 +58,64 @@ a_0 x^n + a_1 x^{n-1} + \cdots + a_{n-1} x + a_n = 0.
 \begin{enumerate}
 	\item
 	Prove that $\sqrt{5}$ and $\sqrt{2 + \sqrt{3}}$ are algebraic.
+
+    \begin{proof}
+        \hfill
+
+        \textbf{$\sqrt{5}$ is algebraic:} Let $n = 2$, $a_0 = 1$, $a_1 = 0$, and $a_2 = -5$. 
+        \begin{align*}
+            a_0 x^2 + a_1 x + a_2 &= 0 \\
+            1 x^2 + 0 x - 5 &= 0 \\
+            x^2 - 5 &= 0 \\
+            \sqrt{5}^2 - 5 &= 0 \\
+            5 - 5 &= 0
+        \end{align*}
+
+        \textbf{$\sqrt{2 + \sqrt{3}}$ is algebraic:} Let $n = 4$, $a_0 = 1$, $a_1 = 0$, $a_2 = -4$, $a_3 = 0$, and $a_4 = 1$.
+        \begin{align*}
+            a_0 x^4 + a_1 x^3 + a_2 x^2 + a_3 x + a_4 &= 0 \\
+            1 x^4 + 0 x^3 - 4 x^2 + 0 x + 1 &= 0 \\
+            x^4 - 4 x^2 + 1 &= 0 \\
+            \left(\sqrt{2 + \sqrt{3}}\right)^4 - 4\left(\sqrt{2 + \sqrt{3}}\right)^2 + 1 &= 0 \\
+            \left(2 + \sqrt{3}\right)^2 - 4\left(2 + \sqrt{3}\right) + 1 &= 0 \\
+            4 + 4\sqrt{3} + 3 - 8 - 4\sqrt{3} + 1 &= 0 \\
+            8 - 8 &= 0
+        \end{align*}
+    \end{proof}
 	
 	\item 
 	Prove that the set of all algebraic real numbers is countable.  
 	
 	\noindent (Hint: for every positive integer $N$, there are
 	only finitely many ways to choose integers $n, a_0, a_1, \dots, a_n$ with $n + \abs{a_0} + \abs{a_1} + \cdots + \abs{a_n} = N$.  You may use the fact that each polynomial has a finite number of roots.)
+
+    \begin{proof}
+        Let $A$ be the set of all algebraic real numbers. For each $N \in \N$, let $A_N$ be the set of all algebraic real numbers that are roots of integer polynomials of degree $n$ with coefficients $a_0, a_1, \dots, a_n$ such that $n + \abs{a_0} + \abs{a_1} + \cdots + \abs{a_n} = N$.
+
+        We will first show that each $A_N$ is finite.
+        By the hint, for every positive integer $N$, there are only finitely many ways to choose integers $n, a_0, a_1, \dots, a_n$ with $n + \abs{a_0} + \abs{a_1} + \cdots + \abs{a_n} = N$. Thus, $A_N$ is finite.
+
+        Then we show $A = \bigcup_{N \in \N} A_N$. 
+        This is true because for any $n, a_0, a_1, \dots, a_n$, there is a unique $N$ such that $n + \abs{a_0} + \abs{a_1} + \cdots + \abs{a_n} = N$.
+        So, any algebraic real number is in $A_N$ for some $N \in \N$.
+
+        Finally, by the corollary from class, that any union of countably many finite sets is at most countable, we have that $A$ is countable.
+    \end{proof}
 	
 	\item Prove that there exist real numbers which are not algebraic.
+        \begin{proof}
+            Assume in contradiction that all real numbers are algebraic.
+            That is, for any real number $x$, there exists an $n \in \N$ and integers $a_0, a_1, \dots, a_n$, not all zero, such that
+            \[a_0 x^n + a_1 x^{n-1} + \cdots + a_{n-1} x + a_n = 0.\]
+            This implies that the set of all real numbers is contained in the set of all algebraic real numbers, which is countable by the previous part.
+
+            By the proposition proved in class (If $S$ is countable and $A \subseteq S$ is infinite, then $A$ is countable), the set of all real numbers is countable.
+            This is a contradiction, as we know that the set of all real numbers is uncountable, a corollary shown in class. Thus, there exist real numbers which are not algebraic.
+        \end{proof}
 \end{enumerate}
 \end{problem}
-\medskip
+
+\newpage
 
 \begin{problem}{3}
 	Let $X$ be any set, let and $d:X\times X\to \R$ be the discrete metric, defined by
@@ -83,26 +125,94 @@ a_0 x^n + a_1 x^{n-1} + \cdots + a_{n-1} x + a_n = 0.
 	for all $x,y\in X$.
 	\begin{enumerate}
 		\item Prove that, with this distance function, $X$ is a metric space.
+            \begin{proof}
+                We will prove that $(X, d)$ is a metric space by verifying the three properties of a metric space.
+                \textbf{Positivity:} Let $x, y \in X$. If $x = y$, then $d(x, y) = 0$. If $x \neq y$, then $d(x, y) = 1$. In either case, $d(x, y) \geq 0$.
+
+                \textbf{Symmetry:} Let $x, y \in X$. If $x = y$ ($\implies y=x$), then $d(x, y) = d(y, x) = 0$. If $x \neq y$ ($\implies y\neq x$), then $d(x, y) = d(y, x) = 1$. In either case, $d(x, y) = d(y, x)$.
+
+                \textbf{Triangle Inequality:} Let $x, y, z \in X$. If $x = y = z$, then $d(x, z) = d(x, y) + d(y, z) = 0$. If $x = y \neq z$, then $d(x, z) = d(x, y) + d(y, z) = 1$. If $x \neq y = z$, then $d(x, z) = d(x, y) + d(y, z) = 1$. If $x \neq y \neq z$, then $d(x, z) = d(x, y) + d(y, z) = 2$. In all cases, $d(x, z) \leq d(x, y) + d(y, z)$.
+            \end{proof}
 		\item For any $x\in X$, what is $N_\epsilon(x)$ when $\epsilon = \frac{1}{2}$, $1$, and $2$?
+            \begin{proof}
+\hfill
+
+                \textbf{$\epsilon = \frac{1}{2}$}: Then $N_\epsilon(x) = \{y \in X : d(x, y) < \frac{1}{2}\} = \{x\}$.
+                
+                \textbf{$\epsilon = 1$}: Then $N_\epsilon(x) = \{y \in X : d(x, y) < 1\} = \{x\}$.
+
+                \textbf{$\epsilon = 2$}: Then $N_\epsilon(x) = \{y \in X : d(x, y) < 2\} = X$.
+
+                $\epsilon = \frac{1}{2}$ and $\epsilon = 1$ give the same set because the only point in $X$ that is within distance $1$ of $x$ is $x$ itself, or $d(x,x) = 1$. For $\epsilon = 2$, every point in $X$ is within distance $2$ of $x$.
+            \end{proof}
 		\item Which subsets of $X$ are open?
+            \begin{proof}
+                We will prove that every subset of $X$ is open. Let $E \subset X$. Then for every $x \in E$, we can choose $\epsilon = \frac{1}{2}$, and then $N_\epsilon(x) = \{x\} \subseteq E$. Thus, $E$ is open.
+            \end{proof}
 	\end{enumerate}
 \end{problem}
 
-\vfill\hfill \emph{turn page}$ \longrightarrow $
 \newpage
 
 \begin{problem}{4}
 	Let $E$ be a subset of a metric space. Define the \emph{interior} of $E$, denoted $E^\circ$, to be the set of all interior points of $E$.
 	\begin{enumerate}
 		\item Prove that $E^\circ$ is always open.
+            \begin{proof}
+                A set $E$ is open if all of its points are interior points, so $E^\circ$, as it is the set of all interior points of $E$ is open.
+            \end{proof}
 		\item Prove that $E$ is open if and only if $E^\circ = E$.
+            \begin{proof} Prove both directions.
+
+                ($\implies$) Suppose $E$ is open. Then every point in $E$ is an interior point of $E$, so $E^\circ = E$.
+
+                ($\impliedby$) Suppose $E^\circ = E$. Then every point in $E$ is an interior point of $E$, so $E$ is open.
+            \end{proof}
+
 		\item Prove that, if $G$ is an open subset of $E$, then $G \subset E^\circ$.
+            \begin{proof}
+                Suppose $G$ is an open subset of $E$. Then every point in $G$ is an interior point of $G$. If a point in $G$ is an interior point of $G$, then it is also an interior point of $E$, as $G \subset E$, so $G \subseteq E^\circ$.
+            \end{proof}
 		\item Prove that $ \Q \subset \R $ has an empty interior.
+            \begin{proof}
+                To prove that $ \Q $ has an empty interior, we will show that the set of all interior points of $ \Q $ is empty.
+                \begin{itemize}
+                    \item Let $x \in \Q$.
+                Then for every $ \epsilon > 0 $, $N_\epsilon(x) = \{y \in \R : d(x, y) < \epsilon\}$.
+                    \item
+                We can show that in $N_\epsilon(x)$, there is a point $y \in \R \smallsetminus \Q$.
+                    \item
+                Let $y = x + \frac{\epsilon}{\sqrt{2}}$. Then $y \in N_\epsilon(x)$, but $y \not\in \Q$.
+                    \item
+                This means that $N_\epsilon(x) \not\subseteq \Q$. Thus, $x$ is not an interior point of $ \Q $.
+                    \item
+                Since $x$ was arbitrary, this holds for any $x \in \Q$.
+                Thus, $ \Q $ has an empty interior.
+                \end{itemize}
+            \end{proof}
 		\item Prove that $ \R \smallsetminus \Q $, the complement of $ \Q $ in $ \R $, also has an empty interior.
+            \begin{proof}
+                We can show that $ \R \smallsetminus \Q $ has an empty interior by showing that the set of all interior points of $ \R \smallsetminus \Q $ is empty.
+                \begin{itemize}
+                    \item
+                Let $x \in \R \smallsetminus \Q$.
+                Then for every $ \epsilon > 0 $, $N_\epsilon(x) = \{y \in \R : d(x, y) < \epsilon\}$.
+                    \item
+                We can show that in $N_\epsilon(x)$, there is a point $y \in \Q$. 
+                    \item
+                We have that $x \in \R$ and $x + \epsilon \in \R$. By the denseness of $ \Q $ in $ \R $ (proven in class), there exists a $y \in \Q$ such that $x < y < x + \epsilon$.
+                    \item
+                Then $d(x, y) < \epsilon$, so $y \in N_\epsilon(x)$, but $y \not\in \R \smallsetminus \Q$.
+                    \item
+                This means that $N_\epsilon(x) \not\subseteq \R \smallsetminus \Q$.
+                Thus, $x$ is not an interior point of $ \R \smallsetminus \Q $.
+                    \item
+                Since $x$ was arbitrary, this holds for any $x \in \R \smallsetminus \Q$.
+                Thus, $ \R \smallsetminus \Q $ has an empty interior.
+                \end{itemize}
+            \end{proof}
 	\end{enumerate}
 \end{problem}
 
-
-\vspace{3cm}\hfill \emph{Good luck!}
 
 \end{document}

@@ -1,0 +1,310 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm,hyperref}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\notimplies}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{Problem Set 7}
+\author{Math 255: Analysis I}
+\date{Due: Thursday, March 28th at 11:59pm EST}
+
+\maketitle
+
+\begin{problem}{1} 
+	Let $ (x_n)_{n\in \N} $ be a sequence in a metric space $ X $. For each of the following statements determine whether it implies the convergence of $ x_n $ to $q $ and whether the convergence of $ x_n $ to $ q $ implies the statement. If an implication holds then prove it, otherwise provide a counter example.
+	\begin{enumerate}
+		\item $ \exists N\in \N \;\;\text{ s.t. } \forall \varepsilon >0 \;\; \forall n \geq N \quad d(x_n,q)<\varepsilon  $
+            \begin{proof} \hfill
+
+                1. $\implies x_n \to q $:
+                \begin{itemize}
+                    \item For any $\epsilon > 0$, we always that $N$ given by assumption such that $d(x_n, q) < \epsilon$ for all $n \geq N$ and for all $\epsilon > 0$.
+                    \item Then, for all $n \geq N$, we have $d(x_n, q) < \epsilon$.
+                    \item Thus, $x_n \to q$.
+                \end{itemize}
+                $q \to x_n \notimplies$ 1: \hfill
+                \begin{itemize}
+                    \item Let $X = \R$ and $x_n = \frac{1}{n}$. Then, $x_n \to 0$.
+                    \item However, there is no single $N$ that works for all $\epsilon > 0$. For example, if one chooses an $N$ based on $\epsilon = 1$, say $N = 2$, this $N$ does not suffice for a smaller $\epsilon$, say $\epsilon = \frac{1}{10}$, for which we would need $N > 10$.
+                \end{itemize}
+            \end{proof}
+		\item $ \forall k \in \N \;\; \exists N\in \N \;\;\text{ s.t. } \forall n \geq N \quad d(x_n,q)<\frac{1}{k} $
+            \begin{proof} \hfill
+                
+                2. $\implies x_n \to q$:
+                \begin{itemize}
+                    \item For any $\epsilon > 0$, we choose $k$ such that $\frac{1}{k} < \epsilon$.
+                    \item By the statement, we have $N$ such that $d(x_n, q) < \frac{1}{k} < \epsilon$ for all $n \geq N$.
+                    \item Therefore, $x_n \to q$.
+                \end{itemize}
+                $x_n \to q \implies$ 2: \hfill
+                \begin{itemize}
+                    \item Let $k \in \N$ be arbitrary.
+                    \item Because $x_n \to q$, we can choose $N$ such that $d(x_n, q) < \frac{1}{k}$ for all $n \geq N$.
+                    \item Therefore, for any $k \in \N$, we can choose $N$ such that $d(x_n, q) < \frac{1}{k}$.
+                \end{itemize}
+            \end{proof}
+		\item $ \forall 0<\varepsilon <1 \;\; \exists N\in \N \;\; \text{ s.t. } \forall n \geq N \quad d(x_n,q)<\varepsilon $
+            \begin{proof} \hfill
+
+                $x_n \to q \implies$ 3:
+                \begin{itemize}
+                    \item By definition, $\forall \epsilon > 0$, $\exists N \in \N$ such that $\forall n \geq N$, $d(x_n, q) < \epsilon$.
+                    \item Therefore, for any $0 < \epsilon < 1$, we can choose $N$ such that $d(x_n, q) < \epsilon$.
+                \end{itemize}
+                3 $\implies x_n \to q$:
+                \begin{itemize}
+                    \item For any $0 < \epsilon < 1$, we can choose $N$ such that $d(x_n, q) < \epsilon$.
+                    \item In particular, let $N'$ be the $N$ corresponding to $\epsilon = 1/2$.
+                        That is, $d(x_n, q) < 1/2$ for all $n \geq N'$.
+                    \item For any $\epsilon \geq 1$, we can choose this $N'$ such that $d(x_n, q) < 1/2 < \epsilon$ for all $n \geq N'$.
+                    \item Therefore, $x_n \to q$.
+                \end{itemize}
+            \end{proof}
+		\item $ \forall \varepsilon > 1 \;\; \exists N\in \N \;\; \text{ s.t. } \forall n \geq N \quad d(x_n,q)<\varepsilon $
+            \begin{proof}
+                $x_n \to q \implies$ 4:
+                \begin{itemize}
+                    \item By definition, $\forall \epsilon > 0$, $\exists N \in \N$ such that $\forall n \geq N$, $d(x_n, q) < \epsilon$.
+                    \item Therefore, for any $\epsilon > 1$, we can choose $N$ such that $d(x_n, q) < \epsilon$.
+                \end{itemize}
+                4 $\notimplies x_n \to q$:
+                \begin{itemize}
+                    \item Let $X = \R$ and $x_n = \frac{(-1)^n}{2}$. $x_n$ does not converge.
+                    \item The condition is satisfied for all $\epsilon > 1$ because $d(x_n, 0) = 1/2 < \epsilon$ for all $n$.
+                    \item However, $x_n$ does not converge.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+\begin{problem}{2}
+	For each of the following pairs of sequences, determine whether $ (b_n)_{n\in\N} $ is a subsequence of $ (a_n)_{n\in\N} $. If it is, find the increasing sequence of indices $ (n_k)_{k \in \N} $ describing the subsequence.
+	\begin{enumerate}
+		\item $ a_n=n $ and $ b_n=2^n $
+            \begin{proof}
+                $(b_n)_{n\in\N}$ is a subsequence of $(a_n)_{n\in\N}$.
+                \begin{itemize}
+                    \item The first few terms of $(b_n)_{n\in\N}$ are $(2, 4, 8, 16, \ldots)$.
+                    \item The first few terms of $(a_{n_k})_{k\in\N}$ are $(2, 4, 8, 16, \ldots)$.
+                    \item $(b_n)_{n\in\N} = (a_{n_k})_{k\in\N}$ where $n_k = 2^k$.
+                    \item We can verify that $(n_k)_{k\in\N}$ is an increasing sequence of indices. The first few terms of $(n_k)_{k\in\N}$ are $(2, 4, 8, 16, \ldots)$.
+                \end{itemize}
+            \end{proof}
+		\item $ a_n=n $ and $ b_n=2+(-1)^n $
+            \begin{proof}
+                $(b_n)_{n\in\N}$ is not a subsequence of $(a_n)_{n\in\N}$.
+                \begin{itemize}
+                    \item Notice that $b_1 = 1$ and $b_3 = 1$.
+                    \item However, the only index $n$ such that $a_n = 1$ is $n = 1$.
+                    \item Therefore, $(b_n)_{n\in\N}$ is not a subsequence of $(a_n)_{n\in\N}$.
+                \end{itemize}
+            \end{proof}
+		\item $ a_n=n^{\sqrt{n}/2} $ and $ b_n=n^n $
+            \begin{proof}
+                $(b_n)_{n\in\N}$ is a subsequence of $(a_n)_{n\in\N}$.
+                \begin{itemize}
+                    \item The first few terms of $(a_n)_{n\in\N}$ are $(1^{\sqrt{1}/2}, 2^{\sqrt{2}/2}, 3^{\sqrt{3}/2}, 4^{\sqrt{4}/2}, \ldots)$.
+                    \item The first few terms of $(b_n)_{n\in\N}$ are $(1, 2^2, 3^3, 4^4, \ldots)$.
+                    \item $(b_n)_{n\in\N} = (a_{n_k})_{k\in\N}$ where $n_k = k^2$.
+                    \item We can verify that $(n_k)_{k\in\N}$ is an increasing sequence of indices. The first few terms of $(n_k)_{k\in\N}$ are $(1, 4, 9, 16, \ldots)$.
+                \end{itemize}
+            \end{proof}
+		\item $ a_n=(-1)^{\lfloor \frac{n}{2}\rfloor} $ and $ b_n=(-1)^n $, where $ \lfloor t \rfloor=\max\{k \in \Z : k \leq t\} $.
+            \begin{proof}
+                $(b_n)_{n\in\N}$ is a subsequence of $(a_n)_{n\in\N}$.
+                \begin{itemize}
+                    \item The first few terms of $(a_n)_{n\in\N}$ are $(1, -1, -1, 1, 1, -1, -1, 1, \ldots)$.
+                    \item The first few terms of $(b_n)_{n\in\N}$ are $(-1, 1, -1, 1, \ldots)$.
+                    \item $(b_n)_{n\in\N} = (a_{n_k})_{k\in\N}$ where $n_k = 2k$.
+                    \item We can verify that $(n_k)_{k\in\N}$ is an increasing sequence of indices. The first few terms of $(n_k)_{k\in\N}$ are $(2, 4, 6, 8, \ldots)$.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+
+\newpage
+\begin{problem}{3}
+	Let $ (x_n)_{n\in \N} $ be a sequence in $ \R $. Recall the following set defined in class
+	\[ \mathrm{Accum}(x_n)_{n\in \N} = \left\{ z \in [-\infty,\infty] : \exists \text{ a subsequence } (x_{n_k})_{k\in \N} \text{ of } (x_n)_{n\in \N} \text{ with } \lim_{k \to \infty} x_{n_k}=z \right\}. \]
+	\begin{enumerate}%[label=(\alph*),leftmargin=*]
+		\item Let $ K \subseteq \R $ be any compact subset\footnote{E.g.~the middle--$ \frac{1}{3} $ Cantor.}. Prove that for any $ m \in \N $ there exist finitely many points $ p_1,...,p_{N_m} \in K $ satisfying that for every $ x \in K $ there exists $ 1 \leq i \leq N_m $ with $ |x-p_i|<\frac{1}{m} $. 
+		
+		Use this to construct a sequence $ (p_n)_{n\in \N} $ in $ K $ which satisfies that $ \mathrm{Accum}(p_n)_{n\in \N} = K $.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Let $K$ be a compact set in $\R$ and let $m \in \N$ be arbitrary.
+                    \item Consider the open cover $\bigcup_{p \in K} N_{\frac{1}{m}}(p)$ that covers $K$.
+                    \item Because $K$ is compact, there exists a finite subcover $\bigcup_{i=1}^{N_m} N_{\frac{1}{m}}(p_i)$ that still covers $K$.
+                    \item $p_1, p_2, \ldots, p_{N_m} \in K$ is the finite set of points that correspond to this finite subcover.
+                    \item Let $x \in K$. Because $x \in K$, there exists $1 \leq i \leq N_m$ such that $x \in N_{\frac{1}{m}}(p_i)$.
+                    \item This implies $|x - p_i| < \frac{1}{m}$.
+                    \item Therefore, for every $x \in K$, there exists $1 \leq i \leq N_m$ such that $|x - p_i| < \frac{1}{m}$.
+                \end{itemize}
+            \end{proof}
+            To construct a sequence $(p_n)_{n\in \N}$ in $K$ such that $\mathrm{Accum}(p_n)_{n\in \N} = K$:
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item
+                For each $m \in \mathbb{N}$, choose $N_m$ distinct points $p_1^{(m)}, p_2^{(m)}, \ldots, p_{N_m}^{(m)} \in K$ as discussed above.
+                    \item Let $p_1 = p_1^{(1)}, p_2 = p_1^{(2)}, \ldots, p_{N_1} = p_1^{(N_1)}, p_{N_1+1} = p_2^{(1)}, \ldots, p_{N_1+N_2} = p_2^{(N_2)}, \ldots$.
+                    \item
+                Define the sequence $(p_n)_{n \in \mathbb{N}}$ as $p_n = p_n^{(m)}$
+                    \item
+                For any $x \in K$, there exists a subsequence of $(p_n){n \in \mathbb{N}}$ converging to $x$.
+                    \item
+                Therefore, $\mathrm{Accum}(p_n)_{n \in \mathbb{N}} = K$.
+                \end{itemize}
+            \end{proof}
+		\item Let $ f: \N \to \Q $ be a bijection\footnote{Recall - why does there exist one?}, and define the sequence $ q_n=f(n) $. Prove $ \mathrm{Accum}(q_n)_{n\in \N} = [-\infty,\infty] $. \footnote{Be careful to construct the subsequences of $ (q_n)_{n\in \N} $ properly.}
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Such a bijection exists because $\N$ and $\Q$ is countable.
+                    \item To prove $\mathrm{Accum}(q_n)_{n\in \N} = [-\infty,\infty]$, we will show that for every real number and the
+                        points $-\infty$ and $\infty$, there exists a subsequence of $(q_n)_{n\in\N}$ that converges to $x$
+                        or $-\infty$ or $\infty$, respectively.
+                    \item Let $x \in \R$ be arbitrary. We will show that there construct a subsequence of $(q_n)_{n\in\N}$ that converges to $x$.
+                    \item Pick the subsequence indexes $k_n$ such that $x - \frac{1}{n} < f(k_n) < x$ and $k_n < k_{n+1}$.
+                    \item Such a $k_n$ exists because $f$ is a bijection. Such a $f(k_n)$ exists because of the denseness of $\Q$ in $\R$.
+                    \item This subsequence converges to $x$. (For any $\epsilon > 0$, choose $N$ such that $1/N < \epsilon$.)
+                    \item Let $x = -\infty$. We can choose the subsequence indexes $k_n$ such that $f(k_n) < -n$ and $k_n < k_{n+1}$.
+                    \item This subsequence converges to $-\infty$.
+                    \item Let $x = \infty$. We can choose the subsequence indexes $k_n$ such that $f(k_n) > n$ and $k_n < k_{n+1}$.
+                    \item This subsequence converges to $\infty$.
+                    \item Therefore, $\mathrm{Accum}(q_n)_{n\in\N} = [-\infty, \infty]$.
+                \end{itemize}
+            \end{proof}
+		\item Let $ (a_n)_{n\in\N} $ and $ (b_n)_{n\in\N} $ be two sequences in $ \R $ where $ a_n \to a $ and $ b_n \to b $, for $ a,b \in \R $. Define 
+		\[ c_n=\begin{cases}
+			a_n & n \text{ is odd} \\
+			b_n & n \text{ is even}
+		\end{cases}. \]
+		What is $ \mathrm{Accum}(c_n)_{c\in\N} $? Prove your claim.
+            \begin{proof}
+                We will prove that $\mathrm{Accum}(c_n)_{n\in \N} = \{a, b\}$.
+                \begin{itemize}
+                    \item Consider the subsequence $(a_{n_k})_{k\in\N}$ of $(a_n)_{n\in\N}$ where $n_k = 2k - 1$.
+                        This is also a subset of $(c_n)_{n\in\N}$.
+                    \item Because $a_n \to a$, we have $a_{n_k} \to a$ as limits are hereditary.
+                    \item Consider the subsequence $(b_{n_k})_{k\in\N}$ of $(b_n)_{n\in\N}$ where $n_k = 2k$.
+                        This is also a subset of $(c_n)_{n\in\N}$.
+                    \item Because $b_n \to b$, we have $b_{n_k} \to b$ as limits are hereditary.
+                    \item Therefore, $\{a, b\} \subseteq \mathrm{Accum}(c_n)_{n\in\N}$.
+                    \item Now, let $x \in \mathrm{Accum}(c_n)_{n\in\N}$. We will show that $x \in \{a, b\}$.
+                    \item Because $x \in \mathrm{Accum}(c_n)_{n\in\N}$, there exists a subsequence $(c_{n_k})_{k\in\N}$ of $(c_n)_{n\in\N}$ that converges to $x$.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+
+\vfill\hfill \emph{turn page}$ \longrightarrow $
+\newpage
+
+\begin{problem}{4}
+	Let $ (a_n)_{n\in\N} $ in $ \R $. Briefly prove or refute with a counterexample, the following statements:
+	\begin{enumerate}
+		\item If $ a_n \to L $ then $ |a_n|\to |L| $
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item By definition, $a_n \to L$ means that for any $\epsilon > 0$, there exists $N \in \N$ such that for all $n \geq N$, $|a_n - L| < \epsilon$.
+                    \item Recall the triangle inequality, taking $z = 0$, $|x - y| \leq |x| + |y|$.
+                    \item Taking $x = a_n - L$ and $y = 0$
+                    \item Then, $|a_n - L| < \epsilon$ implies $||a_n| - |L|| \leq |a_n - L| < \epsilon$.
+                    \item This implication is clear by considering all possibilities of $a_n$ and $L$.
+                    \begin{itemize}
+                        \item If $a_n$ and $L$ are both positive, then $|a_n| = a_n$ and $|L| = L$
+                            so $||a_n| - |L|| = |a_n - L| < \epsilon$.
+                        \item If $a_n$ and $L$ are both negative, then $|a_n| = -a_n$ and $|L| = -L$
+                            so $||a_n| - |L|| = |-a_n - (-L)| = |a_n - L| < \epsilon$.
+                        \item If $a_n$ is positive and $L$ is negative, then $|a_n| = a_n$ and $|L| = -L$
+                        so $||a_n| - |L|| = |a_n - (-L)| = |a_n + L| < |a_n - L| < \epsilon$.
+                    \item If $a_n$ is negative and $L$ is positive, then $|a_n| = -a_n$ and $|L| = L$
+                        so $||a_n| - |L|| = |-a_n - L| < |a_n - L| < \epsilon$.
+                    \end{itemize}
+                    \item Therefore, $|a_n| \to |L|$.
+                \end{itemize}
+            \end{proof}
+		\item If $ |a_n|\to L $ then $ a_n \to L $
+            \begin{proof}
+                Counterexample:
+                \begin{itemize}
+                    \item Let $L = 1$ and $a_n = (-1)^n$. Then, $|a_n| = 1$ for all $n$.
+                    \item It is clear that $|a_n| \to 1$. However, $a_n$ does not converge.
+                \end{itemize}
+            \end{proof}
+		\item If $ |a_n|\to 0 $ then $ a_n \to 0 $
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item By definition, $|a_n| \to 0$ means that for any $\epsilon > 0$, there exists $N \in \N$ such that for all $n \geq N$, $||a_n| - 0| < \epsilon$.
+                    \item $||a_n| - 0| < \epsilon$ implies that $|a_n - 0| < \epsilon$ because
+                        $||a_n| - 0| = ||a_n|| = |a_n| = |a_n - 0|$.
+                    \item Therefore, $a_n \to 0$.
+                \end{itemize}
+            \end{proof}
+		\item If $ a_n \to L $ and for all $ n \in \N $ we know $ a_n > -2 $, then $ L>-2 $
+            \begin{proof}
+                Counterexample:
+                \begin{itemize}
+                    \item Let $L = -2$ and $a_n = -2 + \frac{1}{n}$. It is clear for all $n \in \N$, $a_n > -2$ because $\frac{1}{n} > 0$.
+                    \item To show that $a_n \to -2$, we need to show that for any $\epsilon > 0$, there exists $N \in \N$ such that for all $n \geq N$, $|a_n - (-2)| < \epsilon$.
+                    \item Let $\epsilon > 0$ be arbitrary. Choose $N$ such that $N > \frac{1}{\epsilon}$.
+                    \item Then, for all $n \geq N$, $|a_n - (-2)| = |(-2 + \frac{1}{n}) - (-2)| = \frac{1}{n} < \epsilon$.
+                    \item Therefore, $a_n \to -2$ and for all $n \in \N$, $a_n > -2$ but $L \not> -2$.
+                \end{itemize}
+            \end{proof}
+		\item If $ a_n \to 0 $ then $ a_n^n \to 0 $
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item By definition, $a_n \to 0$ means that for any $\epsilon > 0$, there exists $N \in \N$ such that for all $n \geq N$, $|a_n - 0| = |a_n| < \epsilon$.
+                    \item In particular take $\epsilon = 1$. Denote $N'$ as the $N$ corresponding to $\epsilon = 1$.
+                        That is, $|a_n| < 1$ for all $n \geq N'$.
+                    \item To show that $a_n^n \to 0$, we need to show that for any $\delta> 0$, there exists $M \in \N$ such that for all $n \geq M$, $|a_n^n - 0| = |a_n^n| < \delta$.
+                    \item For $0 < \delta < 1$, we can choose $M$ corresponding to $\epsilon = \delta$.
+                        That is, $M = N$ such that $|a_n| < \delta$ for all $n \geq N$.
+                    \item Because $|a_n^n| < |a_n|$ when $0 < \delta < 1$, we have $|a_n^n| < \delta$ for all $n \geq M$.
+                    \item For $\delta \geq 1$, we can choose $M = N'$. Then, $|a_n| < 1$ for all $n \geq N'$.
+                    \item Therefore, as $|a_n| < \delta$, we also have $|a_n^n| < \delta$ for all $n \geq N'$.
+                    \item Therefore, $a_n^n \to 0$.
+                \end{itemize}
+            \end{proof}
+		\item If $ |a_n|<1 $ for all $ n $ then $ a_n^n \to 0 $
+            \begin{proof}
+                Counterexample:
+                \begin{itemize}
+                    \item Let $a_n = \left(\frac{1}{2}\right)^\frac{1}{n}$. It is clear that $|a_n| < 1$ for all $n$.
+                    \item However, $a_n^n = \left(\frac{1}{2}\right)^{\frac{1}{n}^n} = \frac{1}{2}$ for all $n$.
+                    \item So $a_n^n$ does not converge to $0$.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+
+\vspace{3cm}\hfill \emph{Good luck!}
+
+\end{document}

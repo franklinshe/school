@@ -1,0 +1,354 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm,hyperref}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\abs}[1]{\left| #1 \right|}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{Problem Set 6}
+\author{Math 255: Analysis I}
+\date{Due: Thursday, March 7th at 11:59pm EST}
+
+\maketitle
+
+\begin{problem}{1} 
+	Let $ (X,d) $ be a metric space.
+	\begin{enumerate}
+		\item Prove that $ X $ is disconnected if and only if there exists a clopen (closed and open) set $ \emptyset \neq Y \subsetneq X $.
+            \begin{proof}
+                $(\implies)$ Assume $X$ is disconnected.
+                \begin{itemize}
+                    \item By the proposition in class, $X$ is disconnect if and only if $X = A \cup B$ where $A$ and $B$ are non-empty disjoint open sets.
+                    \item Let $A$ and $B$ be the non-empty disjoint open sets that witness $X$ being disconnected.
+                    \item Thus, we can write $A = X \setminus B = B^c$ and $B = X \setminus A = A^c$.
+                    \item Consider $A$, an open set. As its complement $B$ is open, $A$ is closed.
+                    \item Therefore, $A$ is a clopen non-empty set in $X$.
+                \end{itemize}
+
+                $(\impliedby)$ Assume there exists a clopen set $ \emptyset \neq Y \subsetneq X $.
+                \begin{itemize}
+                    \item Let $A = Y$ and $B = X \setminus Y$. We will show that $X = A \cup B$ and $A \cap \overline{B} = \emptyset$ and $\overline{A} \cap B = \emptyset$.
+                    \item Both $A$ and $B$ are nonempty because $\emptyset \neq Y \subsetneq X$.
+                    \item By definition of set minus, we immediately have $X = A \cup B$.
+                    \item As $B$ is the complement of $Y$, and $Y$ is clopen, $B$ is also clopen.
+                    \item As both $A$ and $B$ are closed, we have $\overline{A} = A$ and $\overline{B} = B$.
+                    \item As $B$ is the complement of $A$, $A \cap B = \emptyset$.
+                    \item This implies that $\overline{A} \cap B = \emptyset$ and $A \cap \overline{B} = \emptyset$.
+                    \item Therefore, $A$ and $B$ are witnesses to $X$ being disconnected.
+                \end{itemize}
+
+                Hence, we have shown that $X$ is disconnected if and only if there exists a non-empty clopen set $Y \subsetneq X$. 
+            \end{proof}
+
+		\item Prove that if $ E \subseteq X $ is connected then so is $ \overline{E} $.
+         %   \begin{proof}
+         %       \hfill
+         %       \begin{itemize}
+         %           \item Assume in contradiction that $\overline{E}$ is disconnected.
+         %           \item By $E$ being connected, we have that $E = A \cup B$ and $A \cap \overline{B} = \emptyset$ and $\overline{A} \cap B = \emptyset$ where $A, B \subseteq X$.
+         %           \item By a Problem 3 in Problem Set 5, we have that
+         %               $B_n = \cup_{i=1}^n A_i$ implies $\overline{B_n} = \cup_{i=1}^n \overline{A_i}$.
+         %           \item This implies $\overline{E} = \overline{A} \cup \overline{B}$.
+         %           \item Because $\overline{E}$ is disconnected, we have $\overline{A} \cap \overline{B} = \emptyset$.
+         %           \item This implies that $\overline{A} \cap B = \emptyset$ and $A \cap \overline{B} = \emptyset$
+         %               because $A \subseteq \overline{A}$ and $B \subseteq \overline{B}$.
+         %           \item This implies that $E$ is disconnected, which is a contradiction.
+         %       \end{itemize}
+         %   \end{proof}
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Assume in contradiction that $\overline{E}$ is disconnected.
+                    \item Then there exists two sets $A$ and $B$ such that $\overline{E} = A \cup B$ and $A \cap \overline{B} = \emptyset$ and $\overline{A} \cap B = \emptyset$.
+                    \item Since $E \subseteq \overline{E}$, we have $E = E \cap (A \cup B)$
+                    \item This implies $E = (E \cap A) \cup (E \cap B)$. (Distributivity of $\cap$ shown in Problem Set 1).
+                    \item Let us see if $(E \cap A)$ and $(E \cap B)$ can be a witness to $E$ being disconnected, which would contradict our assumption.
+                    \item Consider $(E \cap A) \cap \overline{(E \cap B)}$.
+                    \item Notice that $\overline{E \cap B} \subseteq \overline{B}$. We are also given $A \cap \overline{B} = \emptyset$. This implies $A \cap \overline{(E \cap B)} = \emptyset$.
+                    \item By associativity, $(E \cap A) \cap \overline{(E \cap B)} = E \cap (A \cap \overline{(E \cap B)}) = E \cap \emptyset = \emptyset$.
+                    \item Symmetrically, we can show that $\overline{(E \cap A)} \cap (E \cap B) = \emptyset$.
+                    \item Therefore, $E$ is disconnected, which is a contradiction.
+                \end{itemize}
+            \end{proof}
+		\item Give an example of a disconnected set $ W \subseteq \R $ for which $ \overline{W} $ is connected.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item $\Q \subseteq \R$ is disconnected by taking $A = \Q \cap (-\infty, \sqrt{2})$ and $B = \Q \cap (\sqrt{2}, \infty)$.
+                    \item $\overline{\Q} = \R$ by the density of $\Q$ in $\R$ and $\R$ is connected.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+
+\begin{problem}{2}
+	Let $ (X,d) $ be a metric space. 
+	\begin{enumerate}%[label=(\alph*),leftmargin=*]
+		\item Let $ K_1,...,K_N $ be a finite collection of compact sets in $ X $. Prove that $ \bigcup_{n=1}^N K_n $ is also compact.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Let $\{G_\alpha\}_{\alpha}$ be an open cover of $\bigcup_{n=1}^N K_n$.
+                    \item Notice that $\{G_\alpha\}_{\alpha}$ is also an open cover for each $K_n$.
+                    \item Since each $K_n$ is compact, there exists a finite sub-cover $\{G_{n,1}, G_{n,2}, ..., G_{n,m_n}\}$ for each $K_n$, $1 \leq n \leq N$.
+                    \item This implies that $\{G_{n,j} : 1 \leq n \leq N, 1 \leq j \leq m_n\}\subseteq \{G_\alpha\}_\alpha$ is a finite sub-cover of $\bigcup_{n=1}^N K_n$.
+                \end{itemize}
+            \end{proof}
+		\item Prove that any compact set $ K \subseteq X $ has at most finitely many isolated points (i.e.~points in $ K $ which are not limit points of $ K $).
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Assume in contradiction that $K$ has infinitely many isolated points. We will find an open cover of $K$ such that cannot have a finite subcover.
+                    \item Let us call the infinite set of isolated points $I \subseteq K$.
+                    \item Because each $p \in I$ is an isolated point, there exists an $\epsilon_p > 0$ such that $N_{\epsilon_p}(p) \cap K = \{p\}$.
+                    \item Let $\{N_{\epsilon_p}(p)\}_{p \in I}$ be the collection of open sets centered at each isolated point.
+                    \item Let $\{G_\alpha\}_{\alpha}$ be an open cover of $K \setminus I$.
+                    \item We have that $\{N_{\epsilon_p}(p)\}_{p \in I} \cup \{G_\alpha\}_{\alpha}$ is an open cover of $K$.
+                    \item However, notice that it is impossible to find a finite subcover of $\{N_{\epsilon_p}(p)\}_{p \in I} \cup \{G_\alpha\}_{\alpha}$.
+                    \item This is because to cover each $p \in I \subseteq K$, the subcover must contain the corresponding $N_{\epsilon_p}(p)$ which there are infinitely many.
+                    \item Therefore, $K$ is not compact, which is a contradiction.
+                \end{itemize}
+            \end{proof}
+		\item Let $ \{K_\alpha\}_{\alpha \in I} $ be any collection of compact sets. Prove that $ \bigcap_{\alpha \in I} K_\alpha $ is also compact.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Let $B = \{B_\beta\}_{\beta \in J}$ be an open cover of $\bigcap_{\alpha \in I} K_\alpha$.
+                        We will show that $B$ has a finite subcover.
+                    \item Let $K_1 \in \{K_\alpha\}_{\alpha \in I}$. Then $K_1$ is compact.
+                    \item Let $C$ be an open cover of $K_1$. Let $C_f = \{C_1, C_2, \ldots C_n\}$ be a finite subcover of $C$.
+                    \item Notice that $C_f$ is an open cover of $\bigcap_{\alpha \in I} K_\alpha$.
+                        This is because $\bigcap_{\alpha \in I} K_\alpha \subseteq K_1$ and $C_f$ covers $K_1$.
+                    \item We will construct a finite subcover of $B$ from $C_f$.
+                        Consider $B_f = \{C_i \cap (\bigcup_{\beta \in J} B_\beta)\}_{1 \leq i \leq n}$.
+                    \item $B_f$ must be finite as it is constructed from iterating over $C_f$, which has $n$ elements.
+                    \item It is also a subcover of $B$ as $C_f \cap B \subseteq B$.
+                        It must also cover $\bigcap_{\alpha \in I} K_\alpha$ because $C_f$ covers $K_1$ and $K_1 \subseteq \bigcap_{\alpha \in I} K_\alpha$.
+                    \item Therefore, $\bigcap_{\alpha \in I} K_\alpha$ is compact.
+                \end{itemize}
+            \end{proof}
+            
+           % \begin{proof}
+           %     \hfill
+           %     \begin{itemize}
+           %         \item We will prove that $\cap_{\alpha \in I} K_\alpha$ is bounded and closed. By the theorem proved in class, this is sufficient to show that $\cap_{\alpha \in I} K_\alpha$ is compact.
+           %         \item $\forall \alpha \in I$, $K_\alpha$ is compact. This implies $\forall \alpha \in I$, $K_\alpha$ is closed by a proposition proved in class.
+           %         \item This implies $\cap_{\alpha \in I} K_\alpha$ is closed by a corollary proved in class.
+           %         \item Let $K \in \{K_\alpha\}_{\alpha \in I}$. Then $K$ is bounded by a proposition proved in class. Let $M$ be the bound of $K$.
+           %         \item Notice that $M$ also bounds $\cap_{\alpha \in I} K_\alpha$. This is because $\forall p, q \in \cap_{\alpha \in I} K_\alpha$, $p, q \in K$ and $d(p, q) \leq M$ by $M$ being the bound of $K$.
+           %         \item Therefore, $\cap_{\alpha \in I} K_\alpha$ is both bounded and closed, and thus compact.
+           %     \end{itemize}
+           % \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+
+\begin{problem}{3}
+	Let $ (X,d_X) $ and $ (Y,d_Y) $ be two metric spaces. We define a metric on the product space $ X \times Y $:
+	\[ d_{X\times Y}((x_1,y_1),(x_2,y_2)) = d_X(x_1,x_2)+d_Y(y_1,y_2). \]
+	Similarly, if $ (X_1,d_1),...,(X_N,d_N) $ are $ N $ metric spaces we define a metric on the product $ X_1 \times X_2 \times \cdots \times X_N $ as the sum of distances in each coordinate.
+	\begin{enumerate}
+		\item Verify that $ d_{X \times Y} $ is indeed a metric on $ X \times Y $. Conclude by induction that the construction of a metric on $ X_1 \times X_2 \times \cdots \times X_N $ is indeed a metric.
+            \begin{proof}
+                \textbf{Base Case:}
+                We will prove positivity, symmetry, and the triangle inequality for $d_{X \times Y}$.
+
+                \textit{Positivity:}
+                \begin{itemize}
+                    \item Let $(x_1, y_1), (x_2, y_2) \in X \times Y$.
+                    \item Then $d_X(x_1, x_2) \geq 0$ and $d_Y(y_1, y_2) \geq 0$.
+                    \item Therefore, $d_X(x_1, x_2) + d_Y(y_1, y_2) \geq 0$.
+                    \item This implies $d_{X \times Y}((x_1, y_1), (x_2, y_2)) \geq 0$.
+                \end{itemize}
+                
+                \textit{Symmetry:}
+                \begin{itemize}
+                    \item Let $(x_1, y_1), (x_2, y_2) \in X \times Y$.
+                    \item Then $d_X(x_1, x_2) = d_X(x_2, x_1)$ and $d_Y(y_1, y_2) = d_Y(y_2, y_1)$.
+                    \item Therefore, $d_X(x_1, x_2) + d_Y(y_1, y_2) = d_X(x_2, x_1) + d_Y(y_2, y_1)$.
+                    \item This implies $d_{X \times Y}((x_1, y_1), (x_2, y_2)) = d_{X \times Y}((x_2, y_2), (x_1, y_1))$.
+                \end{itemize}
+                
+                \textit{Triangle Inequality:}
+                \begin{itemize}
+                    \item Let $(x_1, y_1), (x_2, y_2), (x_3, y_3) \in X \times Y$.
+                    \item Then $d_X(x_1, x_3) \leq d_X(x_1, x_2) + d_X(x_2, x_3)$ and $d_Y(y_1, y_3) \leq d_Y(y_1, y_2) + d_Y(y_2, y_3)$.
+                    \item Therefore, $d_X(x_1, x_3) + d_Y(y_1, y_3) \leq d_X(x_1, x_2) + d_X(x_2, x_3) + d_Y(y_1, y_2) + d_Y(y_2, y_3)$.
+                    \item This implies $d_{X \times Y}((x_1, y_1), (x_3, y_3)) \leq d_{X \times Y}((x_1, y_1), (x_2, y_2)) + d_{X \times Y}((x_2, y_2), (x_3, y_3))$.
+                \end{itemize}
+
+                Therefore, $d_{X \times Y}$ is a metric on $X \times Y$.
+
+                \textbf{Inductive Step:} We assume that $d_{X_1 \times X_2 \times \cdots \times X_N}$ is a metric on $X_1 \times X_2 \times \cdots \times X_N$. We will prove that $d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}$ is a metric on $X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}$.
+
+                \textit{Positivity:}
+                \begin{itemize}
+                    \item Let $(x_1, x_2, ..., x_N, x_{N+1}), (y_1, y_2, ..., y_N, y_{N+1}) \in X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}$.
+                    \item Then $d_{X_1 \times X_2 \times \cdots \times X_N}(x_1, x_2, ..., x_N, y_1, y_2, ..., y_N) \geq 0$ (inductive hypothesis).
+                    \item And $d_{X_{N+1}}(x_{N+1}, y_{N+1}) \geq 0$ ($d_{X_{N+1}}$ is a metric on $X_{N+1}$).
+                    \item Therefore, $d_{X_1 \times X_2 \times \cdots \times X_N}((x_1, x_2, ..., x_N), (y_1, y_2, ..., y_N)) + d_{X_{N+1}}(x_{N+1}, y_{N+1}) \geq 0$.
+                    \item This implies $d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}((x_1, x_2, ..., x_N, x_{N+1}), (y_1, y_2, ..., y_N, y_{N+1})) \geq 0$.
+                \end{itemize}
+
+                \textit{Symmetry:}
+                \begin{itemize}
+                    \item Let $(x_1, x_2, ..., x_N, x_{N+1}), (y_1, y_2, ..., y_N, y_{N+1}) \in X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}$.
+                    \item Then $d_{X_1 \times X_2 \times \cdots \times X_N}(x_1, x_2, ..., x_N, y_1, y_2, ..., y_N) = d_{X_1 \times X_2 \times \cdots \times X_N}(y_1, y_2, ..., y_N, x_1, x_2, ..., x_N)$ \\ (inductive hypothesis).
+                    \item And $d_{X_{N+1}}(x_{N+1}, y_{N+1}) = d_{X_{N+1}}(y_{N+1}, x_{N+1})$ ($d_{X_{N+1}}$ is a metric on $X_{N+1}$).
+                    \item Therefore, $d_{X_1 \times X_2 \times \cdots \times X_N}((x_1, x_2, ..., x_N), (y_1, y_2, ..., y_N)) + d_{X_{N+1}}(x_{N+1}, y_{N+1})$
+
+                        $= d_{X_1 \times X_2 \times \cdots \times X_N}((y_1, y_2, ..., y_N), (x_1, x_2, ..., x_N)) + d_{X_{N+1}}(y_{N+1}, x_{N+1})$.
+                    \item This implies $d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}((x_1, x_2, ..., x_N, x_{N+1}), (y_1, y_2, ..., y_N, y_{N+1})) $
+
+                        $= d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}((y_1, y_2, ..., y_N, y_{N+1}), (x_1, x_2, ..., x_N, x_{N+1}))$.
+                \end{itemize}
+
+                \textit{Triangle Inequality:}
+
+                \begin{itemize}
+                    \item Let $(x_1, x_2, ..., x_N, x_{N+1}), (y_1, y_2, ..., y_N, y_{N+1}), (z_1, z_2, ..., z_N, z_{N+1}) \in X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}$.
+                    \item Then $d_{X_1 \times X_2 \times \cdots \times X_N}((x_1, x_2, ..., x_N), (z_1, z_2, ..., z_N)) $ \\$ \leq d_{X_1 \times X_2 \times \cdots \times X_N}((x_1, x_2, ..., x_N), (y_1, y_2, ..., y_N)) + d_{X_1 \times X_2 \times \cdots \times X_N}((y_1, y_2, ..., y_N), (z_1, z_2, ..., z_N))$ (inductive hypothesis).
+                    \item And $d_{X_{N+1}}(x_{N+1}, z_{N+1}) \leq d_{X_{N+1}}(x_{N+1}, y_{N+1}) + d_{X_{N+1}}(y_{N+1}, z_{N+1})$ ($d_{X_{N+1}}$ is a metric on $X_{N+1}$).
+                    \item Therefore, $d_{X_1 \times X_2 \times \cdots \times X_N}((x_1, x_2, ..., x_N), (z_1, z_2, ..., z_N)) + d_{X_{N+1}}(x_{N+1}, z_{N+1})$ \\ $\leq d_{X_1 \times X_2 \times \cdots \times X_N}((x_1, x_2, ..., x_N), (y_1, y_2, ..., y_N)) + d_{X_1 \times X_2 \times \cdots \times X_N}((y_1, y_2, ..., y_N), (z_1, z_2, ..., z_N))$ \\ $ + d_{X_{N+1}}(x_{N+1}, y_{N+1}) + d_{X_{N+1}}(y_{N+1}, z_{N+1})$.
+
+                    \item This implies $d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}((x_1, x_2, ..., x_N, x_{N+1}), (z_1, z_2, ..., z_N, z_{N+1}))$ \\ $\leq d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}((x_1, x_2, ..., x_N), (y_1, y_2, ..., y_N, y_{N+1}))$ \\ $+ d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}((y_1, y_2, ..., y_N, y_{N+1}), (z_1, z_2, ..., z_N, z_{N+1}))$.
+                \end{itemize}
+                Hence, $d_{X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}}$ is a metric on $X_1 \times X_2 \times \cdots \times X_N \times X_{N+1}$.
+                By induction, we have shown that the construction of a metric on $X_1 \times X_2 \times \cdots \times X_N$ is indeed a metric.
+            \end{proof}
+		\item Assume $ K_1 \subseteq X $ and $ K_2 \subseteq Y $ are compact sets. Prove that $ K_1 \times K_2 \subseteq X \times Y $ is compact. Conclude that a product of compact sets in $ X_1 \times \cdots \times X_N $ is compact. \footnote{Actually, this holds in much greater generality --- arbitrary products of compact sets are compact! (\href{https://en.wikipedia.org/wiki/Tychonoff\%27s_theorem}{Tychonoff's Theorem})}
+            \begin{proof}
+                \textbf{Base Case:} We will prove that $K_1 \times K_2$ is compact.
+
+                \begin{itemize}
+                    \item Let $K_1$ and $K_2$ be compact sets and $\{G_\alpha\}_{\alpha \in A}$ be an open cover of $K_1 \times K_2$. We will show that it has a finite subcover.
+                    \item For each point $(a, b) \in K_1 \times K_2$, we can choose some $\alpha$ such that $(a, b) \in G_\alpha$.
+                    \item $G_{\alpha}$ is an open set in $X \times Y$.
+                    Hence, $(a,b)$ is contained in some open box $U_{(a,b)} \times V_{(a,b)} \subseteq G_\alpha$ where
+                    $U_{(a,b)} \subseteq K_1$ and $V_{(a,b)} \subseteq K_2$ are open sets.
+                    \item Now, let's fix $a$ and vary $b$. Then every point $(a,b)$ is contained in an open box in the product $K_1 \times K_2$ and the box is itself the product of a subset of $K_1$ and a subset of $K_2$.
+                    \item Therefore, the collection of sets $\{V_{(a,b)}\}_{b \in K_2}$ is an open cover for $K_2$.
+                    \item Since $K_2$ is compact, we find a finite cover $\{V_{(a,b_j(a)}\}$ of $K_2$ containing finitely many open sets containing points $\{(a, b_j(a))\}$.
+                    \item Now, let $U_\alpha = \cap_j U_{(a, b_j(a))}$ where the intersection of finitely many open sets, and therefore open itself.
+                    \item Since $K_1$ is compact, we find a finite subcover $\{U_{\alpha_i}\}$ of $K_1$.
+                    \item This implies that $\{U_{\alpha_i} \times V_{(a, b_j(a))}\}$ is a finite subcover of $K_1 \times K_2$.
+                \end{itemize}
+
+                \textbf{Inductive Step:} We assume that $K_1 \times K_2 \times \cdots \times K_N$ is compact. We will prove that $K_1 \times K_2 \times \cdots \times K_N \times K_{N+1}$ is compact.
+
+                \begin{itemize}
+                    \item Let $\{G_\beta\}_{\beta \in B}$ be an open cover of $K_1 \times \cdots \times K_N \times K_{N+1}$. We will show that it has a finite subcover.
+    
+                    \item For any point $(x_1, \ldots, x_N, x_{N+1}) \in K_1 \times \cdots \times K_N \times K_{N+1}$, there exists an open set $G_\beta$ containing this point. This $G_\beta$ contains an open set of the form $U_1 \times \cdots \times U_N \times U_{N+1}$ where each $U_i$ is open in $K_i$.
+                    
+                    \item By the inductive hypothesis we know that $K_1 \times \cdots \times K_N$ is compact. We know that $K_{N+1}$ is compact as well.
+    
+                    \item By sequentially considering each $K_i$, we can construct a finite subcover for $K_1 \times \cdots \times K_N$, and separately, a finite subcover for $K_{N+1}$, similar to our base case.
+                    
+                    \item Combine these finite subcovers similar to our base case creates a finite subcover of $K_1 \times \cdots \times K_N \times K_{N+1}$.
+                \end{itemize}
+
+            Hence, by induction, we have shown that the product of compact sets in $X_1 \times \cdots \times X_N$ is compact.
+
+            \end{proof}
+		\item Conclude that cells $ [a_1,b_1]\times [a_2,b_2]\times \cdots \times [a_N,b_N] $ are compact in $ \R^N $ equipped with the metric as defined above.
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Assuming $a_i < b_i$ for all $1 \leq i \leq N$, we know by the proposition in class that each
+                        $[a_i, b_i]$ is compact in $\R$.
+                    \item Therefore, $ [a_1,b_1]\times [a_2,b_2]\times \cdots \times [a_N,b_N] $ is compact in $ \R^N $ equipped with the metric as defined above by this problem.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+\medskip
+
+\newpage
+
+\begin{problem}{4}
+	Let $ (X,d) $ be a metric space and let $ K_1 $ and $K_2 $ be two compact sets in $ X $. Assume the sets are disjoint, i.e.~$ K_1 \cap K_2 = \emptyset $. 
+	\begin{enumerate}
+		\item Use the fact that 
+		\[ \forall p \in K_1,\; q \in K_2 \quad \exists r_{p,q}>0 \quad \text{such that} \quad N_{r_{p,q}}(p) \cap N_{r_{p,q}}(q) = \emptyset,  \]
+		to prove that there exists $ r>0 $ satisfying that $ \forall p \in K_1,\; q \in K_2 \quad d(p,q)>r $.
+        \begin{proof}
+            \hfill
+            \begin{itemize}
+                \item We first notice that the fact implies that $\forall p \in K_1,\; q \in K_2 \quad d(p, q) \geq r_{p,q}$.
+                    If this wasn't the case, then $N_{r_{p,q}}(p) \cap N_{r_{p,q}}(q) \neq \emptyset$.
+                \item We will construct a universal $r$ such that for all $\forall p \in K_1,\; q \in K_2 \quad d(p, q) > r$. The idea will be to use the fact that $K_1$ and $K_2$ are compact to locate a minimum from its finite subcovers $r \leq r_{p, q}$.
+                \item We will construct open covers for $K_1$ and $K_2$. For each $p \in K_1$, consider $N_{r_{p,q}/2}(p)$. This is an open cover for $K_1$ because all neighborhoods are open and all $p \in K_1$ are covered.
+                    Similarly, for each $q \in K_2$, consider $N_{r_{p,q}/2}(q)$, which is an open cover for $K_2$.
+                \item Because $K_1$ and $K_2$ are compact, we have finite subcovers $\{N_{r_{p_i,q_i}/2}(p_i)\}_{i=1}^n$ and $\{N_{r_{p_i,q_i}/2}(q_i)\}_{j=1}^m$ for $K_1$ and $K_2$ respectively.
+                \item Let $r = \min\{r_{p_i,q_j}/2 : 1 \leq i \leq n, 1 \leq j \leq m\}$.
+                \item With $r$ chosen as above, for any $p \in K_1$, $q \in K_2$, $d(p,q) > r$. This follows because if there were any $p \in K_1$, $q \in K_2$, $d(p,q) \leq r$, their neighborhoods would overlap, contradicting our initial assumption that we can always find $r_{p,q}$ making their neighborhoods disjoint.
+            \end{itemize}
+        \end{proof}
+		\item Is the same statement true for any two closed sets? That is, if $ F_1 $ and $F_2 $ are closed in $ X $ with $ F_1 \cap F_2 = \emptyset $, then there exists $ r>0 $ for which $ d(p,q) > r $ for all $ p \in F_1 $ and $ q \in F_2 $?
+        \begin{proof}
+            We will show that the statement is not true for any two closed sets by providing a counterexample.
+            \begin{itemize}
+                \item Let $F_1$ and $F_2$ be two closed sets in $\mathbb{R}^2$ with the standard metric.
+                \item Let $F_1 = \{(x, 1/x) \in \mathbb{R}^2: x > 0\}$, $F_2 = \{(x, 0) \in \mathbb{R}^2 : x \in \mathbb{R}\}$.
+                \item Notice that $F_1$ and $F_2$ are both closed. 
+                \item Notice that $F_1 \cap F_2 = \emptyset$. This is clear because for any point in $F_1$, the y-coordinate is $1/x$, which is always positive for $x > 0$. Meanwhile, the y-coordinate for any point in $F_2$ is always 0. Hence, there are no points in common.
+                \item We will show that for any $r > 0$, there exists $p \in F_1$ and $q \in F_2$ such that $d(p, q) \leq r$. Pick $p = (2/r, r/2)$ in $F_1$ and $q = (2/r, 0)$ in $F_2$. The distance between $p$ and $q$ is given by $d(p, q) = \sqrt{((2/r) - (2/r))^2 + (r/2 - 0)^2} = \sqrt{0 + (r/2)^2} = r/2 < r$, demonstrating that there cannot be a uniform $r > 0$ such that $d(p, q) > r$ for all $p \in F_1$ and $q \in F_2$.
+            \end{itemize}
+        \end{proof}
+
+	\end{enumerate}
+\end{problem}
+
+\newpage
+
+\begin{problem}{5}
+	Let $ (X,d) $ be a metric space and let $ \{K_n\}_{n \in \N} $ be a countable collection of non-empty compact sets satisfying $ K_1 \supseteq K_2 \supseteq K_3 \supseteq ... $\footnote{A sequence of sets satisfying this condition is called a \emph{nested} sequence.}. 
+	\begin{enumerate}
+		\item Prove that $ \bigcap_{n \in \N} K_n \neq \emptyset $.\footnote{Hint: Consider the complements $ G_n=K_n^c $. This result is called Cantor's lemma and we've encountered a special case of it as part of the proof of uncountability of $ (0,1) $ in $ \R $.}
+            \begin{proof}
+                \hfill
+                \begin{itemize}
+                    \item Consider $G_n = K_n^c$ for each $n \in \N$. Notice that $G_n$ is open, as it is the complement of a compact set which is necessarily closed.
+                    \item Assume in contradiction that $\bigcap_{n \in \N} K_n = \emptyset$. This implies that $\bigcup_{n \in \N} G_n = X$.
+                        In particular, this implies that $\{G_n\}_{n \in \N}$ is an open cover for $X$.
+                    \item Since $K_1$ is compact, there exists a finite subcover $\{G_{n_1}, G_{n_2}, ..., G_{n_m}\}$ for $K_1$.
+                    \item Define $k = \max\{n_1, n_2, ..., n_m\} + 1$. Then $K_k \subseteq K_1$ because $\{K_n\}_{n \in \N}$ is a nested sequence.
+                    \item This implies that $\{G_{n_1}, G_{n_2}, ..., G_{n_m}\}$ is an open cover for $K_k$.
+                    \item However, because $G_n$ is the complement of $K_n$, $K_k$ must be disjoint from the cover formed by $\{G_{n_1}, G_{n_2}, ..., G_{n_m}\}$. This is a contradiction, as $K_k$ cannot be both disjoint from the cover but also covered by the cover.
+                    \item Therefore, $\bigcap_{n \in \N} K_n \neq \emptyset$.
+                \end{itemize}
+            \end{proof}
+		\item Is the same statement true for a nested sequence of closed sets? That is, is it true that given a sequence $ \{F_n\}_{n \in \N} $ of non-empty closed sets satisfying $ F_1 \supseteq F_2 \supseteq F_3 \supseteq ... $ has $ \bigcap_{n \in \N} F_n \neq \emptyset $?
+            \begin{proof}
+                We will show that the statement is not true for a nested sequence of closed sets by providing a counterexample.
+                \begin{itemize}
+                    \item Consider the nested sequence of closed sets $\{F_n\}_{n \in \N}$ where $F_n = [n, \infty)$ for each $n \in \N$.
+                    \item However, $\bigcap_{n \in \N} F_n = \emptyset$.
+                        This is because there is no real number that is in every set $F_n$.
+                        For any real number $x \in \R$, we can always find an $n > x$ such that the real number is not in $F_n$.
+                \end{itemize}
+            \end{proof}
+	\end{enumerate}
+\end{problem}
+
+\vspace{3cm}\hfill \emph{Good luck!}
+
+\end{document}

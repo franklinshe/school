@@ -136,17 +136,45 @@
             \end{proof}
 		\item If $ A \cap B \neq \emptyset $ then $ \sup(A \cap B) \leq \min(\sup A, \sup B) $. Give an example where equality does not hold.
             \begin{proof}
+                Let $s_A = \sup A$ and $s_B = \sup B$, given by the LUB property.
+                Since $s_A$ and $s_B$ are the least upper bounds of $A$ and $B$, respectively, it follows that for all $a \in A$, $a \leq s_A$, and for all $b \in B$, $b \leq s_B$.
+                
+                \textbf{Elements of $A \cap B$:} For any element $x \in A \cap B$, $x$ is both an element of $A$ and an element of $B$. Therefore, $x \leq s_A$ and $x \leq s_B$. This means that $x$ is less than or equal to both $s_A$ and $s_B$, and hence $x \leq \min(s_A, s_B)$.
+                
+                \textbf{Supremum of $A \cap B$:} Since every element $x \in A \cap B$ satisfies $x \leq \min(s_A, s_B)$, it follows that $\min(s_A, s_B)$ is an upper bound for $A \cap B$. To prove that $\sup(A \cap B) \leq \min(s_A, s_B)$, we observe that the supremum of $A \cap B$ is the least upper bound of $A \cap B$. Since $\min(s_A, s_B)$ is an upper bound for $A \cap B$, and by definition of supremum, no number greater than $\sup(A \cap B)$ can serve as an upper bound, it follows that $\sup(A \cap B)$ must be less than or equal to this common upper bound, $\min(s_A, s_B)$.
+
+                \textbf{Example where equality does not hold:}
                 Let $A = \{ \frac{n-1}{n} : n \in \N \}$ and $B = \{ \frac{n-1}{2n} : n \in \N \}$. Then, $A \cap B = \{0\}$. We have $\sup A = 1$ and $\sup B = 1/2$. Then, $\sup(A \cap B) = 0 < 1/2 = \min(\sup A, \sup B)$.
             \end{proof}
 		\item The set $ -A=\{ -x: x \in A \} $ is bounded below and satisfies $ \inf(-A)=-\sup A $.
             \begin{proof}
-                First, we show that $-A$ is bounded below. By assumption, $A$ is bounded above, meaning $\exists u \in \R$ such that $\forall a \in A$, $a \leq u$. Then, $\forall -a \in -A$, $-a \geq -u$. Thus, $-A$ is bounded below by $-u$.
+                First, we show that $-A$ is bounded below. By assumption, $A$ is bounded above, meaning $\exists u \in \R$ such that $\forall a \in A$, $a \leq u$.
+                By definition of inequality, there exists a $x$ such that $a + x = u$ for all $a \in A$.
+                Then, we can use the additive inverses and the cancellation law to arrive at $-a = -u + x$ for all $a \in A$. Therefore, $\forall -a \in -A$, $-a \geq -u$. Thus, $-A$ is bounded below by $-u$.
                 
                 Next, we show that $\inf(-A) = -\sup A$ by showing that $-\sup A$ is a lower bound for $-A$ and there exists lower bound of $-A$ in $\R$ greater than $-\sup A$.
                 Let $s = \sup A$, which we obtain by the LUB property of $\R$. By $s$ being an upper bound, we reason similarly to the previous paragraph that $-s$ is a lower bound for $-A$.
 
                 Assume in contradiction there exists $y> -s$ that is a lower bound for $-A$. This implies that for all $x \in -A$, we have $-x\geq y$. Thus, $x \leq -y$, which means $-y$ is an upper bound for $A$. However, since $y>-s$, we have $-y<s$, a contradiction of our assumption that $s = \sup A$. Therefore, no such $y > -s$ can exist, meaning that $-s$ is the greatest lower bound of $A$, i.e. $inf(-A) = -\sup A$. 
             \end{proof}
+            \item The set $ A+B=\{a+b: a \in A, b \in B \} $ is bounded above and satisfies $ \sup(A+B)=\sup A + \sup B $.
+                \begin{proof}
+                    Given that $A$ and $B$ are both bounded above, there exist real numbers $M$ and $N$ such that for all $a \in A$, $a \leq M$, and for all $b \in B$, $b \leq N$. Consider any element $x \in A+B$, where $x = a + b$ for some $a \in A$ and $b \in B$. It follows that $x \leq M + N$, demonstrating that $A+B$ is bounded above by $M + N$.
+
+                    $\sup(A+B)$ is an upper bound for $A+B$: Let $s_A = \sup A$ and $s_B = \sup B$. For any $a \in A$ and $b \in B$, we have $a \leq s_A$ and $b \leq s_B$. Therefore, for any element $x = a + b \in A+B$, we have $x = a + b \leq s_A + s_B$. This shows that $s_A + s_B$ is an upper bound for $A+B$.
+
+                    $\sup(A+B)$ is the least upper bound: Suppose there exists $L < \sup A + \sup B$ such that for all $a \in A$ and $b \in B$, $a + b \leq L$. Given $s_A = \sup A$ and $s_B = \sup B$, by definition of supremum, for any $\epsilon > 0$, there exist $a' \in A$ and $b' \in B$ such that:
+
+\begin{itemize}
+    \item $a' > s_A - \frac{\epsilon}{2}$
+    \item $b' > s_B - \frac{\epsilon}{2}$
+\end{itemize}
+
+Choose $\epsilon = \sup A + \sup B - L > 0$. Such an $\epsilon$ exists because we assumed $L < \sup A + \sup B$. Then, for the chosen $a'$ and $b'$, we have:
+
+$$a' + b' > s_A - \frac{\epsilon}{2} + s_B - \frac{\epsilon}{2} = s_A + s_B - \epsilon = L$$
+This is a contradiction because we assumed $L$ is an upper bound for $A+B$, which would mean $a' + b' \leq L$ for all $a' \in A$ and $b' \in B$. However, we have found $a', b'$ such that $a' + b' > L$. Therefore, our initial assumption that there exists an upper bound $L < \sup A + \sup B$ for $A+B$ is false.
+                \end{proof}
 	\end{enumerate}
 \end{problem}
 
@@ -161,26 +189,36 @@
 		\item If bounded above what is its supremum? If bounded below what is its infimum?
 		\item Does the set have a maximum? minimum?
 	\end{enumerate}
-    \begin{enumerate}
-        \item $A$
-            \begin{enumerate}
-                \item $A$ is bounded above and bounded below.
-                \item $\sup A = 1$ and $\inf A = -1$.
-                \item $A$ has no maximum and no minimum.
-            \end{enumerate}
-        \item $B$
-            \begin{enumerate}
-                \item $B$ is bounded above and bounded below.
-                \item $\sup B = 1/3$ and $\inf B = -1/2$.
-                \item $\max B = 1/3$ and $\min B = -1/2$.
-            \end{enumerate}
-        \item $C$
-            \begin{enumerate}
-                \item $C$ is only bounded below.
-                \item $\inf C = 0$.
-                \item $C$ has no maximum and no minimum.
-            \end{enumerate}
-    \end{enumerate}
+
+    \subsection*{Set $A$}
+\begin{enumerate}
+    \item \textbf{Boundedness:} The set $A = \left\{\frac{(-1)^n \cdot n}{n+1} : n \in \mathbb{N}\right\}$ is bounded above by $1$ and below by $-1$. For any $n \in \mathbb{N}$, we indeed have $-1 < \frac{(-1)^n \cdot n}{n+1} < 1$. This is because the magnitude of the numerator is always less than the magnitude of the denominator, ensuring the fraction's absolute value is strictly less than $1$.
+    
+    \item \textbf{Supremum and Infimum:} To prove $\sup A = 1$ and $\inf A = -1$, assume for contradiction there exists an upper bound $U < 1$ or a lower bound $L > -1$. For any $\epsilon > 0$, choose $n \in \mathbb{N}$ such that $\frac{1}{n+1} < \epsilon$. Then, $\frac{n}{n+1} > 1 - \epsilon$, contradicting $U$ as an upper bound. Similarly, we can show $L > -1$ leads to a contradiction, thus $\sup A = 1$ and $\inf A = -1$.
+    
+    \item \textbf{Maximum and Minimum:} Since for every $n \in \mathbb{N}$, there exists $n+1$ such that $\frac{(-1)^{n+1} \cdot (n+1)}{n+2}$ is closer to either $1$ or $-1$, $A$ does not contain its supremum or infimum as elements. Hence, $A$ has no maximum or minimum.
+\end{enumerate}
+
+\subsection*{Set $B$}
+\begin{enumerate}
+    \item \textbf{Boundedness:} The set $B = \left\{\frac{(-1)^n}{n+1} : n \in \mathbb{N}\right\}$ is bounded above by $1$ and below by $-1$ for similar reasons as $A$, with the absolute value of all elements bounded by $1$ due to the denominator being larger than the numerator in absolute value.
+    
+    \item \textbf{Supremum and Infimum:} $\sup B = \frac{1}{3}$ and $\inf B = -\frac{1}{2}$ are demonstrated by directly evaluating the sequence for $n=1$ and $n=0$, respectively. No element for $n > 1$ can exceed these bounds due to the increasing denominator, establishing these as the supremum and infimum.
+    
+    \item \textbf{Maximum and Minimum:} As $\frac{1}{3}$ and $-\frac{1}{2}$ are explicitly present in $B$ for $n=1$ and $n=0$ respectively, they are the maximum and minimum of $B$.
+\end{enumerate}
+
+\subsection*{Set $C$}
+\begin{enumerate}
+    \item \textbf{Boundedness:} The set $C = \left\{\frac{1}{(q-1)^2} : q \in \mathbb{Q}, q \neq 1\right\}$ is unbounded above because as $q$ approaches $1$, the denominator approaches $0$, causing the fraction to increase without bound. However, $C$ is bounded below by $0$ since the fraction is always positive.
+    
+    \item \textbf{Infimum:} We show $\inf C = 0$ using an $\epsilon$-$\delta$ argument. For any $\epsilon > 0$, choose $q$ such that $0 < |q - 1| < \sqrt{\frac{1}{\epsilon}}$. Then, $\frac{1}{(q-1)^2} > \epsilon$, indicating the fraction approaches $0$ as $q$ approaches $1$, but never reaches $0$.
+    
+    \item \textbf{Maximum and Minimum:} $C$ has no maximum or minimum. The minimum value of $0$ is approached but never reached because the
+        numerator is always $1$ and the denominator is always positive, ensuring the fraction is always positive.
+        The lack of an upper bound directly implies no maximum.
+\end{enumerate}
+
 \end{problem}
 \medskip
 
