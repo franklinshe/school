@@ -1,0 +1,521 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={pset2\_R},
+  pdfauthor={Franklin She},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{pset2\_R}
+\author{Franklin She}
+\date{2024-02-15}
+
+\begin{document}
+\maketitle
+
+\hypertarget{part-ii-2-r-questions}{%
+\section{Part II: 2 R Questions}\label{part-ii-2-r-questions}}
+
+\hypertarget{question-1.-load-data}{%
+\subsection{Question 1. Load Data}\label{question-1.-load-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(haven)}
+
+\NormalTok{financeR\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_dta}\NormalTok{(}\StringTok{"financeR.dta"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(financeR\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   date          r_A       r_B     r_C     r_M
+##   <chr>       <dbl>     <dbl>   <dbl>   <dbl>
+## 1 12/1/2004  0.0191 -0.00585   0.100   0.0386
+## 2 1/1/2005  -0.0508  0.0975    0.0227  0.0325
+## 3 2/1/2005  -0.0207  0.00858  -0.0170 -0.0253
+## 4 3/1/2005   0.0287  0.000354  0.0625  0.0189
+## 5 4/1/2005  -0.0162  0.0179   -0.0195 -0.0191
+## 6 5/1/2005   0.0124 -0.125     0.0127 -0.0201
+\end{verbatim}
+
+\hypertarget{question-2-number-of-variables-and-observations}{%
+\subsection{Question 2: Number of Variables and
+Observations}\label{question-2-number-of-variables-and-observations}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_dimensions }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(financeR\_data)}
+\NormalTok{num\_observations }\OtherTok{\textless{}{-}}\NormalTok{ data\_dimensions[}\DecValTok{1}\NormalTok{]}
+\NormalTok{num\_variables }\OtherTok{\textless{}{-}}\NormalTok{ data\_dimensions[}\DecValTok{2}\NormalTok{]}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Number of observations (rows):"}\NormalTok{, num\_observations, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Number of observations (rows): 156
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Number of variables (columns):"}\NormalTok{, num\_variables, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Number of variables (columns): 5
+\end{verbatim}
+
+\hypertarget{question-3-data-types-of-variables}{%
+\subsection{Question 3: Data Types of
+Variables}\label{question-3-data-types-of-variables}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variable\_classes }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(financeR\_data, class)}
+
+\FunctionTok{print}\NormalTok{(variable\_classes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        date         r_A         r_B         r_C         r_M 
+## "character"   "numeric"   "numeric"   "numeric"   "numeric"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{non\_numeric\_variables }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(variable\_classes[variable\_classes }\SpecialCharTok{!=} \StringTok{"numeric"}\NormalTok{])}
+
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{length}\NormalTok{(non\_numeric\_variables) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Non{-}numeric variable(s):"}\NormalTok{, }\FunctionTok{paste}\NormalTok{(non\_numeric\_variables, }\AttributeTok{collapse =} \StringTok{", "}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Non-numeric variable(s): date
+\end{verbatim}
+
+\hypertarget{question-4-drop-non-numeric-variable}{%
+\subsection{Question 4: Drop Non-numeric
+Variable}\label{question-4-drop-non-numeric-variable}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{financeR\_data\_cleaned }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(financeR\_data, }\SpecialCharTok{{-}}\FunctionTok{one\_of}\NormalTok{(non\_numeric\_variables))}
+\FunctionTok{head}\NormalTok{(financeR\_data\_cleaned)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##       r_A       r_B     r_C     r_M
+##     <dbl>     <dbl>   <dbl>   <dbl>
+## 1  0.0191 -0.00585   0.100   0.0386
+## 2 -0.0508  0.0975    0.0227  0.0325
+## 3 -0.0207  0.00858  -0.0170 -0.0253
+## 4  0.0287  0.000354  0.0625  0.0189
+## 5 -0.0162  0.0179   -0.0195 -0.0191
+## 6  0.0124 -0.125     0.0127 -0.0201
+\end{verbatim}
+
+\hypertarget{question-5-calculate-excess-returns}{%
+\subsection{Question 5: Calculate Excess
+Returns}\label{question-5-calculate-excess-returns}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rf }\OtherTok{\textless{}{-}} \FloatTok{0.0041}
+
+\NormalTok{calculate\_excess\_returns }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(returns) \{}
+\NormalTok{  excess\_returns }\OtherTok{\textless{}{-}}\NormalTok{ returns }\SpecialCharTok{{-}}\NormalTok{ rf}
+  \FunctionTok{return}\NormalTok{(excess\_returns)}
+\NormalTok{\}}
+
+\NormalTok{financeR\_excess\_returns }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(financeR\_data\_cleaned, calculate\_excess\_returns))}
+
+\FunctionTok{head}\NormalTok{(financeR\_excess\_returns)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            r_A          r_B          r_C         r_M
+## 1  0.015031184 -0.009947938  0.095899987  0.03445962
+## 2 -0.054895037  0.093351001  0.018627288  0.02839332
+## 3 -0.024807292  0.004476014 -0.021137002 -0.02939047
+## 4  0.024647899 -0.003745696  0.058447088  0.01480335
+## 5 -0.020266300  0.013785573 -0.023603586 -0.02321766
+## 6  0.008341376 -0.129013022  0.008558242 -0.02420858
+\end{verbatim}
+
+\hypertarget{question-6-descriptive-statistics-and-highest-mean-return}{%
+\subsection{Question 6: Descriptive Statistics and Highest Mean
+Return}\label{question-6-descriptive-statistics-and-highest-mean-return}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{descriptive\_stats }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(financeR\_excess\_returns)}
+
+\FunctionTok{print}\NormalTok{(descriptive\_stats)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       r_A                 r_B                 r_C           
+##  Min.   :-0.174342   Min.   :-0.462632   Min.   :-0.713305  
+##  1st Qu.:-0.029586   1st Qu.:-0.043620   1st Qu.:-0.082507  
+##  Median : 0.001516   Median : 0.004074   Median :-0.005886  
+##  Mean   : 0.003752   Mean   : 0.001441   Mean   : 0.007011  
+##  3rd Qu.: 0.042496   3rd Qu.: 0.057011   3rd Qu.: 0.058521  
+##  Max.   : 0.129233   Max.   : 0.287812   Max.   : 1.799471  
+##       r_M           
+##  Min.   :-0.172031  
+##  1st Qu.:-0.020429  
+##  Median : 0.006967  
+##  Mean   : 0.001999  
+##  3rd Qu.: 0.025580  
+##  Max.   : 0.101795
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_returns }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(financeR\_excess\_returns, mean)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The asset with the highest mean return is:"}\NormalTok{, }\FunctionTok{names}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(mean\_returns)), }\StringTok{"with a mean return of"}\NormalTok{, }\FunctionTok{max}\NormalTok{(mean\_returns), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The asset with the highest mean return is: r_C with a mean return of 0.007011021
+\end{verbatim}
+
+\hypertarget{question-7-variances-and-covariances}{%
+\subsection{Question 7: Variances and
+Covariances}\label{question-7-variances-and-covariances}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var\_cov\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{var}\NormalTok{(financeR\_excess\_returns)}
+\FunctionTok{print}\NormalTok{(var\_cov\_matrix)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               r_A           r_B          r_C          r_M
+## r_A  2.905690e-03 -0.0003844852 0.0001249001 1.171093e-05
+## r_B -3.844852e-04  0.0105434580 0.0132516055 2.646404e-03
+## r_C  1.249001e-04  0.0132516055 0.0563354184 4.679460e-03
+## r_M  1.171093e-05  0.0026464043 0.0046794598 1.615544e-03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variances }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(var\_cov\_matrix)}
+\NormalTok{most\_volatile\_asset }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(variances))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"(a) The most volatile asset is:"}\NormalTok{, most\_volatile\_asset, }\StringTok{"with a variance of"}\NormalTok{, }\FunctionTok{max}\NormalTok{(variances), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (a) The most volatile asset is: r_C with a variance of 0.05633542
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{diag}\NormalTok{(var\_cov\_matrix) }\OtherTok{\textless{}{-}} \DecValTok{0}
+\NormalTok{highest\_cov\_value }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(var\_cov\_matrix)}
+\NormalTok{highest\_cov\_assets }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(var\_cov\_matrix }\SpecialCharTok{==}\NormalTok{ highest\_cov\_value, }\AttributeTok{arr.ind =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{asset\_names }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(var\_cov\_matrix)}
+\NormalTok{pair\_with\_highest\_covariance }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(asset\_names[highest\_cov\_assets[}\DecValTok{1}\NormalTok{, }\StringTok{"row"}\NormalTok{]], asset\_names[highest\_cov\_assets[}\DecValTok{1}\NormalTok{, }\StringTok{"col"}\NormalTok{]])}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"(b) The two assets with the highest covariance are:"}\NormalTok{, pair\_with\_highest\_covariance[}\DecValTok{1}\NormalTok{], }\StringTok{"and"}\NormalTok{, pair\_with\_highest\_covariance[}\DecValTok{2}\NormalTok{], }\StringTok{"with a covariance of"}\NormalTok{, highest\_cov\_value, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (b) The two assets with the highest covariance are: r_C and r_B with a covariance of 0.01325161
+\end{verbatim}
+
+\hypertarget{c}{%
+\subsubsection{(c)}\label{c}}
+
+Genworth Financial (GNW) is the most volatile asset likely due to its
+direct exposure to the highly fluctuating financial sector. The high
+covariance between Morgan Stanley (MS) and Genworth Financial (GNW)
+suggests a strong positive relationship, likely because both are deeply
+integrated within the financial industry, making their performances
+susceptible to similar economic and sector-specific influences.
+
+\hypertarget{question-8-risk-return-tradeoff-analysis}{%
+\subsection{Question 8: Risk-Return Tradeoff
+Analysis}\label{question-8-risk-return-tradeoff-analysis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{asset\_means }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(financeR\_excess\_returns, mean)}
+\NormalTok{asset\_variances }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(financeR\_excess\_returns, var)}
+\FunctionTok{print}\NormalTok{(asset\_means)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         r_A         r_B         r_C         r_M 
+## 0.003752189 0.001440923 0.007011021 0.001999263
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(asset\_variances)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         r_A         r_B         r_C         r_M 
+## 0.002905690 0.010543458 0.056335418 0.001615544
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{risk\_return\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Asset =} \FunctionTok{names}\NormalTok{(asset\_means), }\AttributeTok{Er =}\NormalTok{ asset\_means, }\AttributeTok{Var =}\NormalTok{ asset\_variances)}
+
+\FunctionTok{ggplot}\NormalTok{(risk\_return\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Var, }\AttributeTok{y =}\NormalTok{ Er, }\AttributeTok{color =}\NormalTok{ Asset)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_bw}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Risk{-}Return Tradeoff"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Variance (Risk)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\StringTok{"Expected Returns"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pset2_R_files/figure-latex/sample-means-1.pdf}
+
+\hypertarget{d}{%
+\subsubsection{(d)}\label{d}}
+
+The risk-return tradeoff displayed in the figure indicates that Genworth
+Financial (r\_C) offers the highest expected return but also comes with
+the highest level of risk (variance), suggesting a potential reward for
+investors willing to accept greater volatility. Conversely, the S\&P 500
+index (r\_M) demonstrates the lowest risk and offers lower expected
+returns, which is typical for a diversified market index. The tradeoff
+between risk and expected return is a fundamental concept in finance,
+where higher risk is typically associated with the potential for higher
+returns, as investors demand compensation for bearing additional risk.
+
+\hypertarget{question-9-sharpe-ratio-calculation}{%
+\subsection{Question 9: Sharpe Ratio
+Calculation}\label{question-9-sharpe-ratio-calculation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{calculate\_sharpe\_ratio }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(return, variance, rf) \{}
+\NormalTok{  sharpe\_ratio }\OtherTok{\textless{}{-}}\NormalTok{ (return }\SpecialCharTok{{-}}\NormalTok{ rf) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(variance)}
+  \FunctionTok{return}\NormalTok{(sharpe\_ratio)}
+\NormalTok{\}}
+
+\NormalTok{sharpe\_ratios }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(financeR\_excess\_returns), }\ControlFlowTok{function}\NormalTok{(i) \{}
+  \FunctionTok{calculate\_sharpe\_ratio}\NormalTok{(asset\_means[i], asset\_variances[i], rf)}
+\NormalTok{\})}
+
+\FunctionTok{names}\NormalTok{(sharpe\_ratios) }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(asset\_means)}
+\FunctionTok{print}\NormalTok{(sharpe\_ratios)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          r_A          r_B          r_C          r_M 
+## -0.006452367 -0.025896396  0.012264635 -0.052265164
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The asset with the best estimated risk{-}reward tradeoff according to the Sharpe ratio is:"}\NormalTok{, }\FunctionTok{names}\NormalTok{(}\FunctionTok{which.max}\NormalTok{(sharpe\_ratios)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The asset with the best estimated risk-reward tradeoff according to the Sharpe ratio is: r_C
+\end{verbatim}
+
+\hypertarget{question-10-portfolio-diversification}{%
+\subsection{Question 10: Portfolio
+Diversification}\label{question-10-portfolio-diversification}}
+
+\hypertarget{a}{%
+\subsubsection{(a)}\label{a}}
+
+Diversification can reduce the portfolio's overall risk if the returns
+on GLD and the S\&P 500 are not perfectly correlated. The rule for the
+variance of a sum (i.e., the portfolio variance) indicates that if two
+assets do not move exactly in tandem (less than perfect correlation),
+combining them can lead to a portfolio variance that is lower than the
+weighted average of the individual variances, thereby reducing risk.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{omega }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{1}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{1000}\NormalTok{)}
+
+\NormalTok{mean\_GLD }\OtherTok{\textless{}{-}}\NormalTok{ asset\_means[}\StringTok{\textquotesingle{}r\_A\textquotesingle{}}\NormalTok{]}
+\NormalTok{mean\_SP500 }\OtherTok{\textless{}{-}}\NormalTok{ asset\_means[}\StringTok{\textquotesingle{}r\_M\textquotesingle{}}\NormalTok{]}
+\NormalTok{var\_GLD }\OtherTok{\textless{}{-}}\NormalTok{ asset\_variances[}\StringTok{\textquotesingle{}r\_A\textquotesingle{}}\NormalTok{]}
+\NormalTok{var\_SP500 }\OtherTok{\textless{}{-}}\NormalTok{ asset\_variances[}\StringTok{\textquotesingle{}r\_M\textquotesingle{}}\NormalTok{]}
+\NormalTok{cov\_GLD\_SP500 }\OtherTok{\textless{}{-}}\NormalTok{ var\_cov\_matrix[}\StringTok{\textquotesingle{}r\_A\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}r\_M\textquotesingle{}}\NormalTok{]}
+
+\NormalTok{portfolio\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{omega =}\NormalTok{ omega)}
+
+\CommentTok{\# Calculate expected return and variance for each weight combination}
+\NormalTok{portfolio\_df}\SpecialCharTok{$}\NormalTok{expected\_return }\OtherTok{\textless{}{-}}\NormalTok{ (omega }\SpecialCharTok{*}\NormalTok{ mean\_GLD) }\SpecialCharTok{+}\NormalTok{ ((}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ omega) }\SpecialCharTok{*}\NormalTok{ mean\_SP500)}
+\NormalTok{portfolio\_df}\SpecialCharTok{$}\NormalTok{portfolio\_variance }\OtherTok{\textless{}{-}}\NormalTok{ (omega}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ var\_GLD) }\SpecialCharTok{+}\NormalTok{ ((}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ omega)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ var\_SP500) }\SpecialCharTok{+}\NormalTok{ (}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ omega }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ omega) }\SpecialCharTok{*}\NormalTok{ cov\_GLD\_SP500)}
+
+\FunctionTok{ggplot}\NormalTok{(portfolio\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ portfolio\_variance, }\AttributeTok{y =}\NormalTok{ expected\_return, }\AttributeTok{color =}\NormalTok{ omega)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Expected Return and Volatility for Different Portfolio Weights"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Volatility (Portfolio Variance)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Expected Return"}\NormalTok{,}
+       \AttributeTok{color =} \StringTok{"Portfolio Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pset2_R_files/figure-latex/diversification-1.pdf}
+
+\hypertarget{c-1}{%
+\subsubsection{(c)}\label{c-1}}
+
+The risk-return tradeoff for the portfolio versus holding only SPDR Gold
+or only the S\&P 500 index can be evaluated by comparing their Sharpe
+ratios, expected returns, and volatilities. If the combined portfolio
+offers a higher Sharpe ratio than either of the individual assets, it
+suggests a better risk-adjusted return, making it a more attractive
+choice for investors.
+
+Given the estimates, an investor would never invest 100\% in the S\&P
+500 index as putting at that position, putting more portfolio weight on
+GLD gives a higher expected return while lowering volatility.
+
+\end{document}

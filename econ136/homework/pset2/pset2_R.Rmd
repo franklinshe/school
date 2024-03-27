@@ -1,0 +1,182 @@
+---
+title: "pset2_R"
+author: "Franklin She"
+date: "2024-02-15"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Part II: 2 R Questions
+
+## Question 1. Load Data
+
+```{r}
+library(haven)
+
+financeR_data <- read_dta("financeR.dta")
+head(financeR_data)
+```
+
+## Question 2: Number of Variables and Observations
+
+```{r variables-observations}
+data_dimensions <- dim(financeR_data)
+num_observations <- data_dimensions[1]
+num_variables <- data_dimensions[2]
+
+cat("Number of observations (rows):", num_observations, "\n")
+cat("Number of variables (columns):", num_variables, "\n")
+```
+
+## Question 3: Data Types of Variables
+
+```{r data-types}
+variable_classes <- sapply(financeR_data, class)
+
+print(variable_classes)
+
+non_numeric_variables <- names(variable_classes[variable_classes != "numeric"])
+
+if(length(non_numeric_variables) > 0) {
+  cat("Non-numeric variable(s):", paste(non_numeric_variables, collapse = ", "), "\n")
+}
+```
+
+## Question 4: Drop Non-numeric Variable
+
+```{r drop-variable}
+library(dplyr)
+
+financeR_data_cleaned <- select(financeR_data, -one_of(non_numeric_variables))
+head(financeR_data_cleaned)
+```
+
+## Question 5: Calculate Excess Returns
+
+```{r excess-returns}
+rf <- 0.0041
+
+calculate_excess_returns <- function(returns) {
+  excess_returns <- returns - rf
+  return(excess_returns)
+}
+
+financeR_excess_returns <- as.data.frame(sapply(financeR_data_cleaned, calculate_excess_returns))
+
+head(financeR_excess_returns)
+```
+
+## Question 6: Descriptive Statistics and Highest Mean Return
+
+```{r descriptive-stats}
+descriptive_stats <- summary(financeR_excess_returns)
+
+print(descriptive_stats)
+
+mean_returns <- sapply(financeR_excess_returns, mean)
+
+cat("The asset with the highest mean return is:", names(which.max(mean_returns)), "with a mean return of", max(mean_returns), "\n")
+```
+
+## Question 7: Variances and Covariances
+
+```{r variance-covariance-matrix}
+var_cov_matrix <- var(financeR_excess_returns)
+print(var_cov_matrix)
+
+variances <- diag(var_cov_matrix)
+most_volatile_asset <- names(which.max(variances))
+cat("(a) The most volatile asset is:", most_volatile_asset, "with a variance of", max(variances), "\n")
+
+diag(var_cov_matrix) <- 0
+highest_cov_value <- max(var_cov_matrix)
+highest_cov_assets <- which(var_cov_matrix == highest_cov_value, arr.ind = TRUE)
+asset_names <- rownames(var_cov_matrix)
+pair_with_highest_covariance <- c(asset_names[highest_cov_assets[1, "row"]], asset_names[highest_cov_assets[1, "col"]])
+cat("(b) The two assets with the highest covariance are:", pair_with_highest_covariance[1], "and", pair_with_highest_covariance[2], "with a covariance of", highest_cov_value, "\n")
+```
+
+### (c)
+
+Genworth Financial (GNW) is the most volatile asset likely due to its direct exposure to the highly fluctuating financial sector. The high covariance between Morgan Stanley (MS) and Genworth Financial (GNW) suggests a strong positive relationship, likely because both are deeply integrated within the financial industry, making their performances susceptible to similar economic and sector-specific influences.
+
+## Question 8: Risk-Return Tradeoff Analysis
+
+```{r sample-means}
+asset_means <- sapply(financeR_excess_returns, mean)
+asset_variances <- sapply(financeR_excess_returns, var)
+print(asset_means)
+print(asset_variances)
+
+library(ggplot2)
+
+risk_return_df <- data.frame(Asset = names(asset_means), Er = asset_means, Var = asset_variances)
+
+ggplot(risk_return_df, aes(x = Var, y = Er, color = Asset)) +
+  geom_point(size = 5) + theme_bw(base_size = 14) +
+  ggtitle("Risk-Return Tradeoff") +
+  xlab("Variance (Risk)") + ylab("Expected Returns")
+```
+
+### (d)
+The risk-return tradeoff displayed in the figure indicates that Genworth Financial (r_C) offers the highest expected return but also comes with the highest level of risk (variance), suggesting a potential reward for investors willing to accept greater volatility. Conversely, the S&P 500 index (r_M) demonstrates the lowest risk and offers lower expected returns, which is typical for a diversified market index. The tradeoff between risk and expected return is a fundamental concept in finance, where higher risk is typically associated with the potential for higher returns, as investors demand compensation for bearing additional risk.
+
+## Question 9: Sharpe Ratio Calculation
+
+
+```{r sharpe-ratio}
+
+calculate_sharpe_ratio <- function(returns, variance, rf) {
+  sharpe_ratio <- (returns - rf) / sqrt(variance)
+  return(sharpe_ratio)
+}
+
+sharpe_ratios <- sapply(1:ncol(financeR_excess_returns), function(i) {
+  calculate_sharpe_ratio(asset_means[i], asset_variances[i], rf)
+})
+
+names(sharpe_ratios) <- names(asset_means)
+print(sharpe_ratios)
+
+cat("The asset with the best estimated risk-reward tradeoff according to the Sharpe ratio is:", names(which.max(sharpe_ratios)), "\n")
+```
+
+## Question 10: Portfolio Diversification
+
+### (a)
+
+Diversification can reduce the portfolio's overall risk if the returns on GLD and the S&P 500 are not perfectly correlated. The rule for the variance of a sum (i.e., the portfolio variance) indicates that if two assets do not move exactly in tandem (less than perfect correlation), combining them can lead to a portfolio variance that is lower than the weighted average of the individual variances, thereby reducing risk.
+
+```{r diversification}
+omega <- seq(from = 0, to = 1, length.out = 1000)
+
+mean_GLD <- asset_means['r_A']
+mean_SP500 <- asset_means['r_M']
+var_GLD <- asset_variances['r_A']
+var_SP500 <- asset_variances['r_M']
+cov_GLD_SP500 <- var_cov_matrix['r_A', 'r_M']
+
+portfolio_df <- data.frame(omega = omega)
+
+# Calculate expected return and variance for each weight combination
+portfolio_df$expected_return <- (omega * mean_GLD) + ((1 - omega) * mean_SP500)
+portfolio_df$portfolio_variance <- (omega^2 * var_GLD) + ((1 - omega)^2 * var_SP500) + (2 * omega * (1 - omega) * cov_GLD_SP500)
+
+ggplot(portfolio_df, aes(x = portfolio_variance, y = expected_return, color = omega)) +
+  geom_point() +
+  theme_bw() +
+  labs(title = "Expected Return and Volatility for Different Portfolio Weights",
+       x = "Volatility (Portfolio Variance)",
+       y = "Expected Return",
+       color = "Portfolio Weight")
+```
+
+### (c)
+The risk-return tradeoff for the portfolio versus holding only SPDR Gold or only the S&P 500 index can be evaluated by comparing their Sharpe ratios, expected returns, and volatilities. If the combined portfolio offers a higher Sharpe ratio than either of the individual assets, it suggests a better risk-adjusted return, making it a more attractive choice for investors.
+
+Given the estimates, an investor would never invest 100% in the S&P 500 index as putting at that position, putting more portfolio weight on GLD gives a higher expected return while lowering volatility.

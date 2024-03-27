@@ -1,0 +1,245 @@
+\documentclass[10pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb, graphicx, multicol, array, bbm}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{color}
+
+\lstdefinestyle{Rstyle}{
+  language=R,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{black},
+  stringstyle=\color{purple},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  frame=single,
+  rulecolor=\color{black},
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=true,
+  title=\lstname,
+  showstringspaces=false,
+  tabsize=2,
+  belowskip=1em,
+  aboveskip=1em,
+}
+
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\E}{\mathbb{E}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+
+\title{\vspace{-2cm} Econ 136: Problem Set 2}
+\author{Franklin She}
+
+\maketitle
+ 
+\begin{problem}{1}
+    \hfill
+    \begin{enumerate}[label=(\alph*)]
+        \item \hfill
+            \begin{align*}
+                \E[Xe] &= \E[X(Y - X'\beta)] \\
+                       &= \E[XY] - \E[X(X' \cdot \left(\E[X'X]\right)^{-1}XY)] & \text{by linearity of expectation and definition of $\beta$} \\   
+                       &= \E[XY] - \E[XX']\left(\E[X'X]\right)^{-1}\E[XY] & \text{by linearity of expectation} \\
+                       &= \E[XY] - \E[XY] & \text{by matrix properties} \\
+                       &= 0
+            \end{align*}
+        \item
+            The equation in part (a) is a set of 2 equations, one for each element of $X$.
+            \begin{align*}
+                \E[1e] &= \E[e] = 0 \\
+                \E[X_1e] &= 0
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                \text{Cov}(X_1, e) &= \E[(X_1 - \E[X_1])(e - \E[e])] & \text{by the definition of covariance} \\
+                                   &= \E[X_1e] - \E[\E[X_1]e] - \E[X_1\E[e]] + \E[\E[X_1]\E[e]] & \text{by the linearity of expectations} \\
+                                   &= \E[X_1e] & \text{because $\E[e] = 0$, part b} \\
+                                   &= 0 & \text{because $\E[X_1e] = 0$, part b}
+            \end{align*}
+        \item Let's examine the determinant of $E[XX']$.
+            \begin{align*}
+                \det(E[XX']) 
+                &= \det\left(\begin{bmatrix}
+                        \E[1] & \E[X_1] \\
+                        \E[X_1] & \E[X_1^2]
+                \end{bmatrix}\right) \\
+                &= \det\left(\begin{bmatrix}
+                    1 & \mu_{X_1} \\
+                    \mu_{X_1} & \E[X_1^2]
+                \end{bmatrix}\right) \\
+                             &= 1 \cdot \E[X_1^2] - \mu_{X_1}^2 \\
+                             &= Var(X_1) & \text{by the definition of variance}
+            \end{align*}
+            Therefore, the determinant of $E[XX']$ being non-zero directly depends on the variance of $Var(X_1) >0$. The variability of $X_1$ ensures that the components of $X$ are not linearly dependent.
+        \item
+            \begin{align*}
+                \beta &= (\E[XX'])^{-1}\E[XY] & \text{by the definition of $\beta$} \\
+                      &= \left(\begin{bmatrix}
+                            E[1] & E[X_1] \\
+                            E[X_1] & E[X_1^2]
+                    \end{bmatrix}\right)^{-1} \begin{bmatrix}
+                        \E[Y] \\
+                        \E[X_1Y]
+                      \end{bmatrix} & \text{by opening the matrix} \\
+                      &= \frac{1}{\text{det}(\E[XX'])}\begin{bmatrix}
+                          \E[X_1^2] & -\E[X_1] \\
+                          -\E[X_1] & 1
+                      \end{bmatrix} \begin{bmatrix}
+                        \E[Y] \\
+                        \E[X_1Y]
+                      \end{bmatrix} & \text{by the definition matrix inverse} \\
+                      &= \frac{1}{Var(X_1)}\begin{bmatrix}
+                          \E[X_1^2] & -\E[X_1] \\
+                          -\E[X_1] & 1
+                      \end{bmatrix} \begin{bmatrix}
+                        \E[Y] \\
+                        \E[X_1Y]
+                      \end{bmatrix} & \text{by part (d)} \\
+                      &= \frac{1}{Var(X_1)} \begin{bmatrix}
+                          \E[X_1^2]E[Y] - \E[X_1]E[X_1Y] \\
+                          -\E[X_1]E[Y] + E[X_1Y]
+                      \end{bmatrix} & \text{by matrix multiplication} \\
+            \end{align*}
+            Therefore, $\beta_0$ and $\beta_1$ are solved as
+            \begin{align*}
+                \beta_0 &= \frac{\E[X_1^2]E[Y] - \E[X_1]\E[X_1Y]}{Var(X_1)} \\
+                        &= \E[Y] - \frac{\E[X_1]Cov(X_1, Y)}{Var(X_1)} & \text{by the definition of covariance} \\
+                \beta_1 &= \frac{-\E[X_1]E[Y] + \E[X_1Y]}{Var(X_1)} \\
+                        &= \frac{Cov(X_1, Y)}{Var(X_1)} & \text{by the definition of covariance}
+            \end{align*}
+        \end{enumerate}
+\end{problem}
+
+\begin{problem}{2}
+    \begin{align*}
+        \text{Cov}(Y, e) &= \text{Cov}(X'\beta + e, e) & \\
+                         &= \text{Cov}(X'\beta, e) + \text{Cov}(e, e) & \text{by the properties of covariance} \\
+                         & = \E[X'\beta - \E[X'\beta])(e - \E[e])] + Var[e] & \text{by the definition of covariance} \\
+                         &= \beta \E[Xe] - \E[X'\beta]\E[e] + Var[e] & \text{by the linearity of expectations} \\
+                         &= Var[e] & \text{$\E[Xe] = 0$ and $\E[e] = 0$ for BLP $Y$ given $X$}
+    \end{align*}
+    To show that the BLP of $X_1$ given $Y$ cannot be $-\frac{\beta_0}{\beta_1} - \frac{1}{\beta_1}Y$, it suffices to show that $\E[e \cdot g(Y)] \neq 0$ for some function $g(Y)$. Let's consider the function $g(Y) = Y - \beta_0 - \beta_1 X_1$.
+    \begin{align*}
+        \E[e \cdot g(Y)] &= \E[e \cdot (Y - \beta_0 - \beta_1 X_1)] \\
+                         &= \E[e^2] \\
+                         &\neq 0 & \text{if $\text{Cov}(Y,e) = Var[e] > 0$}
+    \end{align*}
+    Alternatively, we can also consider $Cov(X_1, e)$. By problem 1, part (c), we know that $Cov(X_1, e) = 0$.
+    \begin{align*}
+        Cov(X_1, e) &= Cov(-\frac{\beta_0}{\beta_1} - \frac{1}{\beta_1}Y - \frac{1}{\beta_1}e, e) \\
+                    &= Cov(-\frac{\beta_0}{\beta_1}, e) - Cov(\frac{1}{\beta_1}Y, e) + Cov(-\frac{1}{\beta_1}e, e) \\
+                    &= 0 - \frac{1}{\beta_1}Var(e) - \frac{1}{\beta_1}Var(e) \\
+                    &= 0 \\ 
+                    & \implies Var(e) = 0
+    \end{align*}
+    This can only happen if $e = 0$, the zero vector, which implies that $Y$ is a linear combination of $X$ which is not the case in general.
+    Therefore, the BLP of $X_1$ given $Y$ being $-\frac{\beta_0}{\beta_1} - \frac{1}{\beta_1}Y$ is not possible.
+    \hfill
+\end{problem}
+
+\begin{problem}{3}
+    \hfill
+    \begin{enumerate}[label=(\alph*)]
+        \item \hfill
+            \begin{align*}
+                Pr[Y = 1] &= E[Y] & \text{because $Y$ is Bernoulli} \\
+                          &= E[E[Y | X]] & \text{by the law of iterated expectations} \\
+                          &= E[X'\beta] & \text{because $E[e | X] = 0$} \\
+                          &= \mu_X'\beta & \text{by the linearity of expectations}
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                Var[Y] &= P[Y=1](1 - P[Y=1]) & \text{because $Y$ is Bernoulli} \\
+                       &= \mu_X'\beta(1 - \mu_X'\beta) & \text{by part (a)}
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                Pr[Y = 1 | X] &= E[Y | X] & \text{because $Y$ is Bernoulli} \\
+                              &= X'\beta & \text{because $E[e | X] = 0$}
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                Var[Y | X] &= P[Y=1|X](1 - P[Y=1|X]) & \text{because $Y$ is Bernoulli} \\
+                           &= X'\beta(1 - X'\beta) & \text{by part (c)}
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                Var[e | X] &= Var[Y - X'\beta | X] & \text{by the definition of $e$} \\
+                           &= Var[Y | X] + Var[-X'\beta | X] + 2Cov[Y, -X'\beta | X] & \text{by the properties of variance} \\
+                           &= Var[Y | X] + 0 + 0 & \text{because $-X'\beta$ is a constant} \\
+                           &= X'\beta(1 - X'\beta) & \text{by part (d)}
+            \end{align*}
+        \item 
+            Because of part (e), we know $e$ will be heteroskedastic because $Var[e | X]$ is a function of $X$.
+
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}{4}
+    \hfill
+    \begin{enumerate}[label=(\alph*)]
+        \item \hfill
+            \begin{align*}
+                E[e] &= E[E[e | F, S]] & \text{by the law of iterated expectations} \\
+                     &= E[0] & \text{because $E[e | F, S] = 0$} \\
+                     &= 0
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                \E[Y | F] &= \E[\gamma_0 + \gamma_1 F + v | F] \\
+                          &= \gamma_0 + \gamma_1 \E[F | F] + \E[v | F] \\
+                          &= \gamma_0 + \gamma_1 F
+            \end{align*}
+            We can evaluate $\E[Y | F]$ by conditioning on $F$:
+            \begin{align*}
+                \E[Y | F = 0] &= \gamma_0 \\
+                \E[Y | F = 1] &= \gamma_0 + \gamma_1 \\
+            \end{align*}
+            Thus, we can write
+            \begin{align*}
+                \gamma_0 &= \E[Y | F = 0] \\
+                \gamma_1 &= \E[Y | F = 1] - \E[Y | F = 0]
+            \end{align*}
+        \item \hfill
+            \begin{align*}
+                \E[Y | F] &= \E[\beta_0 + \beta_1 F + \beta_2 S + e | F] \\
+                             &= \beta_0 + \beta_1 \E[F | F] + \beta_2 \E[S | F] + \E[e | F] \\
+                             &= \beta_0 + \beta_1 F + \beta_2 \E[S | F] 
+            \end{align*}
+            We can evaluate $\E[Y | F]$ by conditioning on $F$:
+            \begin{align*}
+                \E[Y | F = 0] &= \beta_0 + \beta_2 \E[S | F = 0] \\
+                \E[Y | F = 1] &= \beta_0 + \beta_1 + \beta_2 \E[S | F = 1] \\
+            \end{align*}
+            Thus, we can write
+            \begin{align*}
+                \gamma_1 &= \E[Y | F = 1] - \E[Y | F = 0] \\
+                         &= \beta_1 + \beta_2 (\E[S | F = 1] - \E[S | F = 0])
+            \end{align*}
+            The observed wage gap between genders not controlling for schooling ($\gamma_1$) is influenced by two components: the direct effect of being a woman on wage ($\beta_1$), and the differential effect of schooling between genders ($\beta_2$ times the difference in average years of schooling between women and men).
+        \item 
+            When $\E[S | F = 1] < \E[S | F = 0]$, the second term in the expression for $\gamma_1$ will be negative, meaning that $\gamma_1 < \beta_1$.
+            The gender-wage gap not controlling for schooling will be smaller than the gap that does control for schooling.
+        \item
+            When $\E[S | F = 1] > \E[S | F = 0]$, the second term in the expression for $\gamma_1$ will be positive, meaning that $\gamma_1 > \beta_1$.
+            The gender-wage gap not controlling for schooling will be larger than the gap that does control for schooling.
+    \end{enumerate}
+\end{problem}
+
+\end{document}
